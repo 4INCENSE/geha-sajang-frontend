@@ -2,13 +2,10 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const SnsButton = styled.button`
-  width: 350px;
-  height: 55px;
+  width: 300px;
+  height: 45px;
   border-radius: 5px;
   margin-top: 15px;
-  &:hover {
-    background: red;
-  }
 `;
 
 const SnsLogInWrap = styled.div`
@@ -18,13 +15,13 @@ const SnsLogInWrap = styled.div`
 `;
 
 const SnsLogo = styled.img`
-  width: 40px;
+  width: 35px;
   margin: 0 10px 0 25px;
 `;
 
 const SnsTitle = styled.span`
   font-family: 'Eoe_Zno_L';
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   color: ${({ theme }) => theme.color.gray};
 `;
