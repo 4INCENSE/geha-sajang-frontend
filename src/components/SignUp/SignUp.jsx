@@ -187,8 +187,26 @@ const UploadImgValue = styled.div`
 `;
 
 const SignUp = () => {
+  const userName = 'test';
   const [currentImg, setCurrentImg] = useState(defaultPreviewImg);
   const [currentImgName, setCurrentImgName] = useState('파일을 업로드 해주세요');
+  const formData = new FormData();
+
+  const uploadImage = (e) => {
+    if (!e.target.files[0]) return;
+    setCurrentImg(URL.createObjectURL(e.target.files[0]));
+    setCurrentImgName(e.target.files[0].name);
+    console.log(e.target.files[0]);
+
+    // formData 생성은 currentImg를 통해서 나중에 하기
+    // formData.append('uploadImage', e.target.files[0], userName);
+    //axios로 서버에 전송 시 header에 아래와 같이 추가하여 전송해야함
+    // const config = {
+    //   headers: {
+    //     'content-type': 'multipart/form-data'
+    //   }
+    // };
+  };
 
   return (
     <Wrap>
@@ -210,12 +228,13 @@ const SignUp = () => {
             <ImgUploadWrap>
               <UploadButton htmlFor="file">업로드</UploadButton>
               <UploadImgValue>{currentImgName}</UploadImgValue>
-              <UploadImgDeleteButton>삭제</UploadImgDeleteButton>
+              <UploadImgDeleteButton onClick={deleteImage}>삭제</UploadImgDeleteButton>
               <input
                 style={{ position: 'absolute', width: '0', height: '0' }}
                 id="file"
                 type="file"
                 accept=".jpg, .jpeg, .png"
+                onChange={uploadImage}
               />
             </ImgUploadWrap>
             <PreviewWrap>
@@ -224,7 +243,7 @@ const SignUp = () => {
           </InputWrap>
           <InputWrap>
             <InputTitle>대표 전화번호</InputTitle>
-            <Input type="number" />
+            <Input type="number" maxlength="11" />
           </InputWrap>
         </ResisterWrap>
       </ContentWrap>
