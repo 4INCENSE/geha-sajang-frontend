@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { addExtraService, deleteExtraService } from '@/redux/actions/extraServiceAction';
+
+import { checkDuplicate } from '@/lib/util/checkDuplicate';
 
 import logo from '@/img/Logo/logo.png';
 import defaultPreviewImg from '@/img/default_preview_img.png';
+import questionIcon from '@/img/icon/question.png';
+import closeIcon from '@/img/icon/close_w.png';
 
 const Wrap = styled.div`
   display: flex;
@@ -290,6 +297,10 @@ const SignUp = () => {
     setCurrentImg(defaultPreviewImg);
     setCurrentImgName('파일을 업로드 해주세요');
   };
+
+  const addServiceButtonClickHandler = () => {
+    if (!serviceInputValue) return alert('서비스 이름을 입력해주세요!');
+    if (checkDuplicate(serviceList, serviceInputValue)) return alert('이미 추가된 서비스입니다.');
   return (
     <Wrap>
       <Header>
