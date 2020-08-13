@@ -301,6 +301,16 @@ const SignUp = () => {
   const addServiceButtonClickHandler = () => {
     if (!serviceInputValue) return alert('서비스 이름을 입력해주세요!');
     if (checkDuplicate(serviceList, serviceInputValue)) return alert('이미 추가된 서비스입니다.');
+    dispatch(addExtraService(serviceInputValue));
+    serviceInput.current.value = '';
+    setServiceInputValue();
+  };
+
+  const deleteServiceButtonClickHandler = (e) => {
+    const clickedServiceTitle = e.target.closest('div').firstChild.data;
+    dispatch(deleteExtraService(clickedServiceTitle));
+  };
+
   return (
     <Wrap>
       <Header>
@@ -356,6 +366,26 @@ const SignUp = () => {
                 </div>
               </QuestionMarkIcon>
             </InputTitle>
+            <InputButtonWrap>
+              <Input
+                ref={serviceInput}
+                onChange={(e) => setServiceInputValue(e.target.value)}
+                placeholder="ex. 픽업서비스, 저녁식사…"
+              />
+              <InputButton onClick={addServiceButtonClickHandler}>추가</InputButton>
+            </InputButtonWrap>
+            <ServiceListWrap>
+              {serviceList.map((service, index) => {
+                return (
+                  <ServiceWrap key={index}>
+                    {service}
+                    <button onClick={(e) => deleteServiceButtonClickHandler(e)}>
+                      <img src={closeIcon} />
+                    </button>
+                  </ServiceWrap>
+                );
+              })}
+            </ServiceListWrap>
           </InputWrap>
         </ResisterWrap>
       </ContentWrap>
