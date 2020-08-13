@@ -34,9 +34,8 @@ const ContentWrap = styled.div`
 
 const ResisterTitle = styled.div`
   font-family: 'S-CoreDream-5Medium';
-  /* font-family: 'S-CoreDream-2ExtraLight'; */
   font-weight: bold;
-  font-size: 22px;
+  font-size: 25px;
   color: ${({ theme }) => theme.color.darkGray};
   font-weight: bold;
   margin: 0 0 40px 0;
@@ -46,26 +45,26 @@ const ResisterSubTitle = styled.div`
   font-family: 'Eoe_Zno_L';
   color: ${({ theme }) => theme.color.gray};
   font-weight: bold;
-  font-size: 13px;
-  margin: 0 0 40px 0;
+  font-size: 15px;
+  margin: 0 0 50px 0;
   background: rgba(0, 0, 0, 0.1);
   padding: 10px 15px;
   span {
     font-family: 'Eoe_Zno_L';
-    font-size: 13px;
+    font-size: 15px;
     color: ${({ theme }) => theme.color.darkGray};
     font-weight: bold;
   }
 `;
 
 const ResisterWrap = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 800px;
-  height: 800px;
+  width: 830px;
   border: 0.5px solid #b3b3b3;
-  padding: 50px;
+  padding: 60px;
 `;
 
 const InputWrap = styled.div`
@@ -73,18 +72,23 @@ const InputWrap = styled.div`
   flex-direction: column;
   align-items: center;
   width: 400px;
-  margin-bottom: 20px;
+  margin-bottom: 35px;
 `;
 
 const InputTitle = styled.div`
+  display: flex;
   width: 100%;
   text-align: left;
   font-family: 'Eoe_Zno_L';
   font-weight: bold;
-  font-size: 15px;
+  font-size: 17px;
   color: ${({ theme }) => theme.color.darkGray};
   padding-left: 5px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  span {
+    color: ${({ theme }) => theme.color.point};
+    margin-left: 3px;
+  }
 `;
 
 const Input = styled.input`
@@ -105,6 +109,9 @@ const Input = styled.input`
     appearance: none;
   }
   -moz-appearance: textfield;
+  ::placeholder {
+    font-size: 13px;
+  }
 `;
 
 const PreviewWrap = styled.div`
@@ -120,7 +127,7 @@ const Preview = styled.img`
   height: 100%;
 `;
 
-const ImgUploadWrap = styled.div`
+const InputButtonWrap = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
@@ -141,32 +148,28 @@ const UploadButton = styled.label`
   border-radius: 5px;
   margin-right: 10px;
   &:hover {
-    /* outline: 0;
-    box-shadow: 0 0 5px 2px ${({ theme }) => theme.color.point}; */
-    border : 1px solid ${({ theme }) => theme.color.point};
-    color : ${({ theme }) => theme.color.point};
+    border: 2px solid ${({ theme }) => theme.color.point};
+    color: ${({ theme }) => theme.color.point};
   }
 `;
 
-const UploadImgDeleteButton = styled.button`
-    display: flex;
+const InputButton = styled.button`
+  display: flex;
   justify-content: center;
   align-items: center;
   font-family: 'Eoe_Zno_L';
-  width: 40px;
+  width: 50px;
   height: 40px;
   color: ${({ theme }) => theme.color.darkGray};
   font-weight: bold;
-  font-size: 12px;
+  font-size: 13px;
   border-radius: 5px;
   border: 1px solid ${({ theme }) => theme.color.lightGray};
   border-radius: 5px;
   margin-left: 10px;
   &:hover {
-    /* outline: 0;
-    box-shadow: 0 0 5px 2px ${({ theme }) => theme.color.point}; */
-    border : 1px solid ${({ theme }) => theme.color.point};
-    color : ${({ theme }) => theme.color.point};
+    border: 2px solid ${({ theme }) => theme.color.point};
+    color: ${({ theme }) => theme.color.point};
   }
 `;
 
@@ -186,11 +189,87 @@ const UploadImgValue = styled.div`
   }
 `;
 
+const QuestionMarkIcon = styled.div`
+  position: relative;
+  &:hover {
+    div {
+      display: block;
+    }
+  }
+  img {
+    width: 15px;
+    margin: 0 0 -4px 5px;
+  }
+  div {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    left: 25px;
+    width: 350px;
+    line-height: 25px;
+    padding: 15px 20px;
+    font-family: 'S-CoreDream-2ExtraLight';
+    font-size: 13px;
+    color: white;
+    background: rgba(0, 0, 0, 0.8);
+  }
+`;
+
+const ServiceListWrap = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  min-height: 85px;
+  border: solid 1px ${({ theme }) => theme.color.lightGray};
+  margin-top: 20px;
+  padding: 20px 10px 10px 10px;
+`;
+
+const ServiceWrap = styled.div`
+  display: flex;
+  position: relative;
+  margin-right: 10px;
+  margin-bottom: 12px;
+  border-radius: 15px;
+  border: solid 2px ${({ theme }) => theme.color.gray};
+  display: flex;
+  align-items: center;
+  padding: 8px 10px;
+  font-family: 'Eoe_Zno_L';
+  font-weight: bold;
+  color: ${({ theme }) => theme.color.darkGray};
+  button {
+    background: ${({ theme }) => theme.color.gray};
+    border-radius: 10px;
+    width: 20px;
+    padding: 2px;
+    margin-left: 7px;
+    img {
+      width: 10px;
+    }
+  }
+  &:hover {
+    border: solid 2px ${({ theme }) => theme.color.point};
+    button {
+      background: ${({ theme }) => theme.color.point};
+    }
+  }
+`;
+
 const SignUp = () => {
-  const userName = 'test';
+  const dispatch = useDispatch();
+  const { extraServiceList } = useSelector((state) => state.resisterGuestHouseInfoReducer);
+
   const [currentImg, setCurrentImg] = useState(defaultPreviewImg);
   const [currentImgName, setCurrentImgName] = useState('파일을 업로드 해주세요');
-  const formData = new FormData();
+  const [serviceInputValue, setServiceInputValue] = useState();
+  const [serviceList, setServiceList] = useState([]);
+
+  const serviceInput = React.createRef();
+
+  useEffect(() => {
+    setServiceList(extraServiceList);
+  }, [extraServiceList]);
 
   const uploadImage = (e) => {
     if (!e.target.files[0]) return;
@@ -223,15 +302,17 @@ const SignUp = () => {
         </ResisterSubTitle>
         <ResisterWrap>
           <InputWrap>
-            <InputTitle>게스트하우스 이름</InputTitle>
+            <InputTitle>
+              게스트하우스 이름<span> ●</span>
+            </InputTitle>
             <Input />
           </InputWrap>
           <InputWrap>
             <InputTitle>게스트하우스 대표이미지</InputTitle>
-            <ImgUploadWrap>
+            <InputButtonWrap>
               <UploadButton htmlFor="file">업로드</UploadButton>
               <UploadImgValue>{currentImgName}</UploadImgValue>
-              <UploadImgDeleteButton onClick={deleteImage}>삭제</UploadImgDeleteButton>
+              <InputButton onClick={deleteImage}>삭제</InputButton>
               <input
                 style={{ position: 'absolute', width: '0', height: '0' }}
                 id="file"
@@ -239,14 +320,31 @@ const SignUp = () => {
                 accept=".jpg, .jpeg, .png"
                 onChange={uploadImage}
               />
-            </ImgUploadWrap>
+            </InputButtonWrap>
             <PreviewWrap>
               <Preview src={currentImg} />
             </PreviewWrap>
           </InputWrap>
           <InputWrap>
-            <InputTitle>대표 전화번호</InputTitle>
-            <Input type="number" maxlength="11" />
+            <InputTitle>
+              대표 전화번호<span> ●</span>
+            </InputTitle>
+            <Input type="number" maxlength="11" placeholder="'-'없이 입력해주세요." />
+          </InputWrap>
+          <InputWrap>
+            <InputTitle>
+              게스트하우스 추가 제공 서비스
+              <QuestionMarkIcon>
+                <img src={questionIcon} />
+                <div>
+                  - 게스트하우스 추가 제공 서비스란?
+                  <br />
+                  '픽업', '저녁식사', '장비대여' 등 게스트하우스별 게스트에게 추가적으로 제공하는 서비스를 말합니다.
+                  <br /> 추가 제공 서비스를 등록해두면 게스트의 서비스 이용 여부를 기록하고 관리할 수 있습니다.
+                  <br /> 추가 제공 서비스는 회원가입 후, '게스트하우스 설정'에서도 추가,수정 가능합니다.
+                </div>
+              </QuestionMarkIcon>
+            </InputTitle>
           </InputWrap>
         </ResisterWrap>
       </ContentWrap>
