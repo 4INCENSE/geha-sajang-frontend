@@ -311,6 +311,10 @@ const SignUp = () => {
     dispatch(deleteExtraService(clickedServiceTitle));
   };
 
+  const serviceInputEnterKeyPressHandler = (e) => {
+    if (e.keyCode === 13) addServiceButtonClickHandler();
+  };
+
   return (
     <Wrap>
       <Header>
@@ -370,7 +374,8 @@ const SignUp = () => {
               <Input
                 ref={serviceInput}
                 onChange={(e) => setServiceInputValue(e.target.value)}
-                placeholder="ex. 픽업서비스, 저녁식사…"
+                onKeyDown={serviceInputEnterKeyPressHandler}
+                placeholder="ex. 픽업, 저녁식사, 장비대여…"
               />
               <InputButton onClick={addServiceButtonClickHandler}>추가</InputButton>
             </InputButtonWrap>
