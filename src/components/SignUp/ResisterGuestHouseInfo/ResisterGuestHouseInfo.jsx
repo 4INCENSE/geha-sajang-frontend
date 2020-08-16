@@ -101,6 +101,14 @@ const Input = styled.input`
   }
 `;
 
+const InputMessage = styled.div`
+  display: flex;
+  width: 100%;
+  font-size: 13px;
+  color: ${({ theme }) => theme.color.point};
+  padding: 10px 5px 0px 5px;
+`;
+
 const PreviewWrap = styled.div`
   display: flex;
   justify-content: center;
@@ -251,8 +259,11 @@ const ResisterGuestHouseInfo = () => {
   const [currentImgName, setCurrentImgName] = useState('파일을 업로드 해주세요');
   const [serviceInputValue, setServiceInputValue] = useState();
   const [serviceList, setServiceList] = useState([]);
+  const [nameMessage, setNameMessage] = useState();
+  const [nameMessageDisplay, setNameMessageDisplay] = useState('none');
 
   const serviceInput = React.createRef();
+  const nameInput = React.createRef();
 
   useEffect(() => {
     setServiceList(extraServiceList);
@@ -296,6 +307,23 @@ const ResisterGuestHouseInfo = () => {
     if (e.keyCode === 13) addServiceButtonClickHandler();
   };
 
+  const validateName = () => {
+    const nameValue = nameInput.current.value;
+    const blankPattern = /^\s+|\s+$/g;
+    const nameLengthWithoutBlank = nameValue.replace(blankPattern, '').length;
+
+    if (nameLengthWithoutBlank <= 0) {
+      setNameMessage('이름 입력은 필수입니다');
+      setNameMessageDisplay('block');
+    }
+    if (nameValue.length > 50) {
+      setNameMessage('이름은 50자 이내로 입력해주세요');
+      setNameMessageDisplay('block');
+    }
+    if (nameValue.length <= 50 && nameLengthWithoutBlank > 0) {
+      setNameMessageDisplay('none');
+    }
+  };
   return (
     <ContentWrap>
       <ResisterTitle>게스트하우스 정보 등록</ResisterTitle>
@@ -307,7 +335,8 @@ const ResisterGuestHouseInfo = () => {
           <InputTitle>
             게스트하우스 이름<span> ●</span>
           </InputTitle>
-          <Input />
+          <Input onBlur={validateName} ref={nameInput} />
+          <InputMessage style={{ display: nameMessageDisplay }}>{nameMessage}</InputMessage>
         </InputWrap>
         <InputWrap>
           <InputTitle>게스트하우스 대표이미지</InputTitle>
