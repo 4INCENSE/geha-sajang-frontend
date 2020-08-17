@@ -261,9 +261,12 @@ const ResisterGuestHouseInfo = () => {
   const [serviceList, setServiceList] = useState([]);
   const [nameMessage, setNameMessage] = useState();
   const [nameMessageDisplay, setNameMessageDisplay] = useState('none');
+  const [numberMessage, setNumberMessage] = useState();
+  const [numberMessageDisplay, setNumberMessageDisplay] = useState('none');
 
   const serviceInput = React.createRef();
   const nameInput = React.createRef();
+  const numberInput = React.createRef();
 
   useEffect(() => {
     setServiceList(extraServiceList);
@@ -324,6 +327,29 @@ const ResisterGuestHouseInfo = () => {
       setNameMessageDisplay('none');
     }
   };
+
+  const validatePhoneNumber = (e) => {
+    const numberValue = numberInput.current.value;
+    const pattern = /[^0-9]/gi;
+
+    if (numberValue.length <= 0) {
+      setNumberMessage('전화번호 입력은 필수입니다');
+      setNumberMessageDisplay('block');
+    }
+    if (numberValue.length > 11) {
+      setNumberMessage('전화번호를 다시 확인해주세요');
+      setNumberMessageDisplay('block');
+    }
+    if (numberValue.length > 0 && numberValue.length <= 11) {
+      setNumberMessageDisplay('none');
+    }
+  };
+
+  const removeChar = (e) => {
+    const pattern = /[^0-9]/gi;
+    e.target.value = e.target.value.replace(pattern, '');
+  };
+
   return (
     <ContentWrap>
       <ResisterTitle>게스트하우스 정보 등록</ResisterTitle>
@@ -360,7 +386,14 @@ const ResisterGuestHouseInfo = () => {
           <InputTitle>
             대표 전화번호<span> ●</span>
           </InputTitle>
-          <Input type="number" maxlength="11" placeholder="'-'없이 입력해주세요." />
+          <Input
+            onKeyUp={removeChar}
+            onBlur={validatePhoneNumber}
+            ref={numberInput}
+            maxlength="11"
+            placeholder="숫자만 입력해주세요."
+          />
+          <InputMessage style={{ display: numberMessageDisplay }}>{numberMessage}</InputMessage>
         </InputWrap>
         <InputWrap>
           <InputTitle>
