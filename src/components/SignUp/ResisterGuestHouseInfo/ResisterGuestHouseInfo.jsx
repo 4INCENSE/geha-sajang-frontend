@@ -360,23 +360,32 @@ const ResisterGuestHouseInfo = () => {
     if (nameLengthWithoutBlank <= 0) {
       setNameMessage('이름 입력은 필수입니다');
       setNameMessageDisplay('block');
+      return false;
     }
     if (nameValue.length > 50) {
       setNameMessage('이름은 50자 이내로 입력해주세요');
       setNameMessageDisplay('block');
+      return false;
     }
+    setNameMessageDisplay('none');
+    return true;
   };
 
+  const validatePhoneNumber = () => {
     const numberValue = numberInput.current.value;
 
     if (numberValue.length <= 0) {
       setNumberMessage('전화번호 입력은 필수입니다');
       setNumberMessageDisplay('block');
+      return false;
     }
     if (numberValue.length > 11 || numberValue.length < 9) {
       setNumberMessage('전화번호를 다시 확인해주세요');
       setNumberMessageDisplay('block');
+      return false;
     }
+    setNumberMessageDisplay('none');
+    return true;
   };
 
   const removeChar = (e) => {
