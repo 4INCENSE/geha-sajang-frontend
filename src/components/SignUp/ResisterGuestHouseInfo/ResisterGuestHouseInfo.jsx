@@ -253,6 +253,24 @@ const ServiceWrap = styled.div`
   }
 `;
 
+const ResisterButton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  font-family: 'S-CoreDream-2ExtraLight';
+  font-size: 15px;
+  color: white;
+  font-weight: bold;
+  background: black;
+  border-radius: 3px;
+  padding: 20px 30px;
+  margin-top: 20px;
+  &:hover {
+    background: ${({ theme }) => theme.color.point};
+  }
+`;
+
 const ResisterGuestHouseInfo = () => {
   const dispatch = useDispatch();
   const { extraServiceList } = useSelector((state) => state.resisterGuestHouseInfoReducer);
@@ -393,6 +411,12 @@ const ResisterGuestHouseInfo = () => {
     e.target.value = e.target.value.replace(pattern, '');
   };
 
+  const resisterButtonClickHandler = () => {
+    validateName();
+    validatePhoneNumber();
+    if (validateName() && validatePhoneNumber()) console.log('합격!');
+  };
+
   return (
     <ContentWrap>
       <ResisterTitle>게스트하우스 정보 등록</ResisterTitle>
@@ -475,6 +499,7 @@ const ResisterGuestHouseInfo = () => {
             })}
           </ServiceListWrap>
         </InputWrap>
+        <ResisterButton onClick={resisterButtonClickHandler}>다음</ResisterButton>
       </ResisterWrap>
     </ContentWrap>
   );
