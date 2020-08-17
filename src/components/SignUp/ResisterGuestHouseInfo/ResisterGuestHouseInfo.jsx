@@ -9,6 +9,7 @@ import { checkDuplicate } from '@/lib/util/checkDuplicate';
 import defaultPreviewImg from '@/img/default_preview_img.png';
 import questionIcon from '@/img/icon/question.png';
 import closeIcon from '@/img/icon/close_w.png';
+import { setTimeout } from 'core-js';
 
 const ContentWrap = styled.div`
   display: flex;
@@ -231,6 +232,7 @@ const ServiceWrap = styled.div`
   align-items: center;
   padding: 8px 10px 8px 12px;
   font-family: 'Eoe_Zno_L';
+  font-size: 13px;
   font-weight: bold;
   color: ${({ theme }) => theme.color.darkGray};
   button {
@@ -257,12 +259,13 @@ const ResisterGuestHouseInfo = () => {
 
   const [currentImg, setCurrentImg] = useState(defaultPreviewImg);
   const [currentImgName, setCurrentImgName] = useState('파일을 업로드 해주세요');
-  const [serviceInputValue, setServiceInputValue] = useState();
   const [serviceList, setServiceList] = useState([]);
   const [nameMessage, setNameMessage] = useState();
   const [nameMessageDisplay, setNameMessageDisplay] = useState('none');
   const [numberMessage, setNumberMessage] = useState();
   const [numberMessageDisplay, setNumberMessageDisplay] = useState('none');
+  const [serviceMessage, setServiceMessage] = useState();
+  const [serviceMessageDisplay, setServiceMessageDisplay] = useState('none');
 
   const serviceInput = React.createRef();
   const nameInput = React.createRef();
@@ -294,11 +297,36 @@ const ResisterGuestHouseInfo = () => {
   };
 
   const addServiceButtonClickHandler = () => {
-    if (!serviceInputValue) return alert('서비스 이름을 입력해주세요!');
-    if (checkDuplicate(serviceList, serviceInputValue)) return alert('이미 추가된 서비스입니다.');
-    dispatch(addExtraService(serviceInputValue));
+    const serviceValue = serviceInput.current.value;
+    const blankPattern = /^\s+|\s+$/g;
+    const serviceValueLengthWithoutBlank = serviceValue.replace(blankPattern, '').length;
+
+    if (extraServiceList.length >= 15) {
+      setServiceMessage('서비스는 최대 15개까지 등록 가능합니다');
+      setServiceMessageDisplay('block');
+      setTimeout(() => {
+        setServiceMessageDisplay('none');
+      }, 1800);
+      return;
+    }
+    if (serviceValueLengthWithoutBlank <= 0) {
+      setServiceMessage('서비스 이름을 입력해주세요');
+      setServiceMessageDisplay('block');
+      return;
+    }
+    if (serviceValue.length > 25) {
+      setServiceMessage('서비스 이름은 최대 25자까지 입력 가능합니다');
+      setServiceMessageDisplay('block');
+      return;
+    }
+    if (checkDuplicate(serviceList, serviceValue)) {
+      setServiceMessage('이미 등록된 서비스입니다');
+      setServiceMessageDisplay('block');
+      return;
+    }
+    setServiceMessageDisplay('none');
+    dispatch(addExtraService(serviceValue));
     serviceInput.current.value = '';
-    setServiceInputValue();
   };
 
   const deleteServiceButtonClickHandler = (e) => {
@@ -412,12 +440,12 @@ const ResisterGuestHouseInfo = () => {
           <InputButtonWrap>
             <Input
               ref={serviceInput}
-              onChange={(e) => setServiceInputValue(e.target.value)}
               onKeyDown={serviceInputEnterKeyPressHandler}
               placeholder="ex. 픽업, 저녁식사, 장비대여…"
             />
             <InputButton onClick={addServiceButtonClickHandler}>추가</InputButton>
           </InputButtonWrap>
+          <InputMessage style={{ display: serviceMessageDisplay }}>{serviceMessage}</InputMessage>
           <ServiceListWrap>
             {serviceList.map((service, index) => {
               return (
