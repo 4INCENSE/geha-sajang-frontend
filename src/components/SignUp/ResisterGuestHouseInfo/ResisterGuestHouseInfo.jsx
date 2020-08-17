@@ -41,6 +41,25 @@ const ResisterGuestHouseInfo = () => {
     setServiceList(extraServiceList);
   }, [extraServiceList]);
 
+  const validateName = () => {
+    const nameValue = nameInput.current.value;
+    const blankPattern = /^\s+|\s+$/g;
+    const nameLengthWithoutBlank = nameValue.replace(blankPattern, '').length;
+
+    if (nameLengthWithoutBlank <= 0) {
+      setNameMessage('이름 입력은 필수입니다');
+      setNameMessageDisplay('block');
+      return false;
+    }
+    if (nameValue.length > 50) {
+      setNameMessage('이름은 50자 이내로 입력해주세요');
+      setNameMessageDisplay('block');
+      return false;
+    }
+    setNameMessageDisplay('none');
+    return true;
+  };
+
   const uploadImage = (e) => {
     const currentFile = e.target.files[0];
     if (!currentFile) return;
@@ -73,6 +92,28 @@ const ResisterGuestHouseInfo = () => {
     const fileTypes = ['image/jpeg', 'image/jpg', 'image/png'];
 
     return fileTypes.includes(file.type);
+  };
+
+  const validatePhoneNumber = () => {
+    const numberValue = numberInput.current.value;
+
+    if (numberValue.length <= 0) {
+      setNumberMessage('전화번호 입력은 필수입니다');
+      setNumberMessageDisplay('block');
+      return false;
+    }
+    if (numberValue.length > 11 || numberValue.length < 9) {
+      setNumberMessage('전화번호를 다시 확인해주세요');
+      setNumberMessageDisplay('block');
+      return false;
+    }
+    setNumberMessageDisplay('none');
+    return true;
+  };
+
+  const removeChar = (e) => {
+    const pattern = /[^0-9]/gi;
+    e.target.value = e.target.value.replace(pattern, '');
   };
 
   const addServiceButtonClickHandler = () => {
@@ -108,54 +149,13 @@ const ResisterGuestHouseInfo = () => {
     serviceInput.current.value = '';
   };
 
-  const deleteServiceButtonClickHandler = (e) => {
-    const clickedServiceTitle = e.target.closest('div').firstChild.data;
-    dispatch(deleteExtraService(clickedServiceTitle));
-  };
-
   const serviceInputEnterKeyPressHandler = (e) => {
     if (e.keyCode === 13) addServiceButtonClickHandler();
   };
 
-  const validateName = () => {
-    const nameValue = nameInput.current.value;
-    const blankPattern = /^\s+|\s+$/g;
-    const nameLengthWithoutBlank = nameValue.replace(blankPattern, '').length;
-
-    if (nameLengthWithoutBlank <= 0) {
-      setNameMessage('이름 입력은 필수입니다');
-      setNameMessageDisplay('block');
-      return false;
-    }
-    if (nameValue.length > 50) {
-      setNameMessage('이름은 50자 이내로 입력해주세요');
-      setNameMessageDisplay('block');
-      return false;
-    }
-    setNameMessageDisplay('none');
-    return true;
-  };
-
-  const validatePhoneNumber = () => {
-    const numberValue = numberInput.current.value;
-
-    if (numberValue.length <= 0) {
-      setNumberMessage('전화번호 입력은 필수입니다');
-      setNumberMessageDisplay('block');
-      return false;
-    }
-    if (numberValue.length > 11 || numberValue.length < 9) {
-      setNumberMessage('전화번호를 다시 확인해주세요');
-      setNumberMessageDisplay('block');
-      return false;
-    }
-    setNumberMessageDisplay('none');
-    return true;
-  };
-
-  const removeChar = (e) => {
-    const pattern = /[^0-9]/gi;
-    e.target.value = e.target.value.replace(pattern, '');
+  const deleteServiceButtonClickHandler = (e) => {
+    const clickedServiceTitle = e.target.closest('div').firstChild.data;
+    dispatch(deleteExtraService(clickedServiceTitle));
   };
 
   const resisterButtonClickHandler = () => {
@@ -206,7 +206,7 @@ const ResisterGuestHouseInfo = () => {
             onBlur={validatePhoneNumber}
             ref={numberInput}
             maxlength="11"
-            placeholder="숫자만 입력해주세요."
+            placeholder="숫자만 입력해주세요"
           />
           <InputMessage style={{ display: numberMessageDisplay }}>{numberMessage}</InputMessage>
         </InputWrap>
@@ -347,43 +347,10 @@ const InputMessage = styled.div`
   padding: 10px 5px 0px 5px;
 `;
 
-const PreviewWrap = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 280px;
-  margin-top: 15px;
-`;
-const Preview = styled.img`
-  max-width: 100%;
-  height: 100%;
-`;
-
 const InputButtonWrap = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-`;
-
-const UploadButton = styled.label`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Eoe_Zno_L';
-  width: 80px;
-  height: 40px;
-  color: ${({ theme }) => theme.color.darkGray};
-  font-weight: bold;
-  font-size: 14px;
-  border-radius: 5px;
-  border: 1px solid ${({ theme }) => theme.color.lightGray};
-  border-radius: 5px;
-  margin-right: 10px;
-  &:hover {
-    border: 2px solid ${({ theme }) => theme.color.point};
-    color: ${({ theme }) => theme.color.point};
-  }
 `;
 
 const InputButton = styled.button`
@@ -400,6 +367,39 @@ const InputButton = styled.button`
   border: 1px solid ${({ theme }) => theme.color.lightGray};
   border-radius: 5px;
   margin-left: 10px;
+  &:hover {
+    border: 2px solid ${({ theme }) => theme.color.point};
+    color: ${({ theme }) => theme.color.point};
+  }
+`;
+
+const PreviewWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 280px;
+  margin-top: 15px;
+`;
+const Preview = styled.img`
+  max-width: 100%;
+  height: 100%;
+`;
+
+const UploadButton = styled.label`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Eoe_Zno_L';
+  width: 80px;
+  height: 40px;
+  color: ${({ theme }) => theme.color.darkGray};
+  font-weight: bold;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid ${({ theme }) => theme.color.lightGray};
+  border-radius: 5px;
+  margin-right: 10px;
   &:hover {
     border: 2px solid ${({ theme }) => theme.color.point};
     color: ${({ theme }) => theme.color.point};
