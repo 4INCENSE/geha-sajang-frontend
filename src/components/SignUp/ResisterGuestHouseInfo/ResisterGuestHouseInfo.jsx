@@ -1,15 +1,251 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { setTimeout } from 'core-js';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { addExtraService, deleteExtraService } from '@/redux/actions/extraServiceAction';
 
 import { checkDuplicate } from '@/lib/util/checkDuplicate';
 
-import defaultPreviewImg from '@/img/default_preview_img.png';
+import defaultPreviewImage from '@/img/default_preview_img.png';
 import questionIcon from '@/img/icon/question.png';
 import closeIcon from '@/img/icon/close_w.png';
-import { setTimeout } from 'core-js';
+
+const ResisterGuestHouseInfo = () => {
+  const dispatch = useDispatch();
+  const { extraServiceList } = useSelector((state) => state.resisterGuestHouseInfoReducer);
+
+  const [currentImage, setCurrentImage] = useState(defaultPreviewImage);
+  const [currentImageName, setCurrentImageName] = useState('파일을 업로드 해주세요');
+  const [serviceList, setServiceList] = useState([]);
+  const [nameMessage, setNameMessage] = useState();
+  const [nameMessageDisplay, setNameMessageDisplay] = useState('none');
+  const [imageMessage, setImageMessage] = useState();
+  const [imageMessageDisplay, setImageMessageDisplay] = useState('none');
+  const [numberMessage, setNumberMessage] = useState();
+  const [numberMessageDisplay, setNumberMessageDisplay] = useState('none');
+  const [serviceMessage, setServiceMessage] = useState();
+  const [serviceMessageDisplay, setServiceMessageDisplay] = useState('none');
+
+  const serviceInput = React.createRef();
+  const nameInput = React.createRef();
+  const numberInput = React.createRef();
+
+  useEffect(() => {
+    setServiceList(extraServiceList);
+  }, [extraServiceList]);
+
+  const uploadImage = (e) => {
+    if (!e.target.files[0]) return;
+    if (!validateImageFileType(e.target.files[0])) {
+      setImageMessage('이미지 파일 유형은 png, jpg, jpeg만 가능합니다');
+      setImageMessageDisplay('block');
+      setCurrentImage(defaultPreviewImage);
+      setCurrentImageName('파일을 업로드 해주세요');
+      return;
+    }
+    setImageMessageDisplay('none');
+    setCurrentImage(URL.createObjectURL(e.target.files[0]));
+    setCurrentImageName(e.target.files[0].name);
+    // formData 생성은 currentImage를 통해서 나중에 하기
+    //  const formData = new FormData();
+    // formData.append('uploadImage', e.target.files[0], 'userName');
+    //axios로 서버에 전송 시 header에 아래와 같이 추가하여 전송해야함
+    // const config = {
+    //   headers: {
+    //     'content-type': 'multipart/form-data'
+    //   }
+    // };
+  };
+  const deleteImage = () => {
+    setCurrentImage(defaultPreviewImage);
+    setCurrentImageName('파일을 업로드 해주세요');
+  };
+
+  const validateImageFileType = (file) => {
+    const fileTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+
+    return fileTypes.includes(file.type);
+  };
+
+  const addServiceButtonClickHandler = () => {
+    const serviceValue = serviceInput.current.value;
+    const blankPattern = /^\s+|\s+$/g;
+    const serviceValueLengthWithoutBlank = serviceValue.replace(blankPattern, '').length;
+
+    if (extraServiceList.length >= 15) {
+      setServiceMessage('서비스는 최대 15개까지 등록 가능합니다');
+      setServiceMessageDisplay('block');
+      setTimeout(() => {
+        setServiceMessageDisplay('none');
+      }, 1800);
+      return;
+    }
+    if (serviceValueLengthWithoutBlank <= 0) {
+      setServiceMessage('서비스 이름을 입력해주세요');
+      setServiceMessageDisplay('block');
+      return;
+    }
+    if (serviceValue.length > 25) {
+      setServiceMessage('서비스 이름은 최대 25자까지 입력 가능합니다');
+      setServiceMessageDisplay('block');
+      return;
+    }
+    if (checkDuplicate(serviceList, serviceValue)) {
+      setServiceMessage('이미 등록된 서비스입니다');
+      setServiceMessageDisplay('block');
+      return;
+    }
+    setServiceMessageDisplay('none');
+    dispatch(addExtraService(serviceValue));
+    serviceInput.current.value = '';
+  };
+
+  const deleteServiceButtonClickHandler = (e) => {
+    const clickedServiceTitle = e.target.closest('div').firstChild.data;
+    dispatch(deleteExtraService(clickedServiceTitle));
+  };
+
+  const serviceInputEnterKeyPressHandler = (e) => {
+    if (e.keyCode === 13) addServiceButtonClickHandler();
+  };
+
+  const validateName = () => {
+    const nameValue = nameInput.current.value;
+    const blankPattern = /^\s+|\s+$/g;
+    const nameLengthWithoutBlank = nameValue.replace(blankPattern, '').length;
+
+    if (nameLengthWithoutBlank <= 0) {
+      setNameMessage('이름 입력은 필수입니다');
+      setNameMessageDisplay('block');
+      return false;
+    }
+    if (nameValue.length > 50) {
+      setNameMessage('이름은 50자 이내로 입력해주세요');
+      setNameMessageDisplay('block');
+      return false;
+    }
+    setNameMessageDisplay('none');
+    return true;
+  };
+
+  const validatePhoneNumber = () => {
+    const numberValue = numberInput.current.value;
+
+    if (numberValue.length <= 0) {
+      setNumberMessage('전화번호 입력은 필수입니다');
+      setNumberMessageDisplay('block');
+      return false;
+    }
+    if (numberValue.length > 11 || numberValue.length < 9) {
+      setNumberMessage('전화번호를 다시 확인해주세요');
+      setNumberMessageDisplay('block');
+      return false;
+    }
+    setNumberMessageDisplay('none');
+    return true;
+  };
+
+  const removeChar = (e) => {
+    const pattern = /[^0-9]/gi;
+    e.target.value = e.target.value.replace(pattern, '');
+  };
+
+  const resisterButtonClickHandler = () => {
+    validateName();
+    validatePhoneNumber();
+    if (validateName() && validatePhoneNumber()) console.log('합격!');
+  };
+
+  return (
+    <ContentWrap>
+      <ResisterTitle>게스트하우스 정보 등록</ResisterTitle>
+      <ResisterSubTitle>
+        <span>게스트하우스 정보 등록</span> ▶ 방 정보 등록 ▶ 침대 정보 등록
+      </ResisterSubTitle>
+      <ResisterWrap>
+        <InputWrap>
+          <InputTitle>
+            게스트하우스 이름<span> ●</span>
+          </InputTitle>
+          <Input onBlur={validateName} ref={nameInput} />
+          <InputMessage style={{ display: nameMessageDisplay }}>{nameMessage}</InputMessage>
+        </InputWrap>
+        <InputWrap>
+          <InputTitle>게스트하우스 대표이미지</InputTitle>
+          <InputButtonWrap>
+            <UploadButton htmlFor="file">업로드</UploadButton>
+            <UploadImageValue>{currentImageName}</UploadImageValue>
+            <InputButton onClick={deleteImage}>삭제</InputButton>
+            <input
+              style={{ position: 'absolute', width: '0', height: '0' }}
+              id="file"
+              type="file"
+              accept=".jpg, .jpeg, .png"
+              onChange={uploadImage}
+            />
+          </InputButtonWrap>
+          <InputMessage style={{ display: imageMessageDisplay }}>{imageMessage}</InputMessage>
+          <PreviewWrap>
+            <Preview src={currentImage} />
+          </PreviewWrap>
+        </InputWrap>
+        <InputWrap>
+          <InputTitle>
+            대표 전화번호<span> ●</span>
+          </InputTitle>
+          <Input
+            onKeyUp={removeChar}
+            onBlur={validatePhoneNumber}
+            ref={numberInput}
+            maxlength="11"
+            placeholder="숫자만 입력해주세요."
+          />
+          <InputMessage style={{ display: numberMessageDisplay }}>{numberMessage}</InputMessage>
+        </InputWrap>
+        <InputWrap>
+          <InputTitle>
+            게스트하우스 추가 제공 서비스
+            <QuestionMarkIcon>
+              <img src={questionIcon} />
+              <div>
+                - 게스트하우스 추가 제공 서비스란?
+                <br />
+                '픽업', '저녁식사', '장비대여' 등 게스트하우스별 게스트에게 추가적으로 제공하는 서비스를 말합니다.
+                <br /> 추가 제공 서비스를 등록해두면 게스트의 서비스 이용 여부를 기록하고 관리할 수 있습니다.
+                <br /> 추가 제공 서비스는 회원가입 후, '게스트하우스 설정'에서도 추가,수정 가능합니다.
+              </div>
+            </QuestionMarkIcon>
+          </InputTitle>
+          <InputButtonWrap>
+            <Input
+              ref={serviceInput}
+              onKeyDown={serviceInputEnterKeyPressHandler}
+              placeholder="ex. 픽업, 저녁식사, 장비대여…"
+            />
+            <InputButton onClick={addServiceButtonClickHandler}>추가</InputButton>
+          </InputButtonWrap>
+          <InputMessage style={{ display: serviceMessageDisplay }}>{serviceMessage}</InputMessage>
+          <ServiceListWrap>
+            {serviceList.map((service, index) => {
+              return (
+                <ServiceWrap key={index}>
+                  {service}
+                  <button onClick={(e) => deleteServiceButtonClickHandler(e)}>
+                    <img src={closeIcon} />
+                  </button>
+                </ServiceWrap>
+              );
+            })}
+          </ServiceListWrap>
+        </InputWrap>
+        <ResisterButton onClick={resisterButtonClickHandler}>다음</ResisterButton>
+      </ResisterWrap>
+    </ContentWrap>
+  );
+};
+
+export default ResisterGuestHouseInfo;
 
 const ContentWrap = styled.div`
   display: flex;
@@ -169,7 +405,7 @@ const InputButton = styled.button`
   }
 `;
 
-const UploadImgValue = styled.div`
+const UploadImageValue = styled.div`
   display: flex;
   align-items: center;
   width: 260px;
@@ -270,239 +506,3 @@ const ResisterButton = styled.div`
     background: ${({ theme }) => theme.color.point};
   }
 `;
-
-const ResisterGuestHouseInfo = () => {
-  const dispatch = useDispatch();
-  const { extraServiceList } = useSelector((state) => state.resisterGuestHouseInfoReducer);
-
-  const [currentImg, setCurrentImg] = useState(defaultPreviewImg);
-  const [currentImgName, setCurrentImgName] = useState('파일을 업로드 해주세요');
-  const [serviceList, setServiceList] = useState([]);
-  const [nameMessage, setNameMessage] = useState();
-  const [nameMessageDisplay, setNameMessageDisplay] = useState('none');
-  const [imageMessage, setImageMessage] = useState();
-  const [imageMessageDisplay, setImageMessageDisplay] = useState('none');
-  const [numberMessage, setNumberMessage] = useState();
-  const [numberMessageDisplay, setNumberMessageDisplay] = useState('none');
-  const [serviceMessage, setServiceMessage] = useState();
-  const [serviceMessageDisplay, setServiceMessageDisplay] = useState('none');
-
-  const serviceInput = React.createRef();
-  const nameInput = React.createRef();
-  const numberInput = React.createRef();
-
-  useEffect(() => {
-    setServiceList(extraServiceList);
-  }, [extraServiceList]);
-
-  const uploadImage = (e) => {
-    if (!e.target.files[0]) return;
-    if (!validateImageFileType(e.target.files[0])) {
-      setImageMessage('이미지 파일 유형은 png, jpg, jpeg만 가능합니다');
-      setImageMessageDisplay('block');
-      setCurrentImg(defaultPreviewImg);
-      setCurrentImgName('파일을 업로드 해주세요');
-      return;
-    }
-    setImageMessageDisplay('none');
-    setCurrentImg(URL.createObjectURL(e.target.files[0]));
-    setCurrentImgName(e.target.files[0].name);
-    // formData 생성은 currentImg를 통해서 나중에 하기
-    //  const formData = new FormData();
-    // formData.append('uploadImage', e.target.files[0], 'userName');
-    //axios로 서버에 전송 시 header에 아래와 같이 추가하여 전송해야함
-    // const config = {
-    //   headers: {
-    //     'content-type': 'multipart/form-data'
-    //   }
-    // };
-  };
-  const deleteImage = () => {
-    setCurrentImg(defaultPreviewImg);
-    setCurrentImgName('파일을 업로드 해주세요');
-  };
-
-  const validateImageFileType = (file) => {
-    const fileTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-
-    return fileTypes.includes(file.type);
-  };
-
-  const addServiceButtonClickHandler = () => {
-    const serviceValue = serviceInput.current.value;
-    const blankPattern = /^\s+|\s+$/g;
-    const serviceValueLengthWithoutBlank = serviceValue.replace(blankPattern, '').length;
-
-    if (extraServiceList.length >= 15) {
-      setServiceMessage('서비스는 최대 15개까지 등록 가능합니다');
-      setServiceMessageDisplay('block');
-      setTimeout(() => {
-        setServiceMessageDisplay('none');
-      }, 1800);
-      return;
-    }
-    if (serviceValueLengthWithoutBlank <= 0) {
-      setServiceMessage('서비스 이름을 입력해주세요');
-      setServiceMessageDisplay('block');
-      return;
-    }
-    if (serviceValue.length > 25) {
-      setServiceMessage('서비스 이름은 최대 25자까지 입력 가능합니다');
-      setServiceMessageDisplay('block');
-      return;
-    }
-    if (checkDuplicate(serviceList, serviceValue)) {
-      setServiceMessage('이미 등록된 서비스입니다');
-      setServiceMessageDisplay('block');
-      return;
-    }
-    setServiceMessageDisplay('none');
-    dispatch(addExtraService(serviceValue));
-    serviceInput.current.value = '';
-  };
-
-  const deleteServiceButtonClickHandler = (e) => {
-    const clickedServiceTitle = e.target.closest('div').firstChild.data;
-    dispatch(deleteExtraService(clickedServiceTitle));
-  };
-
-  const serviceInputEnterKeyPressHandler = (e) => {
-    if (e.keyCode === 13) addServiceButtonClickHandler();
-  };
-
-  const validateName = () => {
-    const nameValue = nameInput.current.value;
-    const blankPattern = /^\s+|\s+$/g;
-    const nameLengthWithoutBlank = nameValue.replace(blankPattern, '').length;
-
-    if (nameLengthWithoutBlank <= 0) {
-      setNameMessage('이름 입력은 필수입니다');
-      setNameMessageDisplay('block');
-      return false;
-    }
-    if (nameValue.length > 50) {
-      setNameMessage('이름은 50자 이내로 입력해주세요');
-      setNameMessageDisplay('block');
-      return false;
-    }
-    setNameMessageDisplay('none');
-    return true;
-  };
-
-  const validatePhoneNumber = () => {
-    const numberValue = numberInput.current.value;
-
-    if (numberValue.length <= 0) {
-      setNumberMessage('전화번호 입력은 필수입니다');
-      setNumberMessageDisplay('block');
-      return false;
-    }
-    if (numberValue.length > 11 || numberValue.length < 9) {
-      setNumberMessage('전화번호를 다시 확인해주세요');
-      setNumberMessageDisplay('block');
-      return false;
-    }
-    setNumberMessageDisplay('none');
-    return true;
-  };
-
-  const removeChar = (e) => {
-    const pattern = /[^0-9]/gi;
-    e.target.value = e.target.value.replace(pattern, '');
-  };
-
-  const resisterButtonClickHandler = () => {
-    validateName();
-    validatePhoneNumber();
-    if (validateName() && validatePhoneNumber()) console.log('합격!');
-  };
-
-  return (
-    <ContentWrap>
-      <ResisterTitle>게스트하우스 정보 등록</ResisterTitle>
-      <ResisterSubTitle>
-        <span>게스트하우스 정보 등록</span> ▶ 방 정보 등록 ▶ 침대 정보 등록
-      </ResisterSubTitle>
-      <ResisterWrap>
-        <InputWrap>
-          <InputTitle>
-            게스트하우스 이름<span> ●</span>
-          </InputTitle>
-          <Input onBlur={validateName} ref={nameInput} />
-          <InputMessage style={{ display: nameMessageDisplay }}>{nameMessage}</InputMessage>
-        </InputWrap>
-        <InputWrap>
-          <InputTitle>게스트하우스 대표이미지</InputTitle>
-          <InputButtonWrap>
-            <UploadButton htmlFor="file">업로드</UploadButton>
-            <UploadImgValue>{currentImgName}</UploadImgValue>
-            <InputButton onClick={deleteImage}>삭제</InputButton>
-            <input
-              style={{ position: 'absolute', width: '0', height: '0' }}
-              id="file"
-              type="file"
-              accept=".jpg, .jpeg, .png"
-              onChange={uploadImage}
-            />
-          </InputButtonWrap>
-          <InputMessage style={{ display: imageMessageDisplay }}>{imageMessage}</InputMessage>
-          <PreviewWrap>
-            <Preview src={currentImg} />
-          </PreviewWrap>
-        </InputWrap>
-        <InputWrap>
-          <InputTitle>
-            대표 전화번호<span> ●</span>
-          </InputTitle>
-          <Input
-            onKeyUp={removeChar}
-            onBlur={validatePhoneNumber}
-            ref={numberInput}
-            maxlength="11"
-            placeholder="숫자만 입력해주세요."
-          />
-          <InputMessage style={{ display: numberMessageDisplay }}>{numberMessage}</InputMessage>
-        </InputWrap>
-        <InputWrap>
-          <InputTitle>
-            게스트하우스 추가 제공 서비스
-            <QuestionMarkIcon>
-              <img src={questionIcon} />
-              <div>
-                - 게스트하우스 추가 제공 서비스란?
-                <br />
-                '픽업', '저녁식사', '장비대여' 등 게스트하우스별 게스트에게 추가적으로 제공하는 서비스를 말합니다.
-                <br /> 추가 제공 서비스를 등록해두면 게스트의 서비스 이용 여부를 기록하고 관리할 수 있습니다.
-                <br /> 추가 제공 서비스는 회원가입 후, '게스트하우스 설정'에서도 추가,수정 가능합니다.
-              </div>
-            </QuestionMarkIcon>
-          </InputTitle>
-          <InputButtonWrap>
-            <Input
-              ref={serviceInput}
-              onKeyDown={serviceInputEnterKeyPressHandler}
-              placeholder="ex. 픽업, 저녁식사, 장비대여…"
-            />
-            <InputButton onClick={addServiceButtonClickHandler}>추가</InputButton>
-          </InputButtonWrap>
-          <InputMessage style={{ display: serviceMessageDisplay }}>{serviceMessage}</InputMessage>
-          <ServiceListWrap>
-            {serviceList.map((service, index) => {
-              return (
-                <ServiceWrap key={index}>
-                  {service}
-                  <button onClick={(e) => deleteServiceButtonClickHandler(e)}>
-                    <img src={closeIcon} />
-                  </button>
-                </ServiceWrap>
-              );
-            })}
-          </ServiceListWrap>
-        </InputWrap>
-        <ResisterButton onClick={resisterButtonClickHandler}>다음</ResisterButton>
-      </ResisterWrap>
-    </ContentWrap>
-  );
-};
-
-export default ResisterGuestHouseInfo;
