@@ -373,7 +373,7 @@ const ResisterGuestHouseInfo = () => {
       setNumberMessage('전화번호 입력은 필수입니다');
       setNumberMessageDisplay('block');
     }
-    if (numberValue.length > 11) {
+    if (numberValue.length > 11 || numberValue.length < 9) {
       setNumberMessage('전화번호를 다시 확인해주세요');
       setNumberMessageDisplay('block');
     }
