@@ -42,8 +42,9 @@ const ResisterGuestHouseInfo = () => {
   }, [extraServiceList]);
 
   const uploadImage = (e) => {
-    if (!e.target.files[0]) return;
-    if (!validateImageFileType(e.target.files[0])) {
+    const currentFile = e.target.files[0];
+    if (!currentFile) return;
+    if (!validateImageFileType(currentFile)) {
       setImageMessage('이미지 파일 유형은 png, jpg, jpeg만 가능합니다');
       setImageMessageDisplay('block');
       setCurrentImage(defaultPreviewImage);
@@ -51,8 +52,8 @@ const ResisterGuestHouseInfo = () => {
       return;
     }
     setImageMessageDisplay('none');
-    setCurrentImage(URL.createObjectURL(e.target.files[0]));
-    setCurrentImageName(e.target.files[0].name);
+    setCurrentImage(URL.createObjectURL(currentFile));
+    setCurrentImageName(currentFile.name);
     // formData 생성은 currentImage를 통해서 나중에 하기
     //  const formData = new FormData();
     // formData.append('uploadImage', e.target.files[0], 'userName');
