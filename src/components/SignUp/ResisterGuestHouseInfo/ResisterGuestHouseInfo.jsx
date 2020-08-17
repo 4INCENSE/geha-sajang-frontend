@@ -262,6 +262,8 @@ const ResisterGuestHouseInfo = () => {
   const [serviceList, setServiceList] = useState([]);
   const [nameMessage, setNameMessage] = useState();
   const [nameMessageDisplay, setNameMessageDisplay] = useState('none');
+  const [imageMessage, setImageMessage] = useState();
+  const [imageMessageDisplay, setImageMessageDisplay] = useState('none');
   const [numberMessage, setNumberMessage] = useState();
   const [numberMessageDisplay, setNumberMessageDisplay] = useState('none');
   const [serviceMessage, setServiceMessage] = useState();
@@ -277,10 +279,16 @@ const ResisterGuestHouseInfo = () => {
 
   const uploadImage = (e) => {
     if (!e.target.files[0]) return;
+    if (!validateImageFileType(e.target.files[0])) {
+      setImageMessage('이미지 파일 유형은 png, jpg, jpeg만 가능합니다');
+      setImageMessageDisplay('block');
+      setCurrentImg(defaultPreviewImg);
+      setCurrentImgName('파일을 업로드 해주세요');
+      return;
+    }
+    setImageMessageDisplay('none');
     setCurrentImg(URL.createObjectURL(e.target.files[0]));
     setCurrentImgName(e.target.files[0].name);
-    console.log(e.target.files[0]);
-
     // formData 생성은 currentImg를 통해서 나중에 하기
     //  const formData = new FormData();
     // formData.append('uploadImage', e.target.files[0], 'userName');
@@ -294,6 +302,12 @@ const ResisterGuestHouseInfo = () => {
   const deleteImage = () => {
     setCurrentImg(defaultPreviewImg);
     setCurrentImgName('파일을 업로드 해주세요');
+  };
+
+  const validateImageFileType = (file) => {
+    const fileTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+
+    return fileTypes.includes(file.type);
   };
 
   const addServiceButtonClickHandler = () => {
@@ -406,6 +420,7 @@ const ResisterGuestHouseInfo = () => {
               onChange={uploadImage}
             />
           </InputButtonWrap>
+          <InputMessage style={{ display: imageMessageDisplay }}>{imageMessage}</InputMessage>
           <PreviewWrap>
             <Preview src={currentImg} />
           </PreviewWrap>
