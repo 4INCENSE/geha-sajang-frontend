@@ -1,41 +1,41 @@
-const path = require("path");
-const webpack = require("webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require('path');
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: "./src/index.jsx",
+  entry: './src/index.jsx',
   module: {
     rules: [
       {
         test: /\.jsx?$/,
-        loader: "babel-loader",
+        loader: 'babel-loader',
         options: {
-          presets: ["@babel/preset-env"],
+          presets: ['@babel/preset-env']
         },
-        exclude: /node_modules/,
+        exclude: /node_modules/
       },
       {
         test: /\.(jpg|png|gif)$/,
-        loader: "url-loader",
+        loader: 'url-loader',
         options: {
-          name: "[name].[ext]?[hash]",
-          publicPath: "./dist/",
-          limit: 10000,
-        },
-      },
-    ],
+          name: '[name].[ext]?[hash]',
+          publicPath: './dist/',
+          limit: 25000
+        }
+      }
+    ]
   },
   resolve: {
-    extensions: [".js", ".jsx"],
+    extensions: ['.js', '.jsx'],
     alias: {
-      "@": path.resolve(__dirname, "src"),
-    },
+      '@': path.resolve(__dirname, 'src')
+    }
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
-      filename: "index.html",
-      template: "public/index.html",
-    }),
-  ],
+      filename: 'index.html',
+      template: 'public/index.html'
+    })
+  ]
 };
