@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const SelectRegistrationType = () => {
+const SelectRegistrationType = ({ display, nextButton }) => {
   return (
-    <ContentWrap>
+    <ContentWrap style={{ display: display }}>
       <RegisterWrap>
         <RegisterTitle> 게스트하우스 예약관리 서비스를 시작합니다</RegisterTitle>
         <RegisterDescription>
@@ -16,7 +16,7 @@ const SelectRegistrationType = () => {
         </RegisterDescription>
         <SelectButtonWrap>
           <SelectButton>등록된 게스트하우스</SelectButton>
-          <SelectButton>새로운 게스트하우스</SelectButton>
+          <SelectButton onClick={nextButton}>새로운 게스트하우스</SelectButton>
         </SelectButtonWrap>
       </RegisterWrap>
     </ContentWrap>

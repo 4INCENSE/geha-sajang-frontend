@@ -6,7 +6,7 @@ import uncheckedIcon from '@/img/icon/unchecked.png';
 
 import Button from '@/components/Button/Button';
 
-const TermsAndConditions = () => {
+const TermsAndConditions = ({ display, nextButton }) => {
   const [isAllChecked, setIsAllChecked] = useState(false);
   const [isServiceChecked, setIsServiceChecked] = useState(false);
   const [isPersonalInfoChecked, setIsPersonalInfoChecked] = useState(false);
@@ -51,10 +51,11 @@ const TermsAndConditions = () => {
   const agreementButtonClickHandler = () => {
     if (!isServiceChecked || !isPersonalInfoChecked) return setMessageDisplay('block');
     setMessageDisplay('none');
+    nextButton();
   };
 
   return (
-    <ContentWrap>
+    <ContentWrap style={{ display: display }}>
       <RegisterWrap>
         <RegisterTitle>게하사장 서비스 약관 동의</RegisterTitle>
         <AgreementWrap>
