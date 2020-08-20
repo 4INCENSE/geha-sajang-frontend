@@ -11,6 +11,7 @@ const TermsAndConditions = () => {
   const [isServiceChecked, setIsServiceChecked] = useState(false);
   const [isPersonalInfoChecked, setIsPersonalInfoChecked] = useState(false);
   const [isMarketingChecked, setIsMarketingChecked] = useState(false);
+  const [messageDisplay, setMessageDisplay] = useState('none');
 
   const allCheckboxIcon = isAllChecked ? checkedIcon : uncheckedIcon;
   const serviceCheckboxIcon = isServiceChecked ? checkedIcon : uncheckedIcon;
@@ -45,6 +46,11 @@ const TermsAndConditions = () => {
   const marketingCheckClickHandler = () => {
     setIsMarketingChecked(!isMarketingChecked);
     checkAllChecked(isServiceChecked, isPersonalInfoChecked, !isMarketingChecked);
+  };
+
+  const agreementButtonClickHandler = () => {
+    if (!isServiceChecked || !isPersonalInfoChecked) return setMessageDisplay('block');
+    setMessageDisplay('none');
   };
 
   return (
@@ -89,6 +95,10 @@ const TermsAndConditions = () => {
         </AgreementWrap>
         <InputMessage>이용약관과 개인정보 수집 및 이용에 동의하셔야 합니다.</InputMessage>
         <Button title="다음" />
+        <InputMessage style={{ display: messageDisplay }}>
+          이용약관과 개인정보 수집 및 이용에 동의하셔야 합니다.
+        </InputMessage>
+        <Button title="다음" onClick={agreementButtonClickHandler} />
       </RegisterWrap>
     </ContentWrap>
   );
