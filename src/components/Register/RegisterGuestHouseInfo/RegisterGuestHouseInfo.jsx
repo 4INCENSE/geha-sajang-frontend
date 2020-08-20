@@ -13,7 +13,7 @@ import closeIcon from '@/img/icon/close_w.png';
 
 import Button from '@/components/Button/Button';
 
-const RegisterGuestHouseInfo = () => {
+const RegisterGuestHouseInfo = ({ display, nextButton }) => {
   const dispatch = useDispatch();
   const { extraServiceList } = useSelector((state) => state.registerGuestHouseInfoReducer);
 
@@ -163,11 +163,11 @@ const RegisterGuestHouseInfo = () => {
   const registerButtonClickHandler = () => {
     validateName();
     validatePhoneNumber();
-    if (validateName() && validatePhoneNumber()) console.log('합격!');
+    if (validateName() && validatePhoneNumber()) nextButton();
   };
 
   return (
-    <ContentWrap>
+    <ContentWrap style={{ display: display }}>
       <RegisterTitle>게스트하우스 정보 등록</RegisterTitle>
       <RegisterSubTitle>
         <span>게스트하우스 정보 등록</span> ▶ 방 정보 등록 ▶ 침대 정보 등록
