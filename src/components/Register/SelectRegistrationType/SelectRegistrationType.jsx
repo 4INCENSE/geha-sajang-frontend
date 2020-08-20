@@ -1,10 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import logo from '@/img/logo/logo_b.png';
+
 const SelectRegistrationType = ({ display, nextButton }) => {
   return (
     <ContentWrap style={{ display: display }}>
       <RegisterWrap>
+        <ServiceLogo src={logo} />
         <RegisterTitle> 게스트하우스 예약관리 서비스를 시작합니다</RegisterTitle>
         <RegisterDescription>
           새롭게 게스트하우스를 등록하거나
@@ -32,6 +35,11 @@ const ContentWrap = styled.div`
   align-items: center;
   width: 100%;
   padding: 80px;
+`;
+
+const ServiceLogo = styled.img`
+  width: 180px;
+  margin: 0px 0px 40px 0px;
 `;
 
 const RegisterTitle = styled.div`
