@@ -16,7 +16,7 @@ const LogInButton = ({ title, color, logo, background, hover, logoWidth, logoHei
   };
 
   const moveToSignUp = () => {
-    history.push('/signUp');
+    history.push('/register');
   };
 
   return (

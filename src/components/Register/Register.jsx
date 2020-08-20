@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Header from '@/components/Header/Header';
-import ResisterGuestHouseInfo from '@/components/SignUp/ResisterGuestHouseInfo/ResisterGuestHouseInfo';
+import RegisterGuestHouseInfo from '@/components/Register/RegisterGuestHouseInfo/RegisterGuestHouseInfo';
 
 const Wrap = styled.div`
   display: flex;
@@ -12,13 +12,13 @@ const Wrap = styled.div`
   overflow-x: hidden;
 `;
 
-const SignUp = () => {
+const Register = () => {
   return (
     <Wrap>
       <Header />
-      <ResisterGuestHouseInfo />
+      <RegisterGuestHouseInfo />
     </Wrap>
   );
 };
 
-export default SignUp;
+export default Register;

@@ -2,7 +2,7 @@ const initialState = {
   extraServiceList: []
 };
 
-const resisterGuestHouseInfoReducer = (state = initialState, action) => {
+const registerGuestHouseInfoReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'SET_EXTRA_SERVICE_LIST':
       return {
@@ -14,4 +14,4 @@ const resisterGuestHouseInfoReducer = (state = initialState, action) => {
   }
 };
 
-export { resisterGuestHouseInfoReducer };
+export { registerGuestHouseInfoReducer };

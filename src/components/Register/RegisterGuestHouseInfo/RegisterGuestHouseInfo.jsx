@@ -11,9 +11,9 @@ import defaultPreviewImage from '@/img/default_preview_img.png';
 import questionIcon from '@/img/icon/question.png';
 import closeIcon from '@/img/icon/close_w.png';
 
-const ResisterGuestHouseInfo = () => {
+const RegisterGuestHouseInfo = () => {
   const dispatch = useDispatch();
-  const { extraServiceList } = useSelector((state) => state.resisterGuestHouseInfoReducer);
+  const { extraServiceList } = useSelector((state) => state.registerGuestHouseInfoReducer);
 
   const [currentImage, setCurrentImage] = useState(defaultPreviewImage);
   const [currentImageName, setCurrentImageName] = useState('파일을 업로드 해주세요');
@@ -158,7 +158,7 @@ const ResisterGuestHouseInfo = () => {
     dispatch(deleteExtraService(clickedServiceTitle));
   };
 
-  const resisterButtonClickHandler = () => {
+  const registerButtonClickHandler = () => {
     validateName();
     validatePhoneNumber();
     if (validateName() && validatePhoneNumber()) console.log('합격!');
@@ -166,11 +166,11 @@ const ResisterGuestHouseInfo = () => {
 
   return (
     <ContentWrap>
-      <ResisterTitle>게스트하우스 정보 등록</ResisterTitle>
-      <ResisterSubTitle>
+      <RegisterTitle>게스트하우스 정보 등록</RegisterTitle>
+      <RegisterSubTitle>
         <span>게스트하우스 정보 등록</span> ▶ 방 정보 등록 ▶ 침대 정보 등록
-      </ResisterSubTitle>
-      <ResisterWrap>
+      </RegisterSubTitle>
+      <RegisterWrap>
         <InputWrap>
           <InputTitle>
             게스트하우스 이름<span> ●</span>
@@ -240,13 +240,13 @@ const ResisterGuestHouseInfo = () => {
             })}
           </ServiceListWrap>
         </InputWrap>
-        <ResisterButton onClick={resisterButtonClickHandler}>다음</ResisterButton>
-      </ResisterWrap>
+        <RegisterButton onClick={registerButtonClickHandler}>다음</RegisterButton>
+      </RegisterWrap>
     </ContentWrap>
   );
 };
 
-export default ResisterGuestHouseInfo;
+export default RegisterGuestHouseInfo;
 
 const ContentWrap = styled.div`
   display: flex;
@@ -257,7 +257,7 @@ const ContentWrap = styled.div`
   padding: 80px;
 `;
 
-const ResisterTitle = styled.div`
+const RegisterTitle = styled.div`
   font-family: 'S-CoreDream-5Medium';
   font-weight: bold;
   font-size: 25px;
@@ -266,7 +266,7 @@ const ResisterTitle = styled.div`
   margin: 0 0 40px 0;
 `;
 
-const ResisterSubTitle = styled.div`
+const RegisterSubTitle = styled.div`
   font-family: 'Eoe_Zno_L';
   color: ${({ theme }) => theme.color.gray};
   font-weight: bold;
@@ -282,7 +282,7 @@ const ResisterSubTitle = styled.div`
   }
 `;
 
-const ResisterWrap = styled.div`
+const RegisterWrap = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -490,7 +490,7 @@ const ServiceWrap = styled.div`
   }
 `;
 
-const ResisterButton = styled.div`
+const RegisterButton = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
