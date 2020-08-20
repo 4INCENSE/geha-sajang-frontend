@@ -7,19 +7,59 @@ import uncheckedIcon from '@/img/icon/unchecked.png';
 import Button from '@/components/Button/Button';
 
 const TermsAndConditions = () => {
+  const [isAllChecked, setIsAllChecked] = useState(false);
+  const [isServiceChecked, setIsServiceChecked] = useState(false);
+  const [isPersonalInfoChecked, setIsPersonalInfoChecked] = useState(false);
+  const [isMarketingChecked, setIsMarketingChecked] = useState(false);
+
+  const allCheckboxIcon = isAllChecked ? checkedIcon : uncheckedIcon;
+  const serviceCheckboxIcon = isServiceChecked ? checkedIcon : uncheckedIcon;
+  const personalInfoCheckboxIcon = isPersonalInfoChecked ? checkedIcon : uncheckedIcon;
+  const marketingCheckboxIcon = isMarketingChecked ? checkedIcon : uncheckedIcon;
+
+  const allCheckClickHandler = () => {
+    setIsAllChecked(!isAllChecked);
+    checkAll(!isAllChecked);
+  };
+
+  const checkAll = (bool) => {
+    setIsServiceChecked(bool);
+    setIsPersonalInfoChecked(bool);
+    setIsMarketingChecked(bool);
+  };
+
+  const checkAllChecked = (serviceCheckbox, personalInfoCheckbox, marketingCheckbox) => {
+    if (serviceCheckbox && personalInfoCheckbox && marketingCheckbox) setIsAllChecked(true);
+    if (!serviceCheckbox || !personalInfoCheckbox || !marketingCheckbox) setIsAllChecked(false);
+  };
+
+  const serviceCheckClickHandler = () => {
+    setIsServiceChecked(!isServiceChecked);
+    checkAllChecked(!isServiceChecked, isPersonalInfoChecked, isMarketingChecked);
+  };
+  const personalInfoCheckClickHandler = () => {
+    setIsPersonalInfoChecked(!isPersonalInfoChecked);
+    checkAllChecked(isServiceChecked, !isPersonalInfoChecked, isMarketingChecked);
+  };
+
+  const marketingCheckClickHandler = () => {
+    setIsMarketingChecked(!isMarketingChecked);
+    checkAllChecked(isServiceChecked, isPersonalInfoChecked, !isMarketingChecked);
+  };
+
   return (
     <ContentWrap>
       <RegisterWrap>
         <RegisterTitle>게하사장 서비스 약관 동의</RegisterTitle>
         <AgreementWrap>
           <Checkbox type="checkbox" id="allCheck" />
-          <CheckBoxLabel htmlFor="allCheck">
-            <CheckBoxIcon src={uncheckedIcon} />
+          <CheckBoxLabel htmlFor="allCheck" onClick={allCheckClickHandler}>
+            <CheckBoxIcon src={allCheckboxIcon} />
             <AgreementTitle>모두 동의합니다.</AgreementTitle>
           </CheckBoxLabel>
           <Checkbox type="checkbox" id="serviceCheck" />
-          <CheckBoxLabel htmlFor="serviceCheck">
-            <CheckBoxIcon src={uncheckedIcon} />
+          <CheckBoxLabel htmlFor="serviceCheck" onClick={serviceCheckClickHandler}>
+            <CheckBoxIcon src={serviceCheckboxIcon} />
             <AgreementTitle>[필수] 이용약관 동의</AgreementTitle>
           </CheckBoxLabel>
           <Content>
@@ -30,8 +70,8 @@ const TermsAndConditions = () => {
             절차 등 기본적인 사항을 규정하고 있으므로 조금만 시간을 내서 주의 깊게 읽어주시기 바랍니다.
           </Content>
           <Checkbox type="checkbox" id="personalInfoCheck" />
-          <CheckBoxLabel htmlFor="personalInfoCheck">
-            <CheckBoxIcon src={uncheckedIcon} />
+          <CheckBoxLabel htmlFor="personalInfoCheck" onClick={personalInfoCheckClickHandler}>
+            <CheckBoxIcon src={personalInfoCheckboxIcon} />
             <AgreementTitle>[필수] 개인정보 수집 및 이용 동의</AgreementTitle>
           </CheckBoxLabel>
           <Content>
@@ -42,8 +82,8 @@ const TermsAndConditions = () => {
             절차 등 기본적인 사항을 규정하고 있으므로 조금만 시간을 내서 주의 깊게 읽어주시기 바랍니다.
           </Content>
           <Checkbox type="checkbox" id="marketingCheck" />
-          <CheckBoxLabel htmlFor="marketingCheck">
-            <CheckBoxIcon src={uncheckedIcon} />
+          <CheckBoxLabel htmlFor="marketingCheck" onClick={marketingCheckClickHandler}>
+            <CheckBoxIcon src={marketingCheckboxIcon} />
             <AgreementTitle>[선택] 마케팅 정보 수신 동의</AgreementTitle>
           </CheckBoxLabel>
         </AgreementWrap>
