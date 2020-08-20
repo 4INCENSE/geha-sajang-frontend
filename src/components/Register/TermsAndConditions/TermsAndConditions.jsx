@@ -92,9 +92,16 @@ const TermsAndConditions = () => {
             <CheckBoxIcon src={marketingCheckboxIcon} />
             <AgreementTitle>[선택] 마케팅 정보 수신 동의</AgreementTitle>
           </CheckBoxLabel>
+          <Content>
+            개인정보보호법 제22조 제4항에 의해 선택정보 사항에 대해서는 동의하지 않으셔도 서비스를 이용하실 수 있습니다.
+            <br />① 마케팅 및 광고에의 활용 - 사인센스는 신규 서비스(제품) 개발 및 맞춤 서비스 제공, 이벤트 및 광고성
+            정보 제공 및 참여기회 제공, 인구통계학적 특성에 따른 서비스 제공 및 광고 게재, 서비스의 유효성 확인,
+            접속빈도 파악 또는 회원의 서비스 이용에 대한 통계 등을 목적으로 개인정보를 처리합니다. ② 사인센스는 게하사장
+            서비스를 운영함에 있어 각종 정보를 서비스 화면, 전화, e-mail, SMS, 우편물, 앱푸시 등의 방법으로 게하사장
+            회원에게 제공할 수 있으며, 회원가입/구매/회사의 주요 정책 등 의무적으로 안내되어야 하는 정보성 내용은
+            수신동의 여부와 관계없이 모든 회원에게 제공됩니다.
+          </Content>
         </AgreementWrap>
-        <InputMessage>이용약관과 개인정보 수집 및 이용에 동의하셔야 합니다.</InputMessage>
-        <Button title="다음" />
         <InputMessage style={{ display: messageDisplay }}>
           이용약관과 개인정보 수집 및 이용에 동의하셔야 합니다.
         </InputMessage>
@@ -160,7 +167,7 @@ const AgreementTitle = styled.div`
 
 const Content = styled.div`
   width: 400px;
-  max-height: 200px;
+  max-height: 150px;
   overflow-y: scroll;
   background: rgba(0, 0, 0, 0.05);
   border: solid 1px ${({ theme }) => theme.color.gray};
@@ -170,7 +177,6 @@ const Content = styled.div`
 `;
 
 const InputMessage = styled.div`
-  display: flex;
   width: 400px;
   font-size: 13px;
   color: ${({ theme }) => theme.color.point};
