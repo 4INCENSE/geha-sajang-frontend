@@ -11,6 +11,8 @@ import defaultPreviewImage from '@/img/default_preview_img.png';
 import questionIcon from '@/img/icon/question.png';
 import closeIcon from '@/img/icon/close_w.png';
 
+import Button from '@/components/Button/Button';
+
 const RegisterGuestHouseInfo = () => {
   const dispatch = useDispatch();
   const { extraServiceList } = useSelector((state) => state.registerGuestHouseInfoReducer);
@@ -240,7 +242,7 @@ const RegisterGuestHouseInfo = () => {
             })}
           </ServiceListWrap>
         </InputWrap>
-        <RegisterButton onClick={registerButtonClickHandler}>다음</RegisterButton>
+        <Button title="다음" onClick={registerButtonClickHandler} />
       </RegisterWrap>
     </ContentWrap>
   );
@@ -487,23 +489,5 @@ const ServiceWrap = styled.div`
     button {
       background: ${({ theme }) => theme.color.point};
     }
-  }
-`;
-
-const RegisterButton = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 400px;
-  font-family: 'S-CoreDream-2ExtraLight';
-  font-size: 15px;
-  color: white;
-  font-weight: bold;
-  background: black;
-  border-radius: 3px;
-  padding: 20px 30px;
-  margin-top: 20px;
-  &:hover {
-    background: ${({ theme }) => theme.color.point};
   }
 `;
