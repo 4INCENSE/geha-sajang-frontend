@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import logo from '@/img/Logo/logo.png';
+import logo from '@/img/logo/logo.png';
 
 import LogInForm from '@/components/LogIn/LogInForm/LogInForm';
 import ServiceDescription from '@/components/LogIn/ServiceDescription/ServiceDescription';

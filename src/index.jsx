@@ -5,19 +5,19 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 
 import { loggerMiddleware } from '@/redux/middleware/loggerMiddleware';
-import { resisterGuestHouseInfoMiddleware } from '@/redux/middleware/resisterGuestHouseInfoMiddleware';
+import { registerGuestHouseInfoMiddleware } from '@/redux/middleware/registerGuestHouseInfoMiddleware';
 
-import { resisterGuestHouseInfoReducer } from '@/redux/reducers/resisterGuestHouseInfoReducer';
+import { registerGuestHouseInfoReducer } from '@/redux/reducers/registerGuestHouseInfoReducer';
 
 const rootElement = document.getElementById('root');
 
 const rootReducer = combineReducers({
-  resisterGuestHouseInfoReducer
+  registerGuestHouseInfoReducer
 });
 
 const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(loggerMiddleware, resisterGuestHouseInfoMiddleware))
+  composeWithDevTools(applyMiddleware(loggerMiddleware, registerGuestHouseInfoMiddleware))
 );
 
 import('@/App').then(({ default: App }) =>

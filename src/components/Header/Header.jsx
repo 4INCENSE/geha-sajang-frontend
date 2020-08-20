@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import logo from '@/img/Logo/logo.png';
+import logo from '@/img/logo/logo.png';
 
 const Wrap = styled.div`
   display: flex;
