@@ -101,7 +101,7 @@ const ServiceStartButton = styled.button`
   font-size: 25px;
   font-weight: bold;
   &:hover {
-    background: black;
+    background: ${({ theme }) => theme.color.darkPoint};
   }
 `;
 
