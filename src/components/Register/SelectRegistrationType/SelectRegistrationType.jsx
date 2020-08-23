@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import logo from '@/img/logo/logo_b.png';
 
-const SelectRegistrationType = ({ display, nextButton }) => {
+const SelectRegistrationType = ({ display, registerGuestHouseInfoButton, registeredGuestHouseButton }) => {
   return (
     <ContentWrap style={{ display: display }}>
       <RegisterWrap>
@@ -18,8 +18,8 @@ const SelectRegistrationType = ({ display, nextButton }) => {
           <br /> 아래 두가지 중 하나를 선택해주세요.
         </RegisterDescription>
         <SelectButtonWrap>
-          <SelectButton>등록된 게스트하우스</SelectButton>
-          <SelectButton onClick={nextButton}>새로운 게스트하우스</SelectButton>
+          <SelectButton onClick={registeredGuestHouseButton}>등록된 게스트하우스</SelectButton>
+          <SelectButton onClick={registerGuestHouseInfoButton}>새로운 게스트하우스</SelectButton>
         </SelectButtonWrap>
       </RegisterWrap>
     </ContentWrap>
@@ -89,8 +89,8 @@ const SelectButton = styled.button`
   align-items: center;
   width: 350px;
   height: 80px;
-  border-radius: 5px;
   background: ${({ theme }) => theme.color.point};
+  border-radius: 5px;
   font-family: 'S-CoreDream-2ExtraLight';
   font-weight: bold;
   font-size: 20px;
@@ -100,7 +100,7 @@ const SelectButton = styled.button`
   margin: 30px 0 0 0;
 
   &:hover {
-    background: black;
+    background: ${({ theme }) => theme.color.darkPoint};
     color: white;
   }
 `;

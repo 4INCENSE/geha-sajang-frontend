@@ -6,6 +6,46 @@ import logo from '@/img/logo/logo.png';
 import LogInForm from '@/components/LogIn/LogInForm/LogInForm';
 import ServiceDescription from '@/components/LogIn/ServiceDescription/ServiceDescription';
 
+const LogIn = () => {
+  const [logInFormWrapRightValue, setLogInFormWrapRightValueValue] = useState('-650px');
+  const [serviceStartDisplay, setServiceStartButtonDisplay] = useState('flex');
+
+  const startButtonClickHandler = () => {
+    setLogInFormWrapRightValueValue(0);
+    setServiceStartButtonDisplay('none');
+  };
+
+  const cancelButtonClickHandler = () => {
+    setLogInFormWrapRightValueValue('-650px');
+    setTimeout(() => {
+      setServiceStartButtonDisplay('flex');
+    }, 230);
+  };
+
+  return (
+    <Wrap>
+      <LogInConentWrap>
+        <ImgBlur />
+        <Logo src={logo} />
+        <DescriptionContent>
+          게스트 하우스 맞춤형 예약 관리 시스템으로
+          <br />
+          게스트의 예약을 보다 손쉽게 관리하세요
+        </DescriptionContent>
+        <ServiceStartButton style={{ display: serviceStartDisplay }} onClick={startButtonClickHandler}>
+          지금 바로 시작하기
+        </ServiceStartButton>
+        <LoginFormWrap style={{ right: logInFormWrapRightValue }}>
+          <LogInForm cancelButtonClickHandler={cancelButtonClickHandler} />
+        </LoginFormWrap>
+      </LogInConentWrap>
+      <ServiceDescription />
+    </Wrap>
+  );
+};
+
+export default LogIn;
+
 const Wrap = styled.div`
   position: relative;
   display: flex;
@@ -61,7 +101,7 @@ const ServiceStartButton = styled.button`
   font-size: 25px;
   font-weight: bold;
   &:hover {
-    background: black;
+    background: ${({ theme }) => theme.color.darkPoint};
   }
 `;
 
@@ -90,43 +130,3 @@ const LoginFormWrap = styled.div`
   height: 100%;
   transition: 0.5s;
 `;
-
-const LogIn = () => {
-  const [logInFormWrapRightValue, setLogInFormWrapRightValueValue] = useState('-650px');
-  const [serviceStartDisplay, setServiceStartButtonDisplay] = useState('flex');
-
-  const startButtonClickHandler = () => {
-    setLogInFormWrapRightValueValue(0);
-    setServiceStartButtonDisplay('none');
-  };
-
-  const cancelButtonClickHandler = () => {
-    setLogInFormWrapRightValueValue('-650px');
-    setTimeout(() => {
-      setServiceStartButtonDisplay('flex');
-    }, 230);
-  };
-
-  return (
-    <Wrap>
-      <LogInConentWrap>
-        <ImgBlur />
-        <Logo src={logo} />
-        <DescriptionContent>
-          게스트 하우스 맞춤형 예약 관리 시스템으로
-          <br />
-          게스트의 예약을 보다 손쉽게 관리하세요
-        </DescriptionContent>
-        <ServiceStartButton style={{ display: serviceStartDisplay }} onClick={startButtonClickHandler}>
-          지금 바로 시작하기
-        </ServiceStartButton>
-        <LoginFormWrap style={{ right: logInFormWrapRightValue }}>
-          <LogInForm cancelButtonClickHandler={cancelButtonClickHandler} />
-        </LoginFormWrap>
-      </LogInConentWrap>
-      <ServiceDescription />
-    </Wrap>
-  );
-};
-
-export default LogIn;
