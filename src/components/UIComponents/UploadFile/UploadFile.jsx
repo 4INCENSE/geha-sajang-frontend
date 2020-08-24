@@ -13,9 +13,16 @@ const UploadFile = ({ title, getCurrentFile }) => {
 
   const uploadImage = (e) => {
     const currentFile = e.target.files[0];
+    const maxSize = 10 * 1024 * 1024;
+
     if (!currentFile) return;
     if (!validateImageFileType(currentFile)) {
       setImageMessage('이미지 파일 유형은 png, jpg, jpeg만 가능합니다');
+      setImageMessageDisplay('block');
+      return;
+    }
+    if (currentFile.size > maxSize) {
+      setImageMessage('이미지 파일 크기는 10MB 이내로 등록 가능합니다');
       setImageMessageDisplay('block');
       return;
     }
