@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Button from '@/components/Button/Button';
+import BlackButton from '@/components/UIComponents/Button/BlackButton';
+import Input from '@/components/UIComponents/Input/Input';
+import InputButton from '@/components/UIComponents/Button/InputButton';
 
 const RegisterRegisteredGuesthouse = ({ display, nextButton }) => {
   return (
@@ -12,14 +14,14 @@ const RegisterRegisteredGuesthouse = ({ display, nextButton }) => {
           <InputTitle>게스트하우스 식별 코드</InputTitle>
           <InputButtonWrap>
             <Input />
-            <InputButton>확인</InputButton>
+            <InputButton title="확인" />
           </InputButtonWrap>
         </InputWrap>
         <InputWrap>
           <InputTitle>초대코드</InputTitle>
           <Input />
         </InputWrap>
-        <Button title="다음" onClick={nextButton} />
+        <BlackButton title="다음" onClick={nextButton} />
       </RegisterWrap>
     </ContentWrap>
   );
@@ -79,29 +81,6 @@ const InputTitle = styled.div`
   }
 `;
 
-const Input = styled.input`
-  width: 100%;
-  height: 40px;
-  border-radius: 5px;
-  border: 1px solid ${({ theme }) => theme.color.lightGray};
-  margin-top: 2px;
-  padding: 15px;
-  font-size: 16px;
-  &:focus {
-    outline: 0;
-    box-shadow: 0 0 5px 2px ${({ theme }) => theme.color.point};
-  }
-  ::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-  }
-  -moz-appearance: textfield;
-  ::placeholder {
-    font-size: 13px;
-  }
-`;
-
 const GuestHouseWrap = styled.div`
   display: flex;
   align-items: center;
@@ -130,24 +109,4 @@ const InputButtonWrap = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-`;
-
-const InputButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Eoe_Zno_L';
-  width: 50px;
-  height: 40px;
-  color: ${({ theme }) => theme.color.darkGray};
-  font-weight: bold;
-  font-size: 13px;
-  border-radius: 5px;
-  border: 1px solid ${({ theme }) => theme.color.lightGray};
-  border-radius: 5px;
-  margin-left: 10px;
-  &:hover {
-    border: 2px solid ${({ theme }) => theme.color.point};
-    color: ${({ theme }) => theme.color.point};
-  }
 `;

@@ -1,23 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Button = ({ width, title, onClick }) => {
+const BlackButton = ({ width, title, onClick }) => {
   return (
-    <RegisterButton style={{ width: width }} onClick={onClick}>
+    <ButtonComponent style={{ width: width }} onClick={onClick}>
       {title}
-    </RegisterButton>
+    </ButtonComponent>
   );
 };
 
-export default Button;
+export default BlackButton;
 
-const RegisterButton = styled.div`
+const ButtonComponent = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   width: 400px;
   font-family: 'S-CoreDream-2ExtraLight';
-  font-size: 15px;
+  font-size: 17px;
   color: white;
   font-weight: bold;
   background: black;
