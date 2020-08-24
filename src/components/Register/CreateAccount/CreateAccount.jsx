@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
 import Header from '@/components/Header/Header';
 
@@ -8,6 +9,8 @@ import TitleInput from '@/components/UIComponents/Input/TitleInput';
 import UploadFile from '@/components/UIComponents/UploadFile/UploadFile';
 
 const CreateAccount = () => {
+  const history = useHistory();
+
   const [currentImage, setCurrentImage] = useState();
   const [emailMessage, setEmailMessage] = useState();
   const [emailMessageDisplay, setEmailMessageDisplay] = useState();
@@ -103,8 +106,16 @@ const CreateAccount = () => {
     return true;
   };
 
+  const moveToLogIn = () => {
+    history.push('/');
+  };
+
   const registerButtonClickHandler = () => {
-    console.log(currentImage);
+    validateEmail();
+    validatePassword();
+    confirmPassword();
+    validateNickname();
+    if (validateEmail() && validatePassword() && confirmPassword() && validateNickname()) moveToLogIn();
   };
 
   return (
@@ -156,7 +167,7 @@ const CreateAccount = () => {
             />
           </InputWrap>
           <UploadFile title="프로필 사진" getCurrentFile={setCurrentImage} />
-          <BlackButton title="회원가입" />
+          <BlackButton title="회원가입" onClick={registerButtonClickHandler} />
         </RegisterWrap>
       </ContentWrap>
     </Wrap>
