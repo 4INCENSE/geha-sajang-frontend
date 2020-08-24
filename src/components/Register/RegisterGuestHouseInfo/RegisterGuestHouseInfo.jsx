@@ -11,6 +11,7 @@ import questionIcon from '@/img/icon/question.png';
 import closeIcon from '@/img/icon/close_w.png';
 
 import BlackButton from '@/components/UIComponents/Button/BlackButton';
+import TitleInput from '@/components/UIComponents/Input/TitleInput';
 import UploadFile from '@/components/UIComponents/UploadFile/UploadFile';
 
 const RegisterGuestHouseInfo = ({ display, nextButton }) => {
@@ -137,19 +138,28 @@ const RegisterGuestHouseInfo = ({ display, nextButton }) => {
       </RegisterSubTitle>
       <RegisterWrap>
         <InputWrap>
+          <TitleInput
+            title="게스트하우스 이름"
+            spanValue=" ●"
+            onBlur={validateName}
+            refValue={nameInput}
+            messageDisplay={nameMessageDisplay}
+            messageValue={nameMessage}
+          />
         </InputWrap>
+        <UploadFile title="게스트하우스 대표이미지" getCurrentFile={setCurrentImage} />
         <InputWrap>
-          <InputTitle>
-            대표 전화번호<span> ●</span>
-          </InputTitle>
-          <Input
+          <TitleInput
+            title="대표 전화번호"
+            spanValue=" ●"
             onKeyUp={removeChar}
             onBlur={validatePhoneNumber}
-            ref={numberInput}
+            refValue={numberInput}
             maxlength="11"
             placeholder="숫자만 입력해주세요"
+            messageDisplay={numberMessageDisplay}
+            messageValue={numberMessage}
           />
-          <InputMessage style={{ display: numberMessageDisplay }}>{numberMessage}</InputMessage>
         </InputWrap>
         <InputWrap>
           <InputTitle>
