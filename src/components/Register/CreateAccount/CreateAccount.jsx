@@ -5,7 +5,6 @@ import Header from '@/components/Header/Header';
 
 import BlackButton from '@/components/UIComponents/Button/BlackButton';
 import TitleInput from '@/components/UIComponents/Input/TitleInput';
-import TitleButtonInput from '@/components/UIComponents/Input/TitleButtonInput';
 import UploadFile from '@/components/UIComponents/UploadFile/UploadFile';
 
 const CreateAccount = () => {
@@ -23,14 +22,14 @@ const CreateAccount = () => {
 
   const validateEmail = () => {
     const email = emailInput.current.value;
-    var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    var emailCheck = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
 
     if (email.length <= 0) {
-      setEmailMessage('이메일 입력은 필수입니다');
+      setEmailMessage('이메일을 입력해주세요');
       setEmailMessageDisplay('block');
       return false;
     }
-    if (!regExp.test(email)) {
+    if (!emailCheck.test(email)) {
       setEmailMessage('이메일을 다시 확인해주세요');
       setEmailMessageDisplay('block');
       return false;
