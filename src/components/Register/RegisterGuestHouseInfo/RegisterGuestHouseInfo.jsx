@@ -10,7 +10,7 @@ import { checkDuplicate } from '@/lib/util/checkDuplicate';
 import questionIcon from '@/img/icon/question.png';
 import closeIcon from '@/img/icon/close_w.png';
 
-import Button from '@/components/Button/Button';
+import BlackButton from '@/components/UIComponents/Button/BlackButton';
 import UploadFile from '@/components/UIComponents/UploadFile/UploadFile';
 
 const RegisterGuestHouseInfo = ({ display, nextButton }) => {
@@ -181,7 +181,7 @@ const RegisterGuestHouseInfo = ({ display, nextButton }) => {
             })}
           </ServiceListWrap>
         </InputWrap>
-        <Button title="다음" onClick={registerButtonClickHandler} />
+        <BlackButton title="다음" onClick={registerButtonClickHandler} />
       </RegisterWrap>
     </ContentWrap>
   );

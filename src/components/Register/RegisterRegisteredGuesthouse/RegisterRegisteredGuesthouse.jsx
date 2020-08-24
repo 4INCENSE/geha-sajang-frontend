@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Button from '@/components/Button/Button';
+import BlackButton from '@/components/UIComponents/Button/BlackButton';
 
 const RegisterRegisteredGuesthouse = ({ display, nextButton }) => {
   return (
@@ -19,7 +19,7 @@ const RegisterRegisteredGuesthouse = ({ display, nextButton }) => {
           <InputTitle>초대코드</InputTitle>
           <Input />
         </InputWrap>
-        <Button title="다음" onClick={nextButton} />
+        <BlackButton title="다음" onClick={nextButton} />
       </RegisterWrap>
     </ContentWrap>
   );

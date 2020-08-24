@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import checkedIcon from '@/img/icon/checked.png';
 import uncheckedIcon from '@/img/icon/unchecked.png';
 
-import Button from '@/components/Button/Button';
+import BlackButton from '@/components/UIComponents/Button/BlackButton';
 
 const TermsAndConditions = ({ display, nextButton }) => {
   const [isAllChecked, setIsAllChecked] = useState(false);
@@ -106,7 +106,7 @@ const TermsAndConditions = ({ display, nextButton }) => {
         <InputMessage style={{ display: messageDisplay }}>
           이용약관과 개인정보 수집 및 이용에 동의하셔야 합니다.
         </InputMessage>
-        <Button title="다음" onClick={agreementButtonClickHandler} />
+        <BlackButton title="다음" onClick={agreementButtonClickHandler} />
       </RegisterWrap>
     </ContentWrap>
   );
