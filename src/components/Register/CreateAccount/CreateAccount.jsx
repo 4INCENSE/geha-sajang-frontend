@@ -15,6 +15,9 @@ const CreateAccount = () => {
   const [passwordMessageDisplay, setPasswordMessageDisplay] = useState();
   const [passwordConfirmMessage, setPasswordConfirmMessage] = useState();
   const [passwordConfirmMessageDisplay, setPasswordConfirmMessageDisplay] = useState();
+  const [nicknameMessage, setNicknameMessage] = useState();
+  const [nicknameMessageDisplay, setNicknameMessageDisplay] = useState();
+
   const emailInput = React.createRef();
   const passwordInput = React.createRef();
   const passwordConfirmInput = React.createRef();
@@ -80,6 +83,30 @@ const CreateAccount = () => {
     setPasswordConfirmMessageDisplay('none');
     return true;
   };
+
+  const validateNickname = () => {
+    const nickname = nicknameInput.current.value;
+    const blankPattern = /^\s+|\s+$/g;
+    const nicknameLengthWithoutBlank = nickname.replace(blankPattern, '').length;
+
+    if (nickname.length <= 0 || nicknameLengthWithoutBlank <= 0) {
+      setNicknameMessage('닉네임을 입력해주세요');
+      setNicknameMessageDisplay('block');
+      return false;
+    }
+    if (nickname.length < 2 || nickname.length > 10) {
+      setNicknameMessage('닉네임은 2~10자로 입력해주세요');
+      setNicknameMessageDisplay('block');
+      return false;
+    }
+    setNicknameMessageDisplay('none');
+    return true;
+  };
+
+  const registerButtonClickHandler = () => {
+    console.log(currentImage);
+  };
+
   return (
     <Wrap>
       <Header />
@@ -117,7 +144,14 @@ const CreateAccount = () => {
             />
           </InputWrap>
           <InputWrap>
-            <TitleInput title="닉네임" spanValue=" ●" />
+            <TitleInput
+              title="닉네임"
+              spanValue=" ●"
+              onBlur={validateNickname}
+              refValue={nicknameInput}
+              messageDisplay={nicknameMessageDisplay}
+              messageValue={nicknameMessage}
+            />
           </InputWrap>
           <UploadFile title="프로필 사진" getCurrentFile={setCurrentImage} />
           <BlackButton title="회원가입" />
