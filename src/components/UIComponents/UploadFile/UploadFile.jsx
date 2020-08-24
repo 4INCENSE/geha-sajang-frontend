@@ -17,9 +17,6 @@ const UploadFile = ({ title, getCurrentFile }) => {
     if (!validateImageFileType(currentFile)) {
       setImageMessage('이미지 파일 유형은 png, jpg, jpeg만 가능합니다');
       setImageMessageDisplay('block');
-      setCurrentImage(defaultPreviewImage);
-      getCurrentFile();
-      setCurrentImageName('파일을 업로드 해주세요');
       return;
     }
     setImageMessageDisplay('none');
