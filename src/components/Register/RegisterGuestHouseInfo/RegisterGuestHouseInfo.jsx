@@ -12,6 +12,7 @@ import closeIcon from '@/img/icon/close_w.png';
 
 import BlackButton from '@/components/UIComponents/Button/BlackButton';
 import TitleInput from '@/components/UIComponents/Input/TitleInput';
+import TitleButtonInput from '@/components/UIComponents/Input/TitleButtonInput';
 import UploadFile from '@/components/UIComponents/UploadFile/UploadFile';
 
 const RegisterGuestHouseInfo = ({ display, nextButton }) => {
@@ -169,15 +170,15 @@ const RegisterGuestHouseInfo = ({ display, nextButton }) => {
               <div>{extraServiceDescription}</div>
             </QuestionMarkIcon>
           </InputTitle>
-          <InputButtonWrap>
-            <Input
-              ref={serviceInput}
-              onKeyDown={serviceInputEnterKeyPressHandler}
-              placeholder="ex. 픽업, 저녁식사, 장비대여…"
-            />
-            <InputButton onClick={addServiceButtonClickHandler}>추가</InputButton>
-          </InputButtonWrap>
-          <InputMessage style={{ display: serviceMessageDisplay }}>{serviceMessage}</InputMessage>
+          <TitleButtonInput
+            refValue={serviceInput}
+            onKeyDown={serviceInputEnterKeyPressHandler}
+            placeholder="ex. 픽업, 저녁식사, 장비대여…"
+            buttonTitle="추가"
+            buttonOnClick={addServiceButtonClickHandler}
+            messageDisplay={serviceMessageDisplay}
+            messageValue={serviceMessage}
+          />
           <ServiceListWrap>
             {serviceList.map((service, index) => {
               return (
@@ -241,65 +242,6 @@ const RegisterWrap = styled.div`
   width: 830px;
   border: 0.5px solid #b3b3b3;
   padding: 60px;
-`;
-
-const InputWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 400px;
-  margin-bottom: 35px;
-`;
-
-const InputTitle = styled.div`
-  display: flex;
-  width: 100%;
-  text-align: left;
-  font-family: 'Eoe_Zno_L';
-  font-weight: bold;
-  font-size: 17px;
-  color: ${({ theme }) => theme.color.darkGray};
-  padding-left: 5px;
-  margin-bottom: 10px;
-  span {
-    color: ${({ theme }) => theme.color.point};
-    margin-left: 3px;
-  }
-`;
-
-
-const InputMessage = styled.div`
-  display: flex;
-  width: 100%;
-  font-size: 13px;
-  color: ${({ theme }) => theme.color.point};
-  padding: 10px 5px 0px 5px;
-`;
-
-const InputButtonWrap = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-`;
-
-const InputButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Eoe_Zno_L';
-  width: 50px;
-  height: 40px;
-  color: ${({ theme }) => theme.color.darkGray};
-  font-weight: bold;
-  font-size: 13px;
-  border-radius: 5px;
-  border: 1px solid ${({ theme }) => theme.color.lightGray};
-  border-radius: 5px;
-  margin-left: 10px;
-  &:hover {
-    border: 2px solid ${({ theme }) => theme.color.point};
-    color: ${({ theme }) => theme.color.point};
-  }
 `;
 
 const QuestionMarkIcon = styled.div`
@@ -367,5 +309,27 @@ const ServiceWrap = styled.div`
     button {
       background: ${({ theme }) => theme.color.point};
     }
+  }
+`;
+const InputWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 400px;
+  margin-bottom: 35px;
+`;
+
+const InputTitle = styled.div`
+  display: flex;
+  width: 100%;
+  text-align: left;
+  font-family: 'Eoe_Zno_L';
+  font-weight: bold;
+  font-size: 17px;
+  color: ${({ theme }) => theme.color.darkGray};
+  padding-left: 5px;
+  span {
+    color: ${({ theme }) => theme.color.point};
+    margin-left: 3px;
   }
 `;
