@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import BlackButton from '@/components/UIComponents/Button/BlackButton';
+import InputButton from '@/components/UIComponents/Button/InputButton';
 
 const RegisterRegisteredGuesthouse = ({ display, nextButton }) => {
   return (
@@ -12,7 +13,7 @@ const RegisterRegisteredGuesthouse = ({ display, nextButton }) => {
           <InputTitle>게스트하우스 식별 코드</InputTitle>
           <InputButtonWrap>
             <Input />
-            <InputButton>확인</InputButton>
+            <InputButton title="확인" />
           </InputButtonWrap>
         </InputWrap>
         <InputWrap>
@@ -130,24 +131,4 @@ const InputButtonWrap = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-`;
-
-const InputButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Eoe_Zno_L';
-  width: 50px;
-  height: 40px;
-  color: ${({ theme }) => theme.color.darkGray};
-  font-weight: bold;
-  font-size: 13px;
-  border-radius: 5px;
-  border: 1px solid ${({ theme }) => theme.color.lightGray};
-  border-radius: 5px;
-  margin-left: 10px;
-  &:hover {
-    border: 2px solid ${({ theme }) => theme.color.point};
-    color: ${({ theme }) => theme.color.point};
-  }
 `;
