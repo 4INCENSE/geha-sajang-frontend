@@ -125,6 +125,7 @@ const CreateAccount = () => {
           </InputWrap>
           <InputWrap>
             <TitleInput
+              type="password"
               title="비밀번호"
               spanValue=" ●"
               refValue={passwordInput}
@@ -135,6 +136,7 @@ const CreateAccount = () => {
           </InputWrap>
           <InputWrap>
             <TitleInput
+              type="password"
               title="비밀번호 확인"
               spanValue=" ●"
               onBlur={confirmPassword}

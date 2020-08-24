@@ -5,6 +5,7 @@ import InputButton from '@/components/UIComponents/Button/InputButton';
 import Input from '@/components/UIComponents/Input/Input';
 
 const TitleButtonInput = ({
+  type,
   title,
   spanValue,
   messageDisplay,
@@ -28,6 +29,7 @@ const TitleButtonInput = ({
       </InputTitle>
       <InputButtonWrap>
         <Input
+          type={type}
           inputWidth={inputWidth}
           refValue={refValue}
           placeholder={placeholder}

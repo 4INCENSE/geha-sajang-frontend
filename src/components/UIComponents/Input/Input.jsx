@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Input = ({ inputWidth, refValue, placeholder, maxlength, onBlur, onKeyDown, onKeyUp }) => {
+const Input = ({ type, inputWidth, refValue, placeholder, maxlength, onBlur, onKeyDown, onKeyUp }) => {
   return (
     <>
       <InputComponent
+        type={type}
         style={{ width: inputWidth }}
         ref={refValue}
         placeholder={placeholder}

@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Input from '@/components/UIComponents/Input/Input';
 
 const TitleInput = ({
+  type,
   title,
   spanValue,
   messageDisplay,
@@ -23,6 +24,7 @@ const TitleInput = ({
         <span>{spanValue}</span>
       </InputTitle>
       <Input
+        type={type}
         inputWidth={inputWidth}
         refValue={refValue}
         placeholder={placeholder}
