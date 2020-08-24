@@ -12,6 +12,10 @@ const CreateAccount = () => {
   const [currentImage, setCurrentImage] = useState();
   const [emailMessage, setEmailMessage] = useState();
   const [emailMessageDisplay, setEmailMessageDisplay] = useState();
+  const [passwordMessage, setPasswordMessage] = useState();
+  const [passwordMessageDisplay, setPasswordMessageDisplay] = useState();
+  const [passwordConfirmMessage, setPasswordConfirmMessage] = useState();
+  const [passwordConfirmMessageDisplay, setPasswordConfirmMessageDisplay] = useState();
   const emailInput = React.createRef();
   const passwordInput = React.createRef();
   const passwordConfirmInput = React.createRef();
@@ -35,6 +39,48 @@ const CreateAccount = () => {
     return true;
   };
 
+  const validatePassword = () => {
+    const password = passwordInput.current.value;
+    const passwordCheck = /^[a-zA-Z0-9]{8,16}$/;
+    const passwordCharCheck = /^(?=.*[a-z])/;
+    const passwordNumberCheck = /^(?=.*[0-9])/;
+
+    if (password.length <= 0) {
+      setPasswordMessage('비밀번호를 입력해주세요');
+      setPasswordMessageDisplay('block');
+      return false;
+    }
+    if (!passwordCheck.test(password) || !passwordCharCheck.test(password) || !passwordNumberCheck.test(password)) {
+      setPasswordMessage('8~16자 영문,숫자를 사용하세요');
+      setPasswordMessageDisplay('block');
+      return false;
+    }
+    setPasswordMessageDisplay('none');
+    return true;
+  };
+
+  const confirmPassword = () => {
+    const passwordConfirm = passwordConfirmInput.current.value;
+    const password = passwordInput.current.value;
+
+    if (passwordConfirm.length <= 0) {
+      setPasswordConfirmMessage('비밀번호를 다시 한번 입력해주세요');
+      setPasswordConfirmMessageDisplay('block');
+      return false;
+    }
+    if (passwordConfirm.length <= 0) {
+      setPasswordConfirmMessage('비밀번호를 다시 한번 입력해주세요');
+      setPasswordConfirmMessageDisplay('block');
+      return false;
+    }
+    if (passwordConfirm != password) {
+      setPasswordConfirmMessage('비밀번호가 일치하지 않습니다');
+      setPasswordConfirmMessageDisplay('block');
+      return false;
+    }
+    setPasswordConfirmMessageDisplay('none');
+    return true;
+  };
   return (
     <Wrap>
       <Header />
@@ -52,10 +98,24 @@ const CreateAccount = () => {
             />
           </InputWrap>
           <InputWrap>
-            <TitleInput title="비밀번호" spanValue=" ●" />
+            <TitleInput
+              title="비밀번호"
+              spanValue=" ●"
+              refValue={passwordInput}
+              onBlur={validatePassword}
+              messageDisplay={passwordMessageDisplay}
+              messageValue={passwordMessage}
+            />
           </InputWrap>
           <InputWrap>
-            <TitleInput title="비밀번호 확인" spanValue=" ●" />
+            <TitleInput
+              title="비밀번호 확인"
+              spanValue=" ●"
+              onBlur={confirmPassword}
+              refValue={passwordConfirmInput}
+              messageDisplay={passwordConfirmMessageDisplay}
+              messageValue={passwordConfirmMessage}
+            />
           </InputWrap>
           <InputWrap>
             <TitleInput title="닉네임" spanValue=" ●" />
