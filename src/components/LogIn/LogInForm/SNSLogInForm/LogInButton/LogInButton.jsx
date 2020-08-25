@@ -15,13 +15,13 @@ const LogInButton = ({ title, color, logo, background, hover, logoWidth, logoHei
     setBackgroundColor(background);
   };
 
-  const moveToSignUp = () => {
+  const moveToRegister = () => {
     history.push('/register');
   };
 
   return (
     <SnsButton
-      onClick={moveToSignUp}
+      onClick={moveToRegister}
       style={{ background: backgroundColor }}
       onMouseOver={setHoverColor}
       onMouseLeave={removeHoverColor}>
