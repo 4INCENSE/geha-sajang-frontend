@@ -128,6 +128,7 @@ const RegisterGuestHouseInfo = ({ display, nextButton }) => {
   const registerButtonClickHandler = () => {
     validateName();
     validatePhoneNumber();
+    console.log(currentImage.size);
     if (validateName() && validatePhoneNumber()) nextButton();
   };
 

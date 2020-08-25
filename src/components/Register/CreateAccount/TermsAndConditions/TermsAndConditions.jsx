@@ -6,7 +6,7 @@ import uncheckedIcon from '@/img/icon/unchecked.png';
 
 import BlackButton from '@/components/UIComponents/Button/BlackButton';
 
-const TermsAndConditions = ({ display, nextButton }) => {
+const TermsAndConditions = ({ display, nextButtonClickHandler }) => {
   const [isAllChecked, setIsAllChecked] = useState(false);
   const [isServiceChecked, setIsServiceChecked] = useState(false);
   const [isPersonalInfoChecked, setIsPersonalInfoChecked] = useState(false);
@@ -51,13 +51,13 @@ const TermsAndConditions = ({ display, nextButton }) => {
   const agreementButtonClickHandler = () => {
     if (!isServiceChecked || !isPersonalInfoChecked) return setMessageDisplay('block');
     setMessageDisplay('none');
-    nextButton();
+    nextButtonClickHandler();
   };
 
   return (
     <ContentWrap style={{ display: display }}>
+      <RegisterTitle>게하사장 서비스 약관 동의</RegisterTitle>
       <RegisterWrap>
-        <RegisterTitle>게하사장 서비스 약관 동의</RegisterTitle>
         <AgreementWrap>
           <Checkbox type="checkbox" id="allCheck" />
           <CheckBoxLabel htmlFor="allCheck" onClick={allCheckClickHandler}>

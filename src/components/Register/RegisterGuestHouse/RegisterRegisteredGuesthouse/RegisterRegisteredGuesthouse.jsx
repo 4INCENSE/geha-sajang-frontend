@@ -5,7 +5,7 @@ import BlackButton from '@/components/UIComponents/Button/BlackButton';
 import Input from '@/components/UIComponents/Input/Input';
 import InputButton from '@/components/UIComponents/Button/InputButton';
 
-const RegisterRegisteredGuesthouse = ({ display, nextButton }) => {
+const RegisterRegisteredGuestHouse = ({ display, nextButton }) => {
   return (
     <ContentWrap style={{ display: display }}>
       <RegisterWrap>
@@ -27,7 +27,7 @@ const RegisterRegisteredGuesthouse = ({ display, nextButton }) => {
   );
 };
 
-export default RegisterRegisteredGuesthouse;
+export default RegisterRegisteredGuestHouse;
 
 const ContentWrap = styled.div`
   display: flex;
