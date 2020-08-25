@@ -29,3 +29,7 @@ const deleteServiceFromArray = (store, payload) => {
   extraServiceList.splice(deleteIndex, 1);
   return extraServiceList;
 };
+const putSeparator = (array) => {
+  const separator = '☆§♥♨☎';
+  return array.join(separator);
+};
