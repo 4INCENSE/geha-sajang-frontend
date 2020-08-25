@@ -81,7 +81,7 @@ const Button = styled.button`
   color: white;
   font-size: 15px;
   font-weight: 600;
-  margin: 10px 0px 25px 0px;
+  margin: 0px 0px 18px 0px;
   &:hover {
     background: ${({ theme }) => theme.color.point};
   }
