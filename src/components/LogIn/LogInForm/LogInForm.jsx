@@ -47,8 +47,9 @@ const LogInForm = ({ cancelButtonClickHandler }) => {
           ) : (
             <>
               <AccountLogInForm title="스텝 계정 로그인" buttonTitle="스텝으로 로그인" />
-              {/* <StaffLogInForm /> */}
-              <BackToLogInButton onClick={backButtonClickHandler}>사장님 로그인 화면으로 돌아가기</BackToLogInButton>
+              <BackToLogInButton style={{ marginTop: '10px' }} onClick={backButtonClickHandler}>
+                사장님 로그인 화면으로 돌아가기
+              </BackToLogInButton>
             </>
           )}
         </LogInWrap>
@@ -98,7 +99,7 @@ const ButtonWrap = styled.div`
   span {
     font-family: 'Eoe_Zno_L';
     color: ${({ theme }) => theme.color.darkGray};
-    font-size: 15px;
+    font-size: 14px;
     font-weight: bold;
   }
 `;
@@ -106,7 +107,7 @@ const ButtonWrap = styled.div`
 const BackToLogInButton = styled.button`
   font-family: 'Eoe_Zno_L';
   color: ${({ theme }) => theme.color.point};
-  font-size: 15px;
+  font-size: 14px;
   font-weight: bold;
   &:hover {
     text-decoration: underline;

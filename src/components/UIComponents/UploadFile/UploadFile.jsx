@@ -30,15 +30,6 @@ const UploadFile = ({ title, getCurrentFile }) => {
     setCurrentImage(URL.createObjectURL(currentFile));
     getCurrentFile(currentFile);
     setCurrentImageName(currentFile.name);
-    // formData 생성은 currentImage를 통해서 나중에 하기
-    //  const formData = new FormData();
-    // formData.append('uploadImage', e.target.files[0], 'userName');
-    //axios로 서버에 전송 시 header에 아래와 같이 추가하여 전송해야함
-    // const config = {
-    //   headers: {
-    //     'content-type': 'multipart/form-data'
-    //   }
-    // };
   };
   const deleteImage = () => {
     setCurrentImage(defaultPreviewImage);

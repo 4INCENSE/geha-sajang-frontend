@@ -4,6 +4,7 @@ import { setTimeout } from 'core-js';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { addExtraService, deleteExtraService } from '@/redux/actions/extraServiceAction';
+import { postGuestHouseInfo } from '@/redux/actions/postGuestHouseInfoAction';
 
 import { checkDuplicate } from '@/lib/util/checkDuplicate';
 
@@ -128,8 +129,15 @@ const RegisterGuestHouseInfo = ({ display, nextButton }) => {
   const registerButtonClickHandler = () => {
     validateName();
     validatePhoneNumber();
-    console.log(currentImage.size);
-    if (validateName() && validatePhoneNumber()) nextButton();
+    if (validateName() && validatePhoneNumber()) {
+      const postData = {
+        name: nameInput.current.value,
+        mainNumber: numberInput.current.value,
+        image: currentImage
+      };
+      dispatch(postGuestHouseInfo(postData));
+      nextButton();
+    }
   };
 
   return (
