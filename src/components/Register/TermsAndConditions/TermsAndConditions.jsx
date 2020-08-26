@@ -6,7 +6,7 @@ import uncheckedIcon from '@/img/icon/unchecked.png';
 
 import BlackButton from '@/components/UIComponents/Button/BlackButton';
 
-const TermsAndConditions = ({ display, nextButtonClickHandler }) => {
+const TermsAndConditions = ({ termsData, display, getIsAgreeToMarketing, nextButtonClickHandler }) => {
   const [isAllChecked, setIsAllChecked] = useState(false);
   const [isServiceChecked, setIsServiceChecked] = useState(false);
   const [isPersonalInfoChecked, setIsPersonalInfoChecked] = useState(false);
@@ -17,6 +17,10 @@ const TermsAndConditions = ({ display, nextButtonClickHandler }) => {
   const serviceCheckboxIcon = isServiceChecked ? checkedIcon : uncheckedIcon;
   const personalInfoCheckboxIcon = isPersonalInfoChecked ? checkedIcon : uncheckedIcon;
   const marketingCheckboxIcon = isMarketingChecked ? checkedIcon : uncheckedIcon;
+
+  const termsOfService = { title: termsData[0].type, contents: termsData[0].contents };
+  const termsOfPersonalInfo = { title: termsData[1].type, contents: termsData[1].contents };
+  const termsOfMarketing = { title: termsData[2].type, contents: termsData[2].contents };
 
   const allCheckClickHandler = () => {
     setIsAllChecked(!isAllChecked);
