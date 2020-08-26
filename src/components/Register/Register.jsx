@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import Header from '@/components/Header/Header';
 import CreateAccount from '@/components/Register/CreateAccount/CreateAccount';
-import TermsAndConditions from '@/components/Register/CreateAccount/TermsAndConditions/TermsAndConditions';
+import TermsAndConditions from '@/components/Register/TermsAndConditions/TermsAndConditions';
 
 const Register = () => {
   const [TermsAndConditionsDisplay, setTermsAndConditionsDisplay] = useState('flex');
