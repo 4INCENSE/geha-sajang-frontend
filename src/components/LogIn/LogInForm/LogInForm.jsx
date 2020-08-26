@@ -95,11 +95,11 @@ const ButtonWrap = styled.div`
   display: flex;
   width: 350px;
   justify-content: center;
-  line-height: 23px;
+  line-height: 27px;
   span {
     font-family: 'Eoe_Zno_L';
     color: ${({ theme }) => theme.color.darkGray};
-    font-size: 15px;
+    font-size: 14px;
     font-weight: bold;
   }
 `;
@@ -107,7 +107,7 @@ const ButtonWrap = styled.div`
 const BackToLogInButton = styled.button`
   font-family: 'Eoe_Zno_L';
   color: ${({ theme }) => theme.color.point};
-  font-size: 15px;
+  font-size: 14px;
   font-weight: bold;
   &:hover {
     text-decoration: underline;
