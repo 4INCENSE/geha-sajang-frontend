@@ -16,7 +16,7 @@ import TitleInput from '@/components/UIComponents/Input/TitleInput';
 import TitleButtonInput from '@/components/UIComponents/Input/TitleButtonInput';
 import UploadFile from '@/components/UIComponents/UploadFile/UploadFile';
 
-const RegisterGuestHouseInfo = ({ display, nextButton }) => {
+const GuestHouseInfo = ({ display, nextButton }) => {
   const dispatch = useDispatch();
   const { extraServiceList } = useSelector((state) => state.registerGuestHouseInfoReducer);
 
@@ -207,7 +207,7 @@ const RegisterGuestHouseInfo = ({ display, nextButton }) => {
   );
 };
 
-export default RegisterGuestHouseInfo;
+export default GuestHouseInfo;
 
 const ContentWrap = styled.div`
   display: flex;

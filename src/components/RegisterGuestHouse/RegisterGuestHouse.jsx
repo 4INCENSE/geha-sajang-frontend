@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import Header from '@/components/Header/Header';
-import SelectRegistrationType from '@/components/Register/RegisterGuestHouse/SelectRegistrationType/SelectRegistrationType';
-import RegisterGuestHouseInfo from '@/components/Register/RegisterGuestHouse/RegisterGuestHouseInfo/RegisterGuestHouseInfo';
-import RegisterRegisteredGuestHouse from '@/components/Register/RegisterGuestHouse/RegisterRegisteredGuestHouse/RegisterRegisteredGuestHouse';
+import SelectRegistrationType from '@/components/RegisterGuestHouse/SelectRegistrationType/SelectRegistrationType';
+import RegisterGuestHouseInfo from '@/components/RegisterGuestHouse/GuestHouseInfo/GuestHouseInfo';
+import RegisterRegisteredGuestHouse from '@/components/RegisterGuestHouse/RegisteredGuesthouse/RegisteredGuesthouse';
 
 const Wrap = styled.div`
   display: flex;
