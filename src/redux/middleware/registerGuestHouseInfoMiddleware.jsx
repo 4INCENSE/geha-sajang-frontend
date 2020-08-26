@@ -40,12 +40,19 @@ const postGuestHouseInfo = ({ store, action }) => {
   formData.append('name', payload.name);
   formData.append('mainNumber', payload.mainNumber);
   formData.append('extra', putSeparator(extraServiceList));
-  formData.append('file', payload.image);
+  formData.append('image', payload.image);
 
   axios
     .post(process.env.POST_GUESTHOUSE_INFO, formData, { headers: { 'Content-Type': 'multipart/form-data' } })
     .then((response) => {
-      console.log(response);
+      if (response.status === 400) {
+        alert("서버 등록 오류! \n'" + response.message + "'\n처음 화면으로 돌아갑니다");
+        location.reload();
+      }
+      if (response.status === 500) {
+        alert("서버 등록 오류! \n'" + response.message + "'\n처음 화면으로 돌아갑니다");
+        location.reload();
+      }
     });
 };
 
