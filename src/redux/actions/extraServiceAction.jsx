@@ -1,15 +1,23 @@
-export const addExtraService = (payload) => {
-  return {
-    type: 'ADD_EXTRA_SERVICE',
-    payload
-  };
+export const addExtraService = (payload) => (dispatch, getState) => {
+  const addedExtraServiceArray = addServiceToArray(getState, payload);
+  dispatch(setExtraServiceList(addedExtraServiceArray));
 };
 
-export const deleteExtraService = (payload) => {
-  return {
-    type: 'DELETE_EXTRA_SERVICE',
-    payload
-  };
+const addServiceToArray = (getState, payload) => {
+  const { extraServiceList } = getState().registerGuestHouseInfoReducer;
+  return extraServiceList.concat(payload);
+};
+
+export const deleteExtraService = (payload) => (dispatch, getState) => {
+  const deletedExtraServiceArray = deleteServiceFromArray(getState, payload);
+  dispatch(setExtraServiceList(deletedExtraServiceArray));
+};
+
+const deleteServiceFromArray = (getState, payload) => {
+  const { extraServiceList } = getState().registerGuestHouseInfoReducer;
+  const deleteIndex = extraServiceList.findIndex((service) => service == payload);
+  extraServiceList.splice(deleteIndex, 1);
+  return extraServiceList;
 };
 
 export const setExtraServiceList = (payload) => {
