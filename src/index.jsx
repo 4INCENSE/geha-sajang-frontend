@@ -3,9 +3,8 @@ import React from 'react';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-
-import { loggerMiddleware } from '@/redux/middleware/loggerMiddleware';
-import { registerGuestHouseInfoMiddleware } from '@/redux/middleware/registerGuestHouseInfoMiddleware';
+import ReduxThunk from 'redux-thunk';
+import logger from 'redux-logger';
 
 import { registerGuestHouseInfoReducer } from '@/redux/reducers/registerGuestHouseInfoReducer';
 
@@ -15,10 +14,7 @@ const rootReducer = combineReducers({
   registerGuestHouseInfoReducer
 });
 
-const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(loggerMiddleware, registerGuestHouseInfoMiddleware))
-);
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(ReduxThunk, logger)));
 
 import('@/App').then(({ default: App }) =>
   ReactDOM.render(
