@@ -55,6 +55,7 @@ const TermsAndConditions = ({ termsData, display, getIsAgreeToMarketing, nextBut
   const agreementButtonClickHandler = () => {
     if (!isServiceChecked || !isPersonalInfoChecked) return setMessageDisplay('block');
     setMessageDisplay('none');
+    getIsAgreeToMarketing(isMarketingChecked);
     nextButtonClickHandler();
   };
 
