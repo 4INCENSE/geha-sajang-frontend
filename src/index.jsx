@@ -6,12 +6,14 @@ import { Provider } from 'react-redux';
 import ReduxThunk from 'redux-thunk';
 import logger from 'redux-logger';
 
-import { registerGuestHouseInfoReducer } from '@/redux/reducers/registerGuestHouseInfoReducer';
+import { registerReducer } from '@/redux/Registration/reducers/registerReducer';
+import { registerGuestHouseReducer } from '@/redux/Registration/reducers/registerGuestHouseReducer';
 
 const rootElement = document.getElementById('root');
 
 const rootReducer = combineReducers({
-  registerGuestHouseInfoReducer
+  registerReducer,
+  registerGuestHouseReducer
 });
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(ReduxThunk, logger)));
