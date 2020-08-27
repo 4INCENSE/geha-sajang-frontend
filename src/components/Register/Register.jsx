@@ -6,19 +6,25 @@ import Header from '@/components/Header/Header';
 import CreateAccount from '@/components/Register/CreateAccount/CreateAccount';
 import TermsAndConditions from '@/components/Register/TermsAndConditions/TermsAndConditions';
 
-import { getTermsAndConditions } from '@/redux/actions/getTermsAndConditionsAction';
+import { getTerms } from '@/redux/Registration/thunk/getTerms';
 
 const Register = () => {
   const dispatch = useDispatch();
-  const { loading, data, error } = useSelector((state) => state.apiReducer);
+  const { terms } = useSelector((state) => state.registerReducer);
+  const { data, loading, error } = terms;
 
   const [TermsAndConditionsDisplay, setTermsAndConditionsDisplay] = useState('flex');
   const [CreateAccountDisplay, setCreateAccountDisplay] = useState('none');
+
   const [isAgreeToMarketing, setIsAgreeToMarketing] = useState(false);
 
   useEffect(() => {
-    dispatch(getTermsAndConditions());
-  }, []);
+    dispatch(getTerms());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (error) alertError();
+  }, [terms]);
 
   const nextButtonClickHandler = () => {
     setTermsAndConditionsDisplay('none');
@@ -29,19 +35,23 @@ const Register = () => {
     setIsAgreeToMarketing(bool);
   };
 
+  const alertError = () => {
+    alert(data);
+    window.history.back();
+  };
+
+  console.log(data);
+  if (!data) return <></>;
+  if (error) return <></>;
   return (
     <Wrap>
       <Header />
-      {data.length > 0 ? (
-        <TermsAndConditions
-          termsData={data}
-          display={TermsAndConditionsDisplay}
-          getIsAgreeToMarketing={getIsAgreeToMarketing}
-          nextButtonClickHandler={nextButtonClickHandler}
-        />
-      ) : (
-        ''
-      )}
+      <TermsAndConditions
+        termsData={data}
+        display={TermsAndConditionsDisplay}
+        getIsAgreeToMarketing={getIsAgreeToMarketing}
+        nextButtonClickHandler={nextButtonClickHandler}
+      />
       <CreateAccount isAgreeToMarketing={isAgreeToMarketing} display={CreateAccountDisplay} />
     </Wrap>
   );
