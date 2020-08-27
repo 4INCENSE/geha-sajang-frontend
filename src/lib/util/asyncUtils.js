@@ -58,3 +58,5 @@ export const handleAsyncActions = (type, key) => {
     }
   };
 };
+
+//[출처] https://react.vlpt.us/redux-middleware/05-redux-thunk-with-promise.html
