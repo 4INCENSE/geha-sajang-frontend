@@ -3,8 +3,11 @@ import styled from 'styled-components';
 import { setTimeout } from 'core-js';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { addExtraService, deleteExtraService } from '@/redux/actions/extraServiceAction';
-import { postGuestHouseInfo } from '@/redux/actions/postGuestHouseInfoAction';
+import {
+  addExtraService,
+  deleteExtraService
+} from '@/redux/Registration/actions/RegisterGuestHouseActions/extraServiceAction';
+import { guestHouseInfoFormData } from '@/redux/Registration/actions/RegisterGuestHouseActions/guestHouseInfoFormDataAction';
 
 import { checkDuplicate } from '@/lib/util/checkDuplicate';
 
@@ -18,7 +21,7 @@ import UploadFile from '@/components/UIComponents/UploadFile/UploadFile';
 
 const GuestHouseInfo = ({ display, nextButton }) => {
   const dispatch = useDispatch();
-  const { extraServiceList } = useSelector((state) => state.registerGuestHouseInfoReducer);
+  const { extraServiceList, postGuestHouseInfo } = useSelector((state) => state.registerGuestHouseReducer);
 
   const [currentImage, setCurrentImage] = useState();
   const [serviceList, setServiceList] = useState([]);
@@ -42,6 +45,13 @@ const GuestHouseInfo = ({ display, nextButton }) => {
   useEffect(() => {
     setServiceList(extraServiceList);
   }, [extraServiceList]);
+
+  useEffect(() => {
+    const { data, loading, error } = postGuestHouseInfo;
+    if (!data) return;
+    if (data.status === 201) return nextButton();
+    if (error) alert(data.response.data.message);
+  }, [postGuestHouseInfo]);
 
   const validateName = () => {
     const nameValue = nameInput.current.value;
@@ -135,8 +145,8 @@ const GuestHouseInfo = ({ display, nextButton }) => {
         mainNumber: numberInput.current.value,
         image: currentImage
       };
-      dispatch(postGuestHouseInfo(postData));
-      nextButton();
+
+      dispatch(guestHouseInfoFormData(postData));
     }
   };
 
