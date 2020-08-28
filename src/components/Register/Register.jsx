@@ -11,13 +11,9 @@ import { getTerms } from '@/redux/Registration/thunk/getTerms';
 const Register = () => {
   const dispatch = useDispatch();
   const { terms } = useSelector((state) => state.registerReducer);
-  const { data, loading, error } = terms;
-
-  const [TermsAndConditionsDisplay, setTermsAndConditionsDisplay] = useState('flex');
-  const [CreateAccountDisplay, setCreateAccountDisplay] = useState('none');
+  const { data, error } = terms;
 
   const [isAgreed, setItAgreed] = useState(false);
-
   const [isAgreeToMarketing, setIsAgreeToMarketing] = useState(false);
 
   useEffect(() => {
@@ -25,7 +21,7 @@ const Register = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (error) alertError();
+    if (error) errorGetTerms();
   }, [terms]);
 
   const nextButtonClickHandler = () => {
@@ -36,7 +32,7 @@ const Register = () => {
     setIsAgreeToMarketing(bool);
   };
 
-  const alertError = () => {
+  const errorGetTerms = () => {
     alert(data);
     window.history.back();
   };
