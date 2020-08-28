@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { postCheckEmail, postCheckName } from '@/redux/Registration/thunk/postCheckDuplicate';
+import { postCreateAccount, removeCreateAccountData } from '@/redux/Registration/thunk/postCreateAccount';
 
 import BlackButton from '@/components/UIComponents/Button/BlackButton';
 import TitleInput from '@/components/UIComponents/Input/TitleInput';
@@ -13,7 +14,7 @@ const CreateAccount = ({ isAgreeToMarketing }) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const { checkEmail, checkName } = useSelector((state) => state.registerReducer);
+  const { checkEmail, checkName, createAccount } = useSelector((state) => state.registerReducer);
 
   const [currentImage, setCurrentImage] = useState();
   const [emailMessage, setEmailMessage] = useState();
@@ -63,6 +64,14 @@ const CreateAccount = ({ isAgreeToMarketing }) => {
       setNicknameMessageDisplay('block');
     }
   }, [checkName]);
+
+  useEffect(() => {
+    const { data, loading, error } = createAccount;
+    if (!data) return;
+    if (data.status === 201) {
+      successCreateAccount();
+    }
+  }, [createAccount]);
 
   const validateEmail = () => {
     const email = emailInput.current.value;
@@ -147,7 +156,7 @@ const CreateAccount = ({ isAgreeToMarketing }) => {
   };
 
   const moveToLogIn = () => {
-    history.push('/');
+    history.push('/logIn');
   };
 
   const registerButtonClickHandler = () => {
@@ -164,6 +173,22 @@ const CreateAccount = ({ isAgreeToMarketing }) => {
       !isEmailDuplicated &&
       !isNicknameDuplicated
     ) {
+
+      const formData = new FormData();
+      formData.append('email', emailInput.current.value);
+      formData.append('password', passwordInput.current.value);
+      formData.append('nickname', nicknameInput.current.value);
+      formData.append('image', currentImage);
+      formData.append('isAgreeToMarketing', isAgreeToMarketing);
+
+      dispatch(postCreateAccount(formData));
+    }
+  };
+
+  const successCreateAccount = () => {
+    removeCreateAccountData();
+    alert(`가입한 이메일로 인증 이메일이 전송되었습니다.\n이메일 인증 후 서비스를 이용하실 수 있습니다.`);
+    moveToLogIn();
   };
 
   return (
