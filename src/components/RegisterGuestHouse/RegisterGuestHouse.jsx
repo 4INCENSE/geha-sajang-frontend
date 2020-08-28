@@ -1,18 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import Header from '@/components/Header/Header';
 import SelectRegistrationType from '@/components/RegisterGuestHouse/SelectRegistrationType/SelectRegistrationType';
 import RegisterGuestHouseInfo from '@/components/RegisterGuestHouse/GuestHouseInfo/GuestHouseInfo';
 import RegisterRegisteredGuestHouse from '@/components/RegisterGuestHouse/RegisteredGuesthouse/RegisteredGuesthouse';
-
-const Wrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  overflow-x: hidden;
-`;
 
 const RegisterGuestHouse = () => {
   const [selectRegistrationTypeDisplay, setSelectRegistrationTypeDisplay] = useState('flex');
@@ -52,3 +44,11 @@ const RegisterGuestHouse = () => {
 };
 
 export default RegisterGuestHouse;
+
+const Wrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  overflow-x: hidden;
+`;
