@@ -42,6 +42,11 @@ const registerReducer = (state = initialState, action) => {
     case POST_CREATE_ACCOUNT_SUCCESS:
     case POST_CREATE_ACCOUNT_ERROR:
       return handleAsyncActions(POST_CREATE_ACCOUNT, 'createAccount')(state, action);
+    case REMOVE_CREATE_ACCOUNT_DATA:
+      return {
+        ...state,
+        createAccount: reducerUtils.initial()
+      };
     default:
       return state;
   }
