@@ -30,6 +30,34 @@ const CreateAccount = ({ isAgreeToMarketing }) => {
   const passwordConfirmInput = React.createRef();
   const nicknameInput = React.createRef();
 
+  useEffect(() => {
+    const { data, error } = checkEmail;
+    if (!data) return;
+    if (data.data) {
+      setEmailMessage('이미 사용 중인 이메일입니다');
+      setEmailMessageDisplay('block');
+    }
+    if (error) {
+      setEmailMessage('이메일을 다시 확인해주세요');
+      setEmailMessageDisplay('block');
+    }
+
+    console.log(data);
+  }, [checkEmail]);
+
+  useEffect(() => {
+    const { data, error } = checkName;
+    if (!data) return;
+    if (data.data) {
+      setNicknameMessage('이미 사용 중인 닉네임입니다');
+      setNicknameMessageDisplay('block');
+    }
+    if (error) {
+      setNicknameMessage('닉네임은 2~10자로 입력해주세요');
+      setNicknameMessageDisplay('block');
+    }
+  }, [checkName]);
+
   const validateEmail = () => {
     const email = emailInput.current.value;
     var emailCheck = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
