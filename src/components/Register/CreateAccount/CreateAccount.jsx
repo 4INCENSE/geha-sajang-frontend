@@ -9,6 +9,7 @@ import { postCreateAccount, removeCreateAccountData } from '@/redux/Registration
 import BlackButton from '@/components/UIComponents/Button/BlackButton';
 import TitleInput from '@/components/UIComponents/Input/TitleInput';
 import UploadFile from '@/components/UIComponents/UploadFile/UploadFile';
+import LoadingIndicator from '@/components/LoadingIndicator/LoadingIndicator';
 
 const CreateAccount = ({ isAgreeToMarketing }) => {
   const history = useHistory();
@@ -27,6 +28,8 @@ const CreateAccount = ({ isAgreeToMarketing }) => {
   const [nicknameMessageDisplay, setNicknameMessageDisplay] = useState();
   const [isEmailDuplicated, setIsEmailDuplicated] = useState(false);
   const [isNicknameDuplicated, setIsNicknameDuplicated] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const emailInput = React.createRef();
   const passwordInput = React.createRef();
@@ -70,6 +73,11 @@ const CreateAccount = ({ isAgreeToMarketing }) => {
     if (!data) return;
     if (data.status === 201) {
       successCreateAccount();
+    }
+    if (error) {
+      console.log(data);
+      alert(data.response.data.message);
+      setIsLoading(false);
     }
   }, [createAccount]);
 
@@ -173,6 +181,7 @@ const CreateAccount = ({ isAgreeToMarketing }) => {
       !isEmailDuplicated &&
       !isNicknameDuplicated
     ) {
+      setIsLoading(true);
 
       const formData = new FormData();
       formData.append('email', emailInput.current.value);
@@ -188,59 +197,63 @@ const CreateAccount = ({ isAgreeToMarketing }) => {
   const successCreateAccount = () => {
     removeCreateAccountData();
     alert(`가입한 이메일로 인증 이메일이 전송되었습니다.\n이메일 인증 후 서비스를 이용하실 수 있습니다.`);
+    setIsLoading(false);
     moveToLogIn();
   };
 
   return (
-    <ContentWrap>
-      <RegisterTitle>회원가입</RegisterTitle>
-      <RegisterWrap>
-        <InputWrap>
-          <TitleInput
-            title="이메일 주소"
-            spanValue=" ●"
-            refValue={emailInput}
-            onBlur={validateEmail}
-            messageDisplay={emailMessageDisplay}
-            messageValue={emailMessage}
-          />
-        </InputWrap>
-        <InputWrap>
-          <TitleInput
-            type="password"
-            title="비밀번호"
-            spanValue=" ●"
-            refValue={passwordInput}
-            onBlur={validatePassword}
-            messageDisplay={passwordMessageDisplay}
-            messageValue={passwordMessage}
-          />
-        </InputWrap>
-        <InputWrap>
-          <TitleInput
-            type="password"
-            title="비밀번호 확인"
-            spanValue=" ●"
-            onBlur={confirmPassword}
-            refValue={passwordConfirmInput}
-            messageDisplay={passwordConfirmMessageDisplay}
-            messageValue={passwordConfirmMessage}
-          />
-        </InputWrap>
-        <InputWrap>
-          <TitleInput
-            title="닉네임"
-            spanValue=" ●"
-            onBlur={validateNickname}
-            refValue={nicknameInput}
-            messageDisplay={nicknameMessageDisplay}
-            messageValue={nicknameMessage}
-          />
-        </InputWrap>
-        <UploadFile title="프로필 사진" getCurrentFile={setCurrentImage} />
-        <BlackButton title="회원가입" onClick={registerButtonClickHandler} />
-      </RegisterWrap>
-    </ContentWrap>
+    <>
+      {isLoading ? <LoadingIndicator /> : ''}
+      <ContentWrap>
+        <RegisterTitle>회원가입</RegisterTitle>
+        <RegisterWrap>
+          <InputWrap>
+            <TitleInput
+              title="이메일 주소"
+              spanValue=" ●"
+              refValue={emailInput}
+              onBlur={validateEmail}
+              messageDisplay={emailMessageDisplay}
+              messageValue={emailMessage}
+            />
+          </InputWrap>
+          <InputWrap>
+            <TitleInput
+              type="password"
+              title="비밀번호"
+              spanValue=" ●"
+              refValue={passwordInput}
+              onBlur={validatePassword}
+              messageDisplay={passwordMessageDisplay}
+              messageValue={passwordMessage}
+            />
+          </InputWrap>
+          <InputWrap>
+            <TitleInput
+              type="password"
+              title="비밀번호 확인"
+              spanValue=" ●"
+              onBlur={confirmPassword}
+              refValue={passwordConfirmInput}
+              messageDisplay={passwordConfirmMessageDisplay}
+              messageValue={passwordConfirmMessage}
+            />
+          </InputWrap>
+          <InputWrap>
+            <TitleInput
+              title="닉네임"
+              spanValue=" ●"
+              onBlur={validateNickname}
+              refValue={nicknameInput}
+              messageDisplay={nicknameMessageDisplay}
+              messageValue={nicknameMessage}
+            />
+          </InputWrap>
+          <UploadFile title="프로필 사진" getCurrentFile={setCurrentImage} />
+          <BlackButton title="회원가입" onClick={registerButtonClickHandler} />
+        </RegisterWrap>
+      </ContentWrap>
+    </>
   );
 };
 
