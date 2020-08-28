@@ -16,6 +16,8 @@ const Register = () => {
   const [TermsAndConditionsDisplay, setTermsAndConditionsDisplay] = useState('flex');
   const [CreateAccountDisplay, setCreateAccountDisplay] = useState('none');
 
+  const [isAgreed, setItAgreed] = useState(false);
+
   const [isAgreeToMarketing, setIsAgreeToMarketing] = useState(false);
 
   useEffect(() => {
@@ -27,8 +29,7 @@ const Register = () => {
   }, [terms]);
 
   const nextButtonClickHandler = () => {
-    setTermsAndConditionsDisplay('none');
-    setCreateAccountDisplay('flex');
+    setItAgreed(true);
   };
 
   const getIsAgreeToMarketing = (bool) => {
@@ -40,19 +41,20 @@ const Register = () => {
     window.history.back();
   };
 
-  console.log(data);
   if (!data) return <></>;
   if (error) return <></>;
   return (
     <Wrap>
       <Header />
-      <TermsAndConditions
-        termsData={data}
-        display={TermsAndConditionsDisplay}
-        getIsAgreeToMarketing={getIsAgreeToMarketing}
-        nextButtonClickHandler={nextButtonClickHandler}
-      />
-      <CreateAccount isAgreeToMarketing={isAgreeToMarketing} display={CreateAccountDisplay} />
+      {!isAgreed ? (
+        <TermsAndConditions
+          termsData={data}
+          getIsAgreeToMarketing={getIsAgreeToMarketing}
+          nextButtonClickHandler={nextButtonClickHandler}
+        />
+      ) : (
+        <CreateAccount isAgreeToMarketing={isAgreeToMarketing} />
+      )}
     </Wrap>
   );
 };

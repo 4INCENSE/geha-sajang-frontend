@@ -6,7 +6,7 @@ import BlackButton from '@/components/UIComponents/Button/BlackButton';
 import TitleInput from '@/components/UIComponents/Input/TitleInput';
 import UploadFile from '@/components/UIComponents/UploadFile/UploadFile';
 
-const CreateAccount = ({ display }) => {
+const CreateAccount = ({ isAgreeToMarketing }) => {
   const history = useHistory();
 
   const [currentImage, setCurrentImage] = useState();
@@ -117,7 +117,7 @@ const CreateAccount = ({ display }) => {
   };
 
   return (
-    <ContentWrap style={{ display: display }}>
+    <ContentWrap>
       <RegisterTitle>회원가입</RegisterTitle>
       <RegisterWrap>
         <InputWrap>

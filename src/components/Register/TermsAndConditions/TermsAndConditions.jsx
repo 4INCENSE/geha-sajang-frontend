@@ -6,7 +6,7 @@ import uncheckedIcon from '@/img/icon/unchecked.png';
 
 import BlackButton from '@/components/UIComponents/Button/BlackButton';
 
-const TermsAndConditions = ({ termsData, display, getIsAgreeToMarketing, nextButtonClickHandler }) => {
+const TermsAndConditions = ({ termsData, getIsAgreeToMarketing, nextButtonClickHandler }) => {
   const [isAllChecked, setIsAllChecked] = useState(false);
   const [isServiceChecked, setIsServiceChecked] = useState(false);
   const [isPersonalInfoChecked, setIsPersonalInfoChecked] = useState(false);
@@ -60,7 +60,7 @@ const TermsAndConditions = ({ termsData, display, getIsAgreeToMarketing, nextBut
   };
 
   return (
-    <ContentWrap style={{ display: display }}>
+    <ContentWrap>
       <RegisterTitle>게하사장 서비스 약관 동의</RegisterTitle>
       <RegisterWrap>
         <AgreementWrap>
