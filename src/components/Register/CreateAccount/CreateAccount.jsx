@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { postCheckEmail, postCheckName } from '@/redux/Registration/thunk/postCheckDuplicate';
+import { postCreateAccount, removeCreateAccountData } from '@/redux/Registration/thunk/postCreateAccount';
 
 import BlackButton from '@/components/UIComponents/Button/BlackButton';
 import TitleInput from '@/components/UIComponents/Input/TitleInput';
 import UploadFile from '@/components/UIComponents/UploadFile/UploadFile';
+import LoadingIndicator from '@/components/LoadingIndicator/LoadingIndicator';
 
-const CreateAccount = ({ display }) => {
+const CreateAccount = ({ isAgreeToMarketing }) => {
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  const { checkEmail, checkName, createAccount } = useSelector((state) => state.registerReducer);
 
   const [currentImage, setCurrentImage] = useState();
   const [emailMessage, setEmailMessage] = useState();
@@ -18,11 +26,60 @@ const CreateAccount = ({ display }) => {
   const [passwordConfirmMessageDisplay, setPasswordConfirmMessageDisplay] = useState();
   const [nicknameMessage, setNicknameMessage] = useState();
   const [nicknameMessageDisplay, setNicknameMessageDisplay] = useState();
+  const [isEmailDuplicated, setIsEmailDuplicated] = useState(false);
+  const [isNicknameDuplicated, setIsNicknameDuplicated] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const emailInput = React.createRef();
   const passwordInput = React.createRef();
   const passwordConfirmInput = React.createRef();
   const nicknameInput = React.createRef();
+
+  useEffect(() => {
+    const { data, error } = checkEmail;
+    if (!data) return;
+    if (data.data) {
+      setEmailMessage('이미 사용 중인 이메일입니다');
+      setEmailMessageDisplay('block');
+      setIsEmailDuplicated(true);
+    } else {
+      setIsEmailDuplicated(false);
+    }
+    if (error) {
+      setEmailMessage('이메일을 다시 확인해주세요');
+      setEmailMessageDisplay('block');
+    }
+  }, [checkEmail]);
+
+  useEffect(() => {
+    const { data, error } = checkName;
+    if (!data) return;
+    if (data.data) {
+      setNicknameMessage('이미 사용 중인 닉네임입니다');
+      setNicknameMessageDisplay('block');
+      setIsNicknameDuplicated(true);
+    } else {
+      setIsNicknameDuplicated(false);
+    }
+    if (error) {
+      setNicknameMessage('닉네임은 2~10자로 입력해주세요');
+      setNicknameMessageDisplay('block');
+    }
+  }, [checkName]);
+
+  useEffect(() => {
+    const { data, loading, error } = createAccount;
+    if (!data) return;
+    if (data.status === 201) {
+      successCreateAccount();
+    }
+    if (error) {
+      console.log(data);
+      alert(data.response.data.message);
+      setIsLoading(false);
+    }
+  }, [createAccount]);
 
   const validateEmail = () => {
     const email = emailInput.current.value;
@@ -38,6 +95,7 @@ const CreateAccount = ({ display }) => {
       setEmailMessageDisplay('block');
       return false;
     }
+    dispatch(postCheckEmail(email));
     setEmailMessageDisplay('none');
     return true;
   };
@@ -100,12 +158,13 @@ const CreateAccount = ({ display }) => {
       setNicknameMessageDisplay('block');
       return false;
     }
+    dispatch(postCheckName(nickname));
     setNicknameMessageDisplay('none');
     return true;
   };
 
   const moveToLogIn = () => {
-    history.push('/');
+    history.push('/logIn');
   };
 
   const registerButtonClickHandler = () => {
@@ -113,59 +172,88 @@ const CreateAccount = ({ display }) => {
     validatePassword();
     confirmPassword();
     validateNickname();
-    if (validateEmail() && validatePassword() && confirmPassword() && validateNickname()) moveToLogIn();
+
+    if (
+      validateEmail() &&
+      validatePassword() &&
+      confirmPassword() &&
+      validateNickname() &&
+      !isEmailDuplicated &&
+      !isNicknameDuplicated
+    ) {
+      setIsLoading(true);
+
+      const formData = new FormData();
+      formData.append('email', emailInput.current.value);
+      formData.append('password', passwordInput.current.value);
+      formData.append('nickname', nicknameInput.current.value);
+      formData.append('image', currentImage);
+      formData.append('isAgreeToMarketing', isAgreeToMarketing);
+
+      dispatch(postCreateAccount(formData));
+    }
+  };
+
+  const successCreateAccount = () => {
+    removeCreateAccountData();
+    alert(`가입한 이메일로 인증 이메일이 전송되었습니다.\n이메일 인증 후 서비스를 이용하실 수 있습니다.`);
+    setIsLoading(false);
+    moveToLogIn();
   };
 
   return (
-    <ContentWrap style={{ display: display }}>
-      <RegisterTitle>회원가입</RegisterTitle>
-      <RegisterWrap>
-        <InputWrap>
-          <TitleInput
-            title="이메일 주소"
-            spanValue=" ●"
-            refValue={emailInput}
-            onBlur={validateEmail}
-            messageDisplay={emailMessageDisplay}
-            messageValue={emailMessage}
-          />
-        </InputWrap>
-        <InputWrap>
-          <TitleInput
-            type="password"
-            title="비밀번호"
-            spanValue=" ●"
-            refValue={passwordInput}
-            onBlur={validatePassword}
-            messageDisplay={passwordMessageDisplay}
-            messageValue={passwordMessage}
-          />
-        </InputWrap>
-        <InputWrap>
-          <TitleInput
-            type="password"
-            title="비밀번호 확인"
-            spanValue=" ●"
-            onBlur={confirmPassword}
-            refValue={passwordConfirmInput}
-            messageDisplay={passwordConfirmMessageDisplay}
-            messageValue={passwordConfirmMessage}
-          />
-        </InputWrap>
-        <InputWrap>
-          <TitleInput
-            title="닉네임"
-            spanValue=" ●"
-            onBlur={validateNickname}
-            refValue={nicknameInput}
-            messageDisplay={nicknameMessageDisplay}
-            messageValue={nicknameMessage}
-          />
-        </InputWrap>
-        <UploadFile title="프로필 사진" getCurrentFile={setCurrentImage} />
-        <BlackButton title="회원가입" onClick={registerButtonClickHandler} />
-      </RegisterWrap>
-    </ContentWrap>
+    <>
+      {isLoading ? <LoadingIndicator /> : ''}
+      <ContentWrap>
+        <RegisterTitle>회원가입</RegisterTitle>
+        <RegisterWrap>
+          <InputWrap>
+            <TitleInput
+              title="이메일 주소"
+              spanValue=" ●"
+              refValue={emailInput}
+              onBlur={validateEmail}
+              messageDisplay={emailMessageDisplay}
+              messageValue={emailMessage}
+            />
+          </InputWrap>
+          <InputWrap>
+            <TitleInput
+              type="password"
+              title="비밀번호"
+              spanValue=" ●"
+              refValue={passwordInput}
+              onBlur={validatePassword}
+              messageDisplay={passwordMessageDisplay}
+              messageValue={passwordMessage}
+            />
+          </InputWrap>
+          <InputWrap>
+            <TitleInput
+              type="password"
+              title="비밀번호 확인"
+              spanValue=" ●"
+              onBlur={confirmPassword}
+              refValue={passwordConfirmInput}
+              messageDisplay={passwordConfirmMessageDisplay}
+              messageValue={passwordConfirmMessage}
+            />
+          </InputWrap>
+          <InputWrap>
+            <TitleInput
+              title="닉네임"
+              spanValue=" ●"
+              onBlur={validateNickname}
+              refValue={nicknameInput}
+              messageDisplay={nicknameMessageDisplay}
+              messageValue={nicknameMessage}
+            />
+          </InputWrap>
+          <UploadFile title="프로필 사진" getCurrentFile={setCurrentImage} />
+          <BlackButton title="회원가입" onClick={registerButtonClickHandler} />
+        </RegisterWrap>
+      </ContentWrap>
+    </>
   );
 };
 

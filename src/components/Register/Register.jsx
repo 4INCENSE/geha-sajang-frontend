@@ -1,24 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Header from '@/components/Header/Header';
 import CreateAccount from '@/components/Register/CreateAccount/CreateAccount';
-import TermsAndConditions from '@/components/Register/CreateAccount/TermsAndConditions/TermsAndConditions';
+import TermsAndConditions from '@/components/Register/TermsAndConditions/TermsAndConditions';
+
+import { getTerms } from '@/redux/Registration/thunk/getTerms';
 
 const Register = () => {
-  const [TermsAndConditionsDisplay, setTermsAndConditionsDisplay] = useState('flex');
-  const [CreateAccountDisplay, setCreateAccountDisplay] = useState('none');
+  const dispatch = useDispatch();
+  const { terms } = useSelector((state) => state.registerReducer);
+  const { data, error } = terms;
+
+  const [isAgreed, setItAgreed] = useState(false);
+  const [isAgreeToMarketing, setIsAgreeToMarketing] = useState(false);
+
+  useEffect(() => {
+    dispatch(getTerms());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (error) errorGetTerms();
+  }, [terms]);
 
   const nextButtonClickHandler = () => {
-    setTermsAndConditionsDisplay('none');
-    setCreateAccountDisplay('flex');
+    setItAgreed(true);
   };
 
+  const getIsAgreeToMarketing = (bool) => {
+    setIsAgreeToMarketing(bool);
+  };
+
+  const errorGetTerms = () => {
+    alert(data);
+    window.history.back();
+  };
+
+  if (!data) return <></>;
+  if (error) return <></>;
   return (
     <Wrap>
       <Header />
-      <TermsAndConditions display={TermsAndConditionsDisplay} nextButtonClickHandler={nextButtonClickHandler} />
-      <CreateAccount display={CreateAccountDisplay} />
+      {!isAgreed ? (
+        <TermsAndConditions
+          termsData={data}
+          getIsAgreeToMarketing={getIsAgreeToMarketing}
+          nextButtonClickHandler={nextButtonClickHandler}
+        />
+      ) : (
+        <CreateAccount isAgreeToMarketing={isAgreeToMarketing} />
+      )}
     </Wrap>
   );
 };
