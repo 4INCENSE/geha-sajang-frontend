@@ -10,13 +10,18 @@ const {
   CHECK_EMAIL_ERROR,
   CHECK_NAME,
   CHECK_NAME_SUCCESS,
-  CHECK_NAME_ERROR
+  CHECK_NAME_ERROR,
+  POST_CREATE_ACCOUNT,
+  POST_CREATE_ACCOUNT_SUCCESS,
+  POST_CREATE_ACCOUNT_ERROR,
+  REMOVE_CREATE_ACCOUNT_DATA
 } = registerType;
 
 const initialState = {
   terms: reducerUtils.initial(),
   checkEmail: reducerUtils.initial(),
-  checkName: reducerUtils.initial()
+  checkName: reducerUtils.initial(),
+  createAccount: reducerUtils.initial()
 };
 
 const registerReducer = (state = initialState, action) => {
@@ -33,6 +38,10 @@ const registerReducer = (state = initialState, action) => {
     case CHECK_NAME_SUCCESS:
     case CHECK_NAME_ERROR:
       return handleAsyncActions(CHECK_NAME, 'checkName')(state, action);
+    case POST_CREATE_ACCOUNT:
+    case POST_CREATE_ACCOUNT_SUCCESS:
+    case POST_CREATE_ACCOUNT_ERROR:
+      return handleAsyncActions(POST_CREATE_ACCOUNT, 'createAccount')(state, action);
     default:
       return state;
   }
