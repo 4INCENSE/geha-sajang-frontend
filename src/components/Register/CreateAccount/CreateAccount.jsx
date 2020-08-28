@@ -24,6 +24,8 @@ const CreateAccount = ({ isAgreeToMarketing }) => {
   const [passwordConfirmMessageDisplay, setPasswordConfirmMessageDisplay] = useState();
   const [nicknameMessage, setNicknameMessage] = useState();
   const [nicknameMessageDisplay, setNicknameMessageDisplay] = useState();
+  const [isEmailDuplicated, setIsEmailDuplicated] = useState(false);
+  const [isNicknameDuplicated, setIsNicknameDuplicated] = useState(false);
 
   const emailInput = React.createRef();
   const passwordInput = React.createRef();
@@ -36,13 +38,14 @@ const CreateAccount = ({ isAgreeToMarketing }) => {
     if (data.data) {
       setEmailMessage('이미 사용 중인 이메일입니다');
       setEmailMessageDisplay('block');
+      setIsEmailDuplicated(true);
+    } else {
+      setIsEmailDuplicated(false);
     }
     if (error) {
       setEmailMessage('이메일을 다시 확인해주세요');
       setEmailMessageDisplay('block');
     }
-
-    console.log(data);
   }, [checkEmail]);
 
   useEffect(() => {
@@ -51,6 +54,9 @@ const CreateAccount = ({ isAgreeToMarketing }) => {
     if (data.data) {
       setNicknameMessage('이미 사용 중인 닉네임입니다');
       setNicknameMessageDisplay('block');
+      setIsNicknameDuplicated(true);
+    } else {
+      setIsNicknameDuplicated(false);
     }
     if (error) {
       setNicknameMessage('닉네임은 2~10자로 입력해주세요');
@@ -149,7 +155,15 @@ const CreateAccount = ({ isAgreeToMarketing }) => {
     validatePassword();
     confirmPassword();
     validateNickname();
-    if (validateEmail() && validatePassword() && confirmPassword() && validateNickname()) moveToLogIn();
+
+    if (
+      validateEmail() &&
+      validatePassword() &&
+      confirmPassword() &&
+      validateNickname() &&
+      !isEmailDuplicated &&
+      !isNicknameDuplicated
+    ) {
   };
 
   return (
