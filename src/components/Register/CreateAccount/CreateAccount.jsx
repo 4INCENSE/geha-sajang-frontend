@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { postCheckEmail, postCheckName } from '@/redux/Registration/thunk/postCheckDuplicate';
 
 import BlackButton from '@/components/UIComponents/Button/BlackButton';
 import TitleInput from '@/components/UIComponents/Input/TitleInput';
@@ -8,6 +11,9 @@ import UploadFile from '@/components/UIComponents/UploadFile/UploadFile';
 
 const CreateAccount = ({ isAgreeToMarketing }) => {
   const history = useHistory();
+  const dispatch = useDispatch();
+
+  const { checkEmail, checkName } = useSelector((state) => state.registerReducer);
 
   const [currentImage, setCurrentImage] = useState();
   const [emailMessage, setEmailMessage] = useState();
@@ -38,6 +44,7 @@ const CreateAccount = ({ isAgreeToMarketing }) => {
       setEmailMessageDisplay('block');
       return false;
     }
+    dispatch(postCheckEmail(email));
     setEmailMessageDisplay('none');
     return true;
   };
@@ -100,6 +107,7 @@ const CreateAccount = ({ isAgreeToMarketing }) => {
       setNicknameMessageDisplay('block');
       return false;
     }
+    dispatch(postCheckName(nickname));
     setNicknameMessageDisplay('none');
     return true;
   };
