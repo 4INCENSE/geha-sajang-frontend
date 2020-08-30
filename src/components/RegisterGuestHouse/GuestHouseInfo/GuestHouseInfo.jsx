@@ -7,9 +7,10 @@ import {
   addExtraService,
   deleteExtraService
 } from '@/redux/Registration/actions/RegisterGuestHouseActions/extraServiceAction';
+
 import { guestHouseInfoFormData } from '@/redux/Registration/actions/RegisterGuestHouseActions/guestHouseInfoFormDataAction';
 
-import { checkDuplicate } from '@/lib/util/checkDuplicate';
+import { checkDuplicate } from '@/common/lib/util/checkDuplicate';
 
 import questionIcon from '@/img/icon/question.png';
 import closeIcon from '@/img/icon/close_w.png';
