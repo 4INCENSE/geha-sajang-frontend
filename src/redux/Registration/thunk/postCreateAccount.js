@@ -1,9 +1,10 @@
 import axios from 'axios';
-import { createPromiseThunk } from '@/lib/util/asyncUtils';
+import { createPromiseThunk } from '@/common/lib/util/asyncUtils';
 import { POST_CREATE_ACCOUNT, REMOVE_CREATE_ACCOUNT_DATA } from '@/redux/Registration/type/registerType';
+import { API_URL } from '@/common/config';
 
 export const postCreateAccountAPI = async (formData) => {
-  const response = await axios.post(process.env.POST_CREATE_ACCOUNT, formData, {
+  const response = await axios.post(API_URL.postCreateAccount, formData, {
     headers: { 'Content-Type': 'multipart/form-data' }
   });
   return response;
