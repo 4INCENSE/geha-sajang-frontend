@@ -28,6 +28,10 @@ const AccountLogInForm = ({ title, buttonTitle }) => {
     dispatch(postLogIn(postData));
   };
 
+  const passwordInputEnterKeyPressHandler = (e) => {
+    if (e.keyCode === 13) logInButtonClickHandler();
+  };
+
   const successLogIn = () => {
     console.log('로그인 성공');
   };
