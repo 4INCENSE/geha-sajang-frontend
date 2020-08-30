@@ -184,7 +184,7 @@ const CreateAccount = ({ isAgreeToMarketing }) => {
       setIsLoading(true);
 
       const formData = new FormData();
-      formData.append('email', emailInput.current.value);
+      formData.append('account', emailInput.current.value);
       formData.append('password', passwordInput.current.value);
       formData.append('nickname', nicknameInput.current.value);
       formData.append('image', currentImage);
