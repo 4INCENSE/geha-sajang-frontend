@@ -8,12 +8,14 @@ import logger from 'redux-logger';
 
 import { registerReducer } from '@/redux/Registration/reducers/registerReducer';
 import { registerGuestHouseReducer } from '@/redux/Registration/reducers/registerGuestHouseReducer';
+import { logInLogOutReducer } from '@/redux/LogInLogOut/reducers/logInLogOutReducer';
 
 const rootElement = document.getElementById('root');
 
 const rootReducer = combineReducers({
   registerReducer,
-  registerGuestHouseReducer
+  registerGuestHouseReducer,
+  logInLogOutReducer
 });
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(ReduxThunk, logger)));
