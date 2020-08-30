@@ -1,18 +1,57 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { postLogIn } from '@/redux/LogInLogOut/thunk/postLogIn';
+
+import Input from '@/components/UIComponents/Input/Input';
 
 const AccountLogInForm = ({ title, buttonTitle }) => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const { logIn } = useSelector((state) => state.logInLogOutReducer);
+
+  const IdInput = React.createRef();
+  const passwordInput = React.createRef();
+
+  useEffect(() => {
+    const { data, loading, error } = logIn;
+    if (!data) return;
+    if (data.status === 200) return successLogIn();
+    if (error) alert(data.response.data.message);
+  }, [logIn]);
+
+  const logInButtonClickHandler = () => {
+    const postData = { account: IdInput.current.value, password: passwordInput.current.value };
+    dispatch(postLogIn(postData));
+  };
+
+  const successLogIn = () => {
+    console.log('로그인 성공');
+  };
+
   return (
     <>
       <LogInTitle>{title}</LogInTitle>
       <LogInFormWrap>
         <LogInFormContent style={{ marginTop: '15px' }}>아이디</LogInFormContent>
-        <LogInInput />
+        <InputWrap>
+          <Input inputWidth="300px" refValue={IdInput} />
+        </InputWrap>
         <LogInFormContent>비밀번호</LogInFormContent>
-        <LogInInput type="password" />
+        <InputWrap>
+          <Input
+            inputWidth="300px"
+            refValue={passwordInput}
+            type="password"
+            onKeyDown={passwordInputEnterKeyPressHandler}
+          />
+        </InputWrap>
       </LogInFormWrap>
       <ButtonWrap>
-        <Button>{buttonTitle}</Button>
+        <Button onClick={logInButtonClickHandler}>{buttonTitle}</Button>
       </ButtonWrap>
     </>
   );
