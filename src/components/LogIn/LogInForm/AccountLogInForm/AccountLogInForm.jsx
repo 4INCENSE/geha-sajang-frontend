@@ -91,18 +91,8 @@ const LogInFormContent = styled.div`
   margin: 10px 0 10px 15px;
 `;
 
-const LogInInput = styled.input`
-  width: 300px;
-  height: 40px;
-  border-radius: 5px;
-  border: 1px solid ${({ theme }) => theme.color.gray};
+const InputWrap = styled.div`
   margin: 2px 0 15px 0;
-  padding: 15px;
-  font-size: 16px;
-  &:focus {
-    outline: 0;
-    box-shadow: 0 0 5px 2px ${({ theme }) => theme.color.point};
-  }
 `;
 const ButtonWrap = styled.div`
   display: flex;
