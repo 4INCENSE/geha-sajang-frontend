@@ -1,3 +1,5 @@
+import { SET_EXTRA_SERVICE_LIST } from '@/redux/Registration/type/registerType';
+
 const addExtraService = (payload) => (dispatch, getState) => {
   const addedExtraServiceArray = addServiceToArray(getState, payload);
   dispatch(setExtraServiceList(addedExtraServiceArray));
@@ -22,7 +24,7 @@ const deleteServiceFromArray = (getState, payload) => {
 
 const setExtraServiceList = (payload) => {
   return {
-    type: 'SET_EXTRA_SERVICE_LIST',
+    type: SET_EXTRA_SERVICE_LIST,
     payload
   };
 };

@@ -3,12 +3,9 @@ import styled from 'styled-components';
 import { setTimeout } from 'core-js';
 import { useSelector, useDispatch } from 'react-redux';
 
-import {
-  addExtraService,
-  deleteExtraService
-} from '@/redux/Registration/actions/RegisterGuestHouseActions/extraServiceAction';
+import { addExtraService, deleteExtraService } from '@/redux/Registration/actions/extraServiceAction';
 
-import { guestHouseInfoFormData } from '@/redux/Registration/actions/RegisterGuestHouseActions/guestHouseInfoFormDataAction';
+import { guestHouseInfoFormData } from '@/redux/Registration/actions/guestHouseInfoFormDataAction';
 
 import { checkDuplicate } from '@/common/lib/util/checkDuplicate';
 
