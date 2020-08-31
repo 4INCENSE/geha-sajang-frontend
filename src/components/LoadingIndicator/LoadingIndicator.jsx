@@ -3,9 +3,9 @@ import styled from 'styled-components';
 
 import loadingGIF from '@/img/gif/loadingIndicator.gif';
 
-const LoadingIndicator = () => {
+const LoadingIndicator = ({ display, position }) => {
   return (
-    <LoadingIndicatorWrap>
+    <LoadingIndicatorWrap style={{ display: display, position: position }}>
       <LoadingGIF src={loadingGIF} />
     </LoadingIndicatorWrap>
   );

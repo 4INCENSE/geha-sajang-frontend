@@ -1,4 +1,4 @@
-import { reducerUtils, handleAsyncActions } from '@/lib/util/asyncUtils';
+import { reducerUtils, handleAsyncActions } from '@/common/lib/util/asyncUtils';
 import * as registerType from '@/redux/Registration/type/registerType';
 
 const {

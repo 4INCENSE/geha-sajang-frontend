@@ -3,13 +3,11 @@ import styled from 'styled-components';
 import { setTimeout } from 'core-js';
 import { useSelector, useDispatch } from 'react-redux';
 
-import {
-  addExtraService,
-  deleteExtraService
-} from '@/redux/Registration/actions/RegisterGuestHouseActions/extraServiceAction';
-import { guestHouseInfoFormData } from '@/redux/Registration/actions/RegisterGuestHouseActions/guestHouseInfoFormDataAction';
+import { addExtraService, deleteExtraService } from '@/redux/Registration/actions/extraServiceAction';
 
-import { checkDuplicate } from '@/lib/util/checkDuplicate';
+import { guestHouseInfoFormData } from '@/redux/Registration/actions/guestHouseInfoFormDataAction';
+
+import { checkDuplicate } from '@/common/lib/util/checkDuplicate';
 
 import questionIcon from '@/img/icon/question.png';
 import closeIcon from '@/img/icon/close_w.png';

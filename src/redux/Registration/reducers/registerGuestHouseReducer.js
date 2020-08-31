@@ -1,4 +1,4 @@
-import { reducerUtils, handleAsyncActions } from '@/lib/util/asyncUtils';
+import { reducerUtils, handleAsyncActions } from '@/common/lib/util/asyncUtils';
 import {
   POST_GUEST_HOUSE_INFO,
   POST_GUEST_HOUSE_INFO_SUCCESS,
@@ -7,7 +7,7 @@ import {
 
 const initialState = {
   extraServiceList: [],
-  postGuestHouseInfo: reducerUtils.initial()
+  guestHouseInfo: reducerUtils.initial()
 };
 
 const registerGuestHouseReducer = (state = initialState, action) => {
@@ -20,8 +20,7 @@ const registerGuestHouseReducer = (state = initialState, action) => {
     case POST_GUEST_HOUSE_INFO:
     case POST_GUEST_HOUSE_INFO_SUCCESS:
     case POST_GUEST_HOUSE_INFO_ERROR:
-      const reducer = handleAsyncActions(POST_GUEST_HOUSE_INFO, 'postGuestHouseInfo');
-      return reducer(state, action);
+      return handleAsyncActions(POST_GUEST_HOUSE_INFO, 'guestHouseInfo')(state, action);
     default:
       return state;
   }
