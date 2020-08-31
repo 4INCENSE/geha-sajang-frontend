@@ -1,4 +1,4 @@
-export const addExtraService = (payload) => (dispatch, getState) => {
+const addExtraService = (payload) => (dispatch, getState) => {
   const addedExtraServiceArray = addServiceToArray(getState, payload);
   dispatch(setExtraServiceList(addedExtraServiceArray));
 };
@@ -8,7 +8,7 @@ const addServiceToArray = (getState, payload) => {
   return extraServiceList.concat(payload);
 };
 
-export const deleteExtraService = (payload) => (dispatch, getState) => {
+const deleteExtraService = (payload) => (dispatch, getState) => {
   const deletedExtraServiceArray = deleteServiceFromArray(getState, payload);
   dispatch(setExtraServiceList(deletedExtraServiceArray));
 };
@@ -20,9 +20,11 @@ const deleteServiceFromArray = (getState, payload) => {
   return extraServiceList;
 };
 
-export const setExtraServiceList = (payload) => {
+const setExtraServiceList = (payload) => {
   return {
     type: 'SET_EXTRA_SERVICE_LIST',
     payload
   };
 };
+
+export { addExtraService, deleteExtraService, setExtraServiceList };
