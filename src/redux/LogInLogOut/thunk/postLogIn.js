@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { createPromiseThunk } from '@/common/lib/util/asyncUtils';
-import { POST_LOGIN } from '@/redux/LogInLogOut/type/LogInLogOutType';
+import { POST_LOGIN } from '@/redux/LogInLogOut/type/logInLogOutType';
 import { API_URL } from '@/common/config';
 
 const postLogInAPI = async (payload) => {
