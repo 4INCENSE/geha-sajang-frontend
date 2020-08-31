@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { postLogIn } from '@/redux/LogInLogOut/thunk/postLogIn';
+import { removeAccessToken } from '@/redux/LogInLogOut/actions/logInLogOutAction';
 
 import Input from '@/components/UIComponents/Input/Input';
 
@@ -34,6 +35,11 @@ const AccountLogInForm = ({ title, buttonTitle }) => {
 
   const successLogIn = () => {
     console.log('로그인 성공');
+  };
+
+  const logOutButtonClickHandler = () => {
+    dispatch(removeAccessToken());
+    console.log('로그아웃');
   };
 
   return (
