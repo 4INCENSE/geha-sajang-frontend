@@ -7,6 +7,7 @@ import { postLogIn } from '@/redux/LogInLogOut/thunk/postLogIn';
 import { removeAccessToken } from '@/redux/LogInLogOut/actions/logInLogOutAction';
 
 import { logInErrorCode } from '@/common/constants/errorCode';
+import { unregistered, inProgress, registered, staff } from '@/common/constants/registerState';
 
 import LoadingIndicator from '@/components/LoadingIndicator/LoadingIndicator';
 import Input from '@/components/UIComponents/Input/Input';
@@ -47,8 +48,10 @@ const AccountLogInForm = ({ title, buttonTitle }) => {
     if (e.keyCode === 13) logInButtonClickHandler();
   };
 
-  const successLogIn = () => {
-    console.log('로그인 성공');
+  const successLogIn = (data) => {
+    const registerState = data.data.registerState;
+    if (registerState === staff || registerState === registered) return history.push('/');
+    history.push('/registerGuestHouse');
   };
 
   const logOutButtonClickHandler = () => {
