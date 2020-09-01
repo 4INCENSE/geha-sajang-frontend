@@ -28,9 +28,9 @@ const AccountLogInForm = ({ title, buttonTitle }) => {
   useEffect(() => {
     const { data, error } = logIn;
     if (!data) return;
+    if (data.status === 200) return successLogIn(data);
     if (data) setIsLoading(false);
-    if (data.status === 200) return successLogIn();
-    if (error) errorLogIn(data);
+    if (error) return errorLogIn(data);
   }, [logIn]);
 
   const logInButtonClickHandler = () => {
@@ -74,6 +74,7 @@ const AccountLogInForm = ({ title, buttonTitle }) => {
   };
 
   const errorLogIn = (data) => {
+    if (!data.response) return alert(data.message);
     const errorCode = data.response.data.code;
     const errorMessage = data.response.data.message;
     const { NOT_CERTIFIED_ACCOUNT, NOT_FOUNT_ACCOUNT, INCORRECT_PASSWORD } = logInErrorCode;
