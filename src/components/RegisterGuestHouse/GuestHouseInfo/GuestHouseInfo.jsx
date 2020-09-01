@@ -19,7 +19,7 @@ import UploadFile from '@/components/UIComponents/UploadFile/UploadFile';
 
 const GuestHouseInfo = ({ display, nextButton }) => {
   const dispatch = useDispatch();
-  const { extraServiceList, postGuestHouseInfo } = useSelector((state) => state.registerGuestHouseReducer);
+  const { extraServiceList, guestHouseInfo } = useSelector((state) => state.registerGuestHouseReducer);
 
   const [currentImage, setCurrentImage] = useState();
   const [serviceList, setServiceList] = useState([]);
@@ -45,11 +45,11 @@ const GuestHouseInfo = ({ display, nextButton }) => {
   }, [extraServiceList]);
 
   useEffect(() => {
-    const { data, loading, error } = postGuestHouseInfo;
+    const { data, loading, error } = guestHouseInfo;
     if (!data) return;
     if (data.status === 201) return nextButton();
     if (error) alert(data.response.data.message);
-  }, [postGuestHouseInfo]);
+  }, [guestHouseInfo]);
 
   const validateName = () => {
     const nameValue = nameInput.current.value;
