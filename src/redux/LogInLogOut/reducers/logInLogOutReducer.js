@@ -8,6 +8,7 @@ import {
 
 const initialState = {
   accessToken: null,
+  registerState: null,
   logIn: reducerUtils.initial()
 };
 
@@ -17,7 +18,12 @@ const logInLogOutReducer = (state = initialState, action) => {
     case POST_LOGIN_ERROR:
       return handleAsyncActions(POST_LOGIN, 'logIn')(state, action);
     case POST_LOGIN_SUCCESS:
-      return { ...state, logIn: reducerUtils.success(action.payload), accessToken: action.payload.data.accessToken };
+      return {
+        ...state,
+        logIn: reducerUtils.success(action.payload),
+        accessToken: action.payload.data.accessToken,
+        registerState: action.payload.data.registerState
+      };
     case REMOVE_ACCESS_TOKEN:
       return {
         ...state,
