@@ -6,6 +6,8 @@ import { API_URL } from '@/common/config';
 const postLogInRequest = async (payload) => {
   const postData = { account: payload.account, password: payload.password };
   const response = await axios.post(API_URL.postLogIn, postData);
+  localStorage.setItem('jwt', response.data.accessToken);
+  localStorage.setItem('registerState', response.data.registerState);
   return response;
 };
 

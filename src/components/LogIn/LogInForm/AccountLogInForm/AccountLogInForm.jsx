@@ -4,9 +4,9 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { postLogIn } from '@/redux/LogInLogOut/thunk/postLogIn';
-import { removeAccessToken } from '@/redux/LogInLogOut/actions/logInLogOutAction';
 
 import { logInErrorCode } from '@/common/constants/errorCode';
+import { unregistered, inProgress, registered, staff } from '@/common/constants/registerState';
 
 import LoadingIndicator from '@/components/LoadingIndicator/LoadingIndicator';
 import Input from '@/components/UIComponents/Input/Input';
@@ -28,9 +28,9 @@ const AccountLogInForm = ({ title, buttonTitle }) => {
   useEffect(() => {
     const { data, error } = logIn;
     if (!data) return;
+    if (data.status === 200) return successLogIn(data);
     if (data) setIsLoading(false);
-    if (data.status === 200) return successLogIn();
-    if (error) errorLogIn(data);
+    if (error) return errorLogIn(data);
   }, [logIn]);
 
   const logInButtonClickHandler = () => {
@@ -47,12 +47,17 @@ const AccountLogInForm = ({ title, buttonTitle }) => {
     if (e.keyCode === 13) logInButtonClickHandler();
   };
 
-  const successLogIn = () => {
-    console.log('로그인 성공');
+  const successLogIn = (data) => {
+    let registerState = data.data.registerState;
+    if (registerState === staff || registerState === registered) {
+      return history.push('/');
+    }
+    if (registerState === unregistered) {
+      return history.push('/registerGuestHouse');
+    }
   };
 
   const logOutButtonClickHandler = () => {
-    dispatch(removeAccessToken());
     console.log('로그아웃');
   };
 
@@ -74,6 +79,7 @@ const AccountLogInForm = ({ title, buttonTitle }) => {
   };
 
   const errorLogIn = (data) => {
+    if (!data.response) return alert(data.message);
     const errorCode = data.response.data.code;
     const errorMessage = data.response.data.message;
     const { NOT_CERTIFIED_ACCOUNT, NOT_FOUNT_ACCOUNT, INCORRECT_PASSWORD } = logInErrorCode;

@@ -1,34 +1,52 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
+
+import { inProgress, unregistered, registered, staff } from '@/common/constants/registerState';
 
 import Header from '@/components/Header/Header';
 import SelectRegistrationType from '@/components/RegisterGuestHouse/SelectRegistrationType/SelectRegistrationType';
 import RegisterGuestHouseInfo from '@/components/RegisterGuestHouse/GuestHouseInfo/GuestHouseInfo';
 import RegisterRegisteredGuestHouse from '@/components/RegisterGuestHouse/RegisteredGuesthouse/RegisteredGuesthouse';
+import RoomInfo from '@/components/RegisterGuestHouse/RoomInfo/RoomInfo';
 
 const RegisterGuestHouse = () => {
+  const history = useHistory();
+
   const [selectRegistrationTypeDisplay, setSelectRegistrationTypeDisplay] = useState('flex');
-  const [registerGuestHouseInfoDisplay, setRegisterGuestHouseInfoDisplay] = useState('none');
-  const [registerRegisteredGuestHouseDisplay, setRegisterRegisteredGuestHouseDisplay] = useState('none');
+  const [guestHouseInfoDisplay, setGuestHouseInfoDisplay] = useState('none');
+  const [registeredGuestHouseDisplay, setRegisteredGuestHouseDisplay] = useState('none');
+  const [roomInfoDisplay, setRoomInfoDisplay] = useState('none');
+
+  const registerState = localStorage.getItem('registerState');
+
+  useEffect(() => {
+    if (registerState === registered || registerState === staff) history.replace('/');
+    if (registerState === inProgress) goToRegisterRoomInfo();
+  }, [registerState]);
 
   const goToRegisterGuestHouseInfo = () => {
     setSelectRegistrationTypeDisplay('none');
-    setRegisterGuestHouseInfoDisplay('flex');
-    setRegisterRegisteredGuestHouseDisplay('none');
+    setGuestHouseInfoDisplay('flex');
+    setRegisteredGuestHouseDisplay('none');
+    setRoomInfoDisplay('none');
   };
 
   const goToRegisterRegisteredGuestHouse = () => {
     setSelectRegistrationTypeDisplay('none');
-    setRegisterGuestHouseInfoDisplay('none');
-    setRegisterRegisteredGuestHouseDisplay('flex');
+    setGuestHouseInfoDisplay('none');
+    setRegisteredGuestHouseDisplay('flex');
+    setRoomInfoDisplay('none');
   };
 
   const goToRegisterRoomInfo = () => {
     setSelectRegistrationTypeDisplay('none');
-    setRegisterGuestHouseInfoDisplay('none');
-    setRegisterRegisteredGuestHouseDisplay('none');
+    setGuestHouseInfoDisplay('none');
+    setRegisteredGuestHouseDisplay('none');
+    setRoomInfoDisplay('flex');
   };
 
+  if (registerState === registered || registerState === staff) return <></>;
   return (
     <Wrap>
       <Header />
@@ -37,8 +55,9 @@ const RegisterGuestHouse = () => {
         registerGuestHouseInfoButton={goToRegisterGuestHouseInfo}
         registeredGuestHouseButton={goToRegisterRegisteredGuestHouse}
       />
-      <RegisterGuestHouseInfo display={registerGuestHouseInfoDisplay} nextButton={goToRegisterRoomInfo} />
-      <RegisterRegisteredGuestHouse display={registerRegisteredGuestHouseDisplay} nextButton={goToRegisterRoomInfo} />
+      <RegisterGuestHouseInfo display={guestHouseInfoDisplay} nextButton={goToRegisterRoomInfo} />
+      <RegisterRegisteredGuestHouse display={registeredGuestHouseDisplay} nextButton={goToRegisterRoomInfo} />
+      <RoomInfo display={roomInfoDisplay} />
     </Wrap>
   );
 };
