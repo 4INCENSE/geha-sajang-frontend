@@ -34,7 +34,7 @@ const RegisterGuestHouse = () => {
 
   const goToRegisterRegisteredGuestHouse = () => {
     setSelectRegistrationTypeDisplay('none');
-    setRegisterGuestHouseInfoDisplay('none');
+    setGuestHouseInfoDisplay('none');
     setRegisteredGuestHouseDisplay('flex');
     setRoomInfoDisplay('none');
   };
