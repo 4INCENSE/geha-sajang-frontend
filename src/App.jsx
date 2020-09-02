@@ -12,9 +12,6 @@ import LogIn from '@/components/LogIn/LogIn';
 import Main from '@/components/Main/Main';
 import Footer from '@/components/Footer/Footer';
 import NotFound from '@/components/NotFound/NotFound';
-
-const goToMainPage = () => <Redirect to="/" />;
-const goToLogInPage = () => <Redirect to="/logIn" />;
 import EmptyComponent from '@/components/EmptyComponent/EmptyComponent';
 
 const App = () => {
@@ -32,14 +29,26 @@ const App = () => {
     <GlobalStyleProvider>
       <BrowserRouter>
         <Switch>
-          <RestrictRoute path="/" component={Main} fallback={goToLogInPage} exact isAllow={isAuthenticated()} />
-          <RestrictRoute path="/logIn" component={LogIn} fallback={goToMainPage} isAllow={!isAuthenticated()} />
-          <RestrictRoute path="/register" component={Register} fallback={goToMainPage} isAllow={!isAuthenticated()} />
+          <RestrictRoute path="/" component={Main} fallback={goToLogInPage} exact isAllow={isAuthenticated} />
+          <RestrictRoute
+            path="/logIn"
+            component={LogIn}
+            fallback={goToBeforePage}
+            exact
+            isAllow={() => !isAuthenticated()}
+          />
+          <RestrictRoute
+            path="/register"
+            component={Register}
+            fallback={goToBeforePage}
+            exact
+            isAllow={() => !isAuthenticated()}
+          />
           <RestrictRoute
             path="/registerGuestHouse"
             component={RegisterGuestHouse}
             fallback={goToLogInPage}
-            isAllow={isAuthenticated()}
+            isAllow={isAuthenticated}
           />
           <Route path="/notFound" component={NotFound} />
           <Redirect path="*" to="/notFound" />
