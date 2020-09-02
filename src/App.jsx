@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Switch, Redirect } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 import { isAuthenticated } from '@/common/lib/authorityCheck';
+import { useHistory } from 'react-router-dom';
 
 import GlobalStyleProvider from '@/components/style/GlobalStyle';
 import RestrictRoute from '@/common/lib/util/RestrictRoute';
@@ -14,8 +15,19 @@ import NotFound from '@/components/NotFound/NotFound';
 
 const goToMainPage = () => <Redirect to="/" />;
 const goToLogInPage = () => <Redirect to="/logIn" />;
+import EmptyComponent from '@/components/EmptyComponent/EmptyComponent';
 
 const App = () => {
+  const goToLogInPage = () => {
+    useHistory().push('/logIn');
+    return <EmptyComponent />;
+  };
+  const goToBeforePage = () => {
+    alert('잘못된 접근입니다.\n이전페이지로 돌아갑니다.');
+    useHistory().goBack();
+    return <EmptyComponent />;
+  };
+
   return (
     <GlobalStyleProvider>
       <BrowserRouter>
