@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { postLogIn } from '@/redux/LogInLogOut/thunk/postLogIn';
-import { removeAccessToken } from '@/redux/LogInLogOut/actions/logInLogOutAction';
 
 import { logInErrorCode } from '@/common/constants/errorCode';
 import { unregistered, inProgress, registered, staff } from '@/common/constants/registerState';
@@ -49,13 +48,16 @@ const AccountLogInForm = ({ title, buttonTitle }) => {
   };
 
   const successLogIn = (data) => {
-    const registerState = data.data.registerState;
-    if (registerState === staff || registerState === registered) return history.push('/');
-    history.push('/registerGuestHouse');
+    let registerState = data.data.registerState;
+    if (registerState === staff || registerState === registered) {
+      return history.push('/');
+    }
+    if (registerState === unregistered) {
+      return history.push('/registerGuestHouse');
+    }
   };
 
   const logOutButtonClickHandler = () => {
-    dispatch(removeAccessToken());
     console.log('로그아웃');
   };
 
