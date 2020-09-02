@@ -24,7 +24,7 @@ const LogIn = () => {
 
   return (
     <Wrap>
-      <LogInConentWrap>
+      <LogInContentWrap>
         <ImgBlur />
         <Logo src={logo} />
         <DescriptionContent>
@@ -38,7 +38,7 @@ const LogIn = () => {
         <LoginFormWrap style={{ right: logInFormWrapRightValue }}>
           <LogInForm cancelButtonClickHandler={cancelButtonClickHandler} />
         </LoginFormWrap>
-      </LogInConentWrap>
+      </LogInContentWrap>
       <ServiceDescription />
     </Wrap>
   );
@@ -57,7 +57,7 @@ const Wrap = styled.div`
   overflow-x: hidden;
 `;
 
-const LogInConentWrap = styled.div`
+const LogInContentWrap = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
