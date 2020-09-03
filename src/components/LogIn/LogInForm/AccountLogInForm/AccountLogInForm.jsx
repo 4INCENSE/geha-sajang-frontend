@@ -52,7 +52,7 @@ const AccountLogInForm = ({ title, buttonTitle }) => {
     if (registerState === staff || registerState === registered) {
       return history.push('/');
     }
-    if (registerState === unregistered) {
+    if (registerState === unregistered || registerState === inProgress) {
       return history.push('/registerGuestHouse');
     }
   };
