@@ -12,18 +12,15 @@ import RoomInfo from '@/components/RegisterGuestHouse/RoomInfo/RoomInfo';
 
 const RegisterGuestHouse = () => {
   const history = useHistory();
+  const registerState = localStorage.getItem('registerState');
 
   const [selectRegistrationTypeDisplay, setSelectRegistrationTypeDisplay] = useState('flex');
   const [guestHouseInfoDisplay, setGuestHouseInfoDisplay] = useState('none');
   const [registeredGuestHouseDisplay, setRegisteredGuestHouseDisplay] = useState('none');
-  const [roomInfoDisplay, setRoomInfoDisplay] = useState('none');
 
-  const registerState = localStorage.getItem('registerState');
+  const [roomInfoDisplay, setRoomInfoDisplay] = useState('flex');
 
-  useEffect(() => {
-    if (registerState === registered || registerState === staff) history.replace('/');
-    if (registerState === inProgress) goToRegisterRoomInfo();
-  }, [registerState]);
+  if (registerState === registered || registerState === staff) history.replace('/');
 
   const goToRegisterGuestHouseInfo = () => {
     setSelectRegistrationTypeDisplay('none');
@@ -39,25 +36,31 @@ const RegisterGuestHouse = () => {
     setRoomInfoDisplay('none');
   };
 
-  const goToRegisterRoomInfo = () => {
-    setSelectRegistrationTypeDisplay('none');
-    setGuestHouseInfoDisplay('none');
-    setRegisteredGuestHouseDisplay('none');
-    setRoomInfoDisplay('flex');
+  const renderRegisterComponent = () => {
+    switch (registerState) {
+      case unregistered:
+        return (
+          <>
+            <SelectRegistrationType
+              display={selectRegistrationTypeDisplay}
+              registerGuestHouseInfoButton={goToRegisterGuestHouseInfo}
+              registeredGuestHouseButton={goToRegisterRegisteredGuestHouse}
+            />
+            <RegisterGuestHouseInfo display={guestHouseInfoDisplay} />
+            <RegisterRegisteredGuestHouse display={registeredGuestHouseDisplay} />
+          </>
+        );
+      case inProgress:
+        return <RoomInfo display={roomInfoDisplay} />;
+      default:
+        break;
+    }
   };
 
-  if (registerState === registered || registerState === staff) return <></>;
   return (
     <Wrap>
       <Header />
-      <SelectRegistrationType
-        display={selectRegistrationTypeDisplay}
-        registerGuestHouseInfoButton={goToRegisterGuestHouseInfo}
-        registeredGuestHouseButton={goToRegisterRegisteredGuestHouse}
-      />
-      <RegisterGuestHouseInfo display={guestHouseInfoDisplay} nextButton={goToRegisterRoomInfo} />
-      <RegisterRegisteredGuestHouse display={registeredGuestHouseDisplay} nextButton={goToRegisterRoomInfo} />
-      <RoomInfo display={roomInfoDisplay} />
+      {renderRegisterComponent()}
     </Wrap>
   );
 };
