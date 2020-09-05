@@ -55,6 +55,30 @@ const RoomInfo = ({ display }) => {
     dispatch(decreaseMaxCapacity());
   };
 
+  const onBlurCapacity = (e) => {
+    const value = Number(e.target.value);
+    if (e.target.value.length === 0) return setCapacityValue(roomCapacity);
+    if (value > 99 || value < 0) return setCapacityValue(roomCapacity);
+    dispatch(setCapacity(value));
+  };
+
+  const onBlurMaxCapacity = (e) => {
+    const value = Number(e.target.value);
+    if (e.target.value.length === 0) return setMaxCapacityValue(roomMaxCapacity);
+    if (value > 99 || value < 0) return setMaxCapacityValue(roomMaxCapacity);
+    dispatch(setMaxCapacity(value));
+  };
+
+  const onChangeCapacity = (e) => {
+    const value = removeChar(e.target.value);
+    setCapacityValue(value);
+  };
+
+  const onChangeMaxCapacity = (e) => {
+    const value = removeChar(e.target.value);
+    setMaxCapacityValue(value);
+  };
+
   return (
     <ContentWrap style={{ display: display }}>
       <RegisterTitle>방 정보 등록</RegisterTitle>
@@ -104,6 +128,7 @@ const RoomInfo = ({ display }) => {
                   inputWidth="50px"
                   textAlign="center"
                   value={capacityValue}
+                  onBlur={onBlurCapacity}
                   onChange={onChangeCapacity}
                 />
                 <NumberButton onClick={capacityIncreaseButtonClickHandler}>+</NumberButton>
@@ -119,6 +144,7 @@ const RoomInfo = ({ display }) => {
                   inputWidth="50px"
                   textAlign="center"
                   value={maxCapacityValue}
+                  onBlur={onBlurMaxCapacity}
                   onChange={onChangeMaxCapacity}
                 />
                 <NumberButton onClick={maxCapacityIncreaseButtonClickHandler}>+</NumberButton>
