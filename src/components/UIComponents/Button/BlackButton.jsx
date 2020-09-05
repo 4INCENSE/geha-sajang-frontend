@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const BlackButton = ({ width, title, onClick }) => {
+const BlackButton = ({ width, height, title, titleSize, onClick }) => {
   return (
-    <ButtonComponent style={{ width: width }} onClick={onClick}>
+    <ButtonComponent style={{ width: width, height: height, fontSize: titleSize }} onClick={onClick}>
       {title}
     </ButtonComponent>
   );
@@ -16,6 +16,7 @@ const ButtonComponent = styled.div`
   justify-content: center;
   align-items: center;
   width: 400px;
+  height: 60px;
   font-family: 'S-CoreDream-2ExtraLight';
   font-size: 17px;
   color: white;
