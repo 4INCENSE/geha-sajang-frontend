@@ -1,18 +1,33 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Input = ({ type, inputWidth, refValue, placeholder, maxlength, onBlur, onKeyDown, onKeyUp }) => {
+const Input = ({
+  type,
+  inputWidth,
+  marginRight,
+  refValue,
+  placeholder,
+  maxlength,
+  onBlur,
+  onKeyDown,
+  onKeyUp,
+  onChange,
+  textAlign,
+  value
+}) => {
   return (
     <>
       <InputComponent
         type={type}
-        style={{ width: inputWidth }}
+        style={{ width: inputWidth, marginRight: marginRight, textAlign: textAlign }}
         ref={refValue}
         placeholder={placeholder}
         maxlength={maxlength}
         onKeyDown={onKeyDown}
         onKeyUp={onKeyUp}
+        onChange={onChange}
         onBlur={onBlur}
+        value={value}
       />
     </>
   );

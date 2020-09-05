@@ -7,31 +7,40 @@ const TitleInput = ({
   type,
   title,
   spanValue,
+  titleFontSize,
   messageDisplay,
   messageValue,
   inputWidth,
+  marginRight,
+  marginBottom,
+  textAlign,
   refValue,
   placeholder,
   maxlength,
   onBlur,
   onKeyDown,
-  onKeyUp
+  onKeyUp,
+  onChange,
+  value
 }) => {
   return (
-    <InputWrap>
-      <InputTitle>
+    <InputWrap style={{ marginBottom: marginBottom, width: inputWidth, marginRight: marginRight }}>
+      <InputTitle style={{ fontSize: titleFontSize }}>
         {title}
         <span>{spanValue}</span>
       </InputTitle>
       <Input
         type={type}
         inputWidth={inputWidth}
+        textAlign={textAlign}
         refValue={refValue}
         placeholder={placeholder}
         maxlength={maxlength}
         onKeyDown={onKeyDown}
         onKeyUp={onKeyUp}
         onBlur={onBlur}
+        onChange={onChange}
+        value={value}
       />
       <InputMessage style={{ display: messageDisplay }}>{messageValue}</InputMessage>
     </InputWrap>
@@ -43,8 +52,7 @@ export default TitleInput;
 const InputWrap = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 400px;
+  width: 100%;
 `;
 
 const InputTitle = styled.div`
