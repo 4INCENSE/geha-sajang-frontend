@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
+import { numberWithCommas, removeChar } from '@/common/lib/util/inputUtils';
+
 import TitleInput from '@/components/UIComponents/Input/TitleInput';
 import Input from '@/components/UIComponents/Input/Input';
 import BlackButton from '@/components/UIComponents/Button/BlackButton';
 
 const RoomInfo = ({ display }) => {
+  const addCommasToPrice = (e) => {
+    const numberValue = removeChar(e.target.value);
+    e.target.value = numberWithCommas(numberValue);
+  };
+
   return (
     <ContentWrap style={{ display: display }}>
       <RegisterTitle>방 정보 등록</RegisterTitle>
@@ -41,6 +48,7 @@ const RoomInfo = ({ display }) => {
               inputWidth="130px"
               marginRight="10px"
               textAlign="right"
+              onChange={addCommasToPrice}
             />
           </AddRoomInfoWrap>
           <AddRoomInfoWrap>
