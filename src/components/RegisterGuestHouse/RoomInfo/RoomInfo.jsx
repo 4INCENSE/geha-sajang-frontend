@@ -1,16 +1,58 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { numberWithCommas, removeChar } from '@/common/lib/util/inputUtils';
+import {
+  increaseCapacity,
+  decreaseCapacity,
+  setCapacity,
+  increaseMaxCapacity,
+  decreaseMaxCapacity,
+  setMaxCapacity
+} from '@/redux/Registration/actions/roomCapacityAction';
 
 import TitleInput from '@/components/UIComponents/Input/TitleInput';
 import Input from '@/components/UIComponents/Input/Input';
 import BlackButton from '@/components/UIComponents/Button/BlackButton';
 
+import RegisterGuestHouseInfo from '@/components/RegisterGuestHouse/GuestHouseInfo/GuestHouseInfo';
+
 const RoomInfo = ({ display }) => {
+  const dispatch = useDispatch();
+  const { roomCapacity, roomMaxCapacity } = useSelector((state) => state.registerGuestHouseReducer);
+
+  const [capacityValue, setCapacityValue] = useState(roomCapacity);
+  const [maxCapacityValue, setMaxCapacityValue] = useState(roomMaxCapacity);
+
+  useEffect(() => {
+    setCapacityValue(roomCapacity);
+    setMaxCapacityValue(roomMaxCapacity);
+  }, [roomCapacity, roomMaxCapacity]);
+
   const addCommasToPrice = (e) => {
     const numberValue = removeChar(e.target.value);
     e.target.value = numberWithCommas(numberValue);
+  };
+
+  const capacityIncreaseButtonClickHandler = () => {
+    if (roomCapacity >= 99) return;
+    dispatch(increaseCapacity());
+  };
+
+  const capacityDecreaseButtonClickHandler = () => {
+    if (roomCapacity <= 0) return;
+    dispatch(decreaseCapacity());
+  };
+
+  const maxCapacityIncreaseButtonClickHandler = () => {
+    if (roomMaxCapacity >= 99) return;
+    dispatch(increaseMaxCapacity());
+  };
+
+  const maxCapacityDecreaseButtonClickHandler = () => {
+    if (roomMaxCapacity <= 0) return;
+    dispatch(decreaseMaxCapacity());
   };
 
   return (
@@ -54,20 +96,32 @@ const RoomInfo = ({ display }) => {
           <AddRoomInfoWrap>
             <InputWrap>
               <Title>
-                인원<span> ●</span>
+                기준 인원<span> ●</span>
               </Title>
               <InputNumberButtonWrap>
-                <NumberButton>-</NumberButton>
-                <Input inputWidth="50px" textAlign="center" />
-                <NumberButton>+</NumberButton>
+                <NumberButton onClick={capacityDecreaseButtonClickHandler}>-</NumberButton>
+                <Input
+                  inputWidth="50px"
+                  textAlign="center"
+                  value={capacityValue}
+                  onChange={onChangeCapacity}
+                />
+                <NumberButton onClick={capacityIncreaseButtonClickHandler}>+</NumberButton>
               </InputNumberButtonWrap>
             </InputWrap>
             <InputWrap style={{ marginLeft: '10px' }}>
-              <Title>최대 인원</Title>
+              <Title>
+                최대 인원<span> ●</span>
+              </Title>
               <InputNumberButtonWrap>
-                <NumberButton>-</NumberButton>
-                <Input inputWidth="50px" textAlign="center" />
-                <NumberButton>+</NumberButton>
+                <NumberButton onClick={maxCapacityDecreaseButtonClickHandler}>-</NumberButton>
+                <Input
+                  inputWidth="50px"
+                  textAlign="center"
+                  value={maxCapacityValue}
+                  onChange={onChangeMaxCapacity}
+                />
+                <NumberButton onClick={maxCapacityIncreaseButtonClickHandler}>+</NumberButton>
               </InputNumberButtonWrap>
             </InputWrap>
           </AddRoomInfoWrap>
