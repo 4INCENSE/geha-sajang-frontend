@@ -8,6 +8,8 @@ import { addExtraService, deleteExtraService } from '@/redux/Registration/action
 import { guestHouseInfoFormData } from '@/redux/Registration/actions/guestHouseInfoFormDataAction';
 
 import { checkDuplicate } from '@/common/lib/util/checkDuplicate';
+import { removeChar } from '@/common/lib/util/inputUtils';
+
 import { inProgress, unregistered, registered, staff } from '@/common/constants/registerState';
 
 import questionIcon from '@/img/icon/question.png';
@@ -88,9 +90,9 @@ const GuestHouseInfo = ({ display, nextButton }) => {
     return true;
   };
 
-  const removeChar = (e) => {
-    const pattern = /[^0-9]/gi;
-    e.target.value = e.target.value.replace(pattern, '');
+  const onlyNumber = (e) => {
+    const number = removeChar(e.target.value);
+    e.target.value = number;
   };
 
   const addServiceButtonClickHandler = () => {
@@ -176,7 +178,7 @@ const GuestHouseInfo = ({ display, nextButton }) => {
           <TitleInput
             title="대표 전화번호"
             spanValue=" ●"
-            onKeyUp={removeChar}
+            onKeyUp={onlyNumber}
             onBlur={validatePhoneNumber}
             refValue={numberInput}
             maxlength="11"
