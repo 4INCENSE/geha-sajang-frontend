@@ -28,6 +28,9 @@ const RoomInfo = ({ display }) => {
   const { roomCapacity, roomMaxCapacity } = useSelector((state) => state.registerGuestHouseReducer);
 
   const descriptionLimitLength = 200;
+
+  const [addMessage, setAddMessage] = useState();
+  const [addMessageDisplay, setAddMessageDisplay] = useState('none');
   const [capacityValue, setCapacityValue] = useState(roomCapacity);
   const [maxCapacityValue, setMaxCapacityValue] = useState(roomMaxCapacity);
 
@@ -179,6 +182,7 @@ const RoomInfo = ({ display }) => {
           <InputWrap>
             <Title>방 설명</Title>
             <Description />
+            <InputMessage style={{ display: addMessageDisplay }}>{addMessage}</InputMessage>
           </InputWrap>
           <BlackButton title="추가" width="300px" height="50px" titleSize="15px" />
         </AddRoomWrap>
@@ -331,3 +335,11 @@ const Description = styled.textarea`
     box-shadow: 0 0 5px 2px ${({ theme }) => theme.color.point};
   }
 `;
+const InputMessage = styled.div`
+  display: flex;
+  width: 300px;
+  font-size: 13px;
+  color: ${({ theme }) => theme.color.point};
+  padding: 10px 5px 0px 5px;
+`;
+
