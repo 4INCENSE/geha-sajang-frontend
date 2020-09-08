@@ -12,3 +12,8 @@ export const calculateAvailableStringLength = (value, limitLength) => {
   return limitLength - value.length;
 };
 
+export const checkIsOnlyBlank = (value) => {
+  const blankPattern = /^\s+|\s+$/g;
+  const valueLengthWithoutBlank = value.replace(blankPattern, '').length;
+  return valueLengthWithoutBlank === 0 ? true : false;
+};
