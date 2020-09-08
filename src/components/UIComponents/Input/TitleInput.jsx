@@ -21,6 +21,7 @@ const TitleInput = ({
   onKeyDown,
   onKeyUp,
   onChange,
+  onFocus,
   value
 }) => {
   return (
@@ -40,6 +41,7 @@ const TitleInput = ({
         onKeyUp={onKeyUp}
         onBlur={onBlur}
         onChange={onChange}
+        onFocus={onFocus}
         value={value}
       />
       <InputMessage style={{ display: messageDisplay }}>{messageValue}</InputMessage>

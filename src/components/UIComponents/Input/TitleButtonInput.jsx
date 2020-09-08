@@ -17,6 +17,8 @@ const TitleButtonInput = ({
   onBlur,
   onKeyDown,
   onKeyUp,
+  onChange,
+  onFocus,
   buttonWidth,
   buttonTitle,
   buttonOnClick
@@ -37,6 +39,8 @@ const TitleButtonInput = ({
           onKeyDown={onKeyDown}
           onKeyUp={onKeyUp}
           onBlur={onBlur}
+          onChange={onChange}
+          onFocus={onFocus}
         />
         <InputButton width={buttonWidth} title={buttonTitle} onClick={buttonOnClick} />
       </InputButtonWrap>

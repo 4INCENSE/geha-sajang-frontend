@@ -12,6 +12,7 @@ const Input = ({
   onKeyDown,
   onKeyUp,
   onChange,
+  onFocus,
   textAlign,
   value
 }) => {
@@ -27,6 +28,7 @@ const Input = ({
         onKeyUp={onKeyUp}
         onChange={onChange}
         onBlur={onBlur}
+        onFocus={onFocus}
         value={value}
       />
     </>
