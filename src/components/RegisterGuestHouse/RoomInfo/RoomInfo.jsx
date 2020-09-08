@@ -37,6 +37,11 @@ const RoomInfo = ({ display }) => {
   const onFocusPrice = (e) => {
     if (priceValue === '0') e.target.value = '';
   };
+
+  const onBlurPrice = (e) => {
+    if (e.target.value == '') e.target.value = priceValue;
+  };
+
   };
 
   const capacityIncreaseButtonClickHandler = () => {
