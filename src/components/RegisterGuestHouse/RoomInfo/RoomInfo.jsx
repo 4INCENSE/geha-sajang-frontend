@@ -2,7 +2,12 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { numberWithCommas, removeChar } from '@/common/lib/util/inputUtils';
+import {
+  numberWithCommas,
+  removeChar,
+  calculateAvailableStringLength,
+  checkIsOnlyBlank
+} from '@/common/lib/util/inputUtils';
 import {
   increaseCapacity,
   decreaseCapacity,
@@ -31,11 +36,15 @@ const RoomInfo = ({ display }) => {
     setMaxCapacityValue(roomMaxCapacity);
   }, [roomCapacity, roomMaxCapacity]);
 
-  const addCommasToPrice = (e) => {
-    const numberValue = removeChar(e.target.value);
-    e.target.value = numberWithCommas(numberValue);
   const onFocusPrice = (e) => {
     if (priceValue === '0') e.target.value = '';
+  };
+
+  const onChangePrice = () => {
+    const priceValueLength = priceInput.current.value.length;
+    if (priceValueLength >= 10) return;
+    const price = removeChar(priceInput.current.value);
+    setPriceValue(numberWithCommas(price));
   };
 
   const onBlurPrice = (e) => {
