@@ -33,6 +33,8 @@ const RoomInfo = ({ display }) => {
   const [addMessageDisplay, setAddMessageDisplay] = useState('none');
   const [capacityValue, setCapacityValue] = useState(roomCapacity);
   const [maxCapacityValue, setMaxCapacityValue] = useState(roomMaxCapacity);
+  const [availableDescriptionLength, setAvailableDescriptionLength] = useState(descriptionLimitLength);
+  const [descriptionValue, setDescriptionValue] = useState();
 
   useEffect(() => {
     setCapacityValue(roomCapacity);
@@ -179,7 +181,8 @@ const RoomInfo = ({ display }) => {
           </AddRoomInfoWrap>
           <InputWrap>
             <Title>방 설명</Title>
-            <Description />
+            <Description onChange={onChangeRoomDescription} value={descriptionValue} />
+            <AvailableLength>{availableDescriptionLength}</AvailableLength>
             <InputMessage style={{ display: addMessageDisplay }}>{addMessage}</InputMessage>
           </InputWrap>
           <BlackButton title="추가" width="300px" height="50px" titleSize="15px" />
@@ -341,3 +344,11 @@ const InputMessage = styled.div`
   padding: 10px 5px 0px 5px;
 `;
 
+const AvailableLength = styled.div`
+  width: 100%;
+  font-size: 12px;
+  font-family: 'Eoe_Zno_L';
+  color: ${({ theme }) => theme.color.darkGray};
+  padding: 10px;
+  text-align: right;
+`;
