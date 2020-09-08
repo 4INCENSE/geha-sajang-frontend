@@ -45,22 +45,18 @@ const RoomInfo = ({ display }) => {
   };
 
   const capacityIncreaseButtonClickHandler = () => {
-    if (roomCapacity >= 99) return;
     dispatch(increaseCapacity());
   };
 
   const capacityDecreaseButtonClickHandler = () => {
-    if (roomCapacity <= 0) return;
     dispatch(decreaseCapacity());
   };
 
   const maxCapacityIncreaseButtonClickHandler = () => {
-    if (roomMaxCapacity >= 99) return;
     dispatch(increaseMaxCapacity());
   };
 
   const maxCapacityDecreaseButtonClickHandler = () => {
-    if (roomMaxCapacity <= 0) return;
     dispatch(decreaseMaxCapacity());
   };
 
@@ -75,6 +71,7 @@ const RoomInfo = ({ display }) => {
     const value = Number(e.target.value);
     if (e.target.value.length === 0) return setMaxCapacityValue(roomMaxCapacity);
     if (value > 99 || value < 0) return setMaxCapacityValue(roomMaxCapacity);
+    if (value < capacityValue) return setMaxCapacityValue(roomMaxCapacity);
     dispatch(setMaxCapacity(value));
   };
 
