@@ -147,7 +147,7 @@ const RoomInfo = ({ display }) => {
           <AddRoomInfoWrap>
             <InputWrap>
               <Title>
-                기준 인원<span> ●</span>
+                기본 인원<span> ●</span>
               </Title>
               <InputNumberButtonWrap>
                 <NumberButton onClick={capacityDecreaseButtonClickHandler}>-</NumberButton>
@@ -162,9 +162,7 @@ const RoomInfo = ({ display }) => {
               </InputNumberButtonWrap>
             </InputWrap>
             <InputWrap style={{ marginLeft: '10px' }}>
-              <Title>
-                최대 인원<span> ●</span>
-              </Title>
+              <Title>최대 인원</Title>
               <InputNumberButtonWrap>
                 <NumberButton onClick={maxCapacityDecreaseButtonClickHandler}>-</NumberButton>
                 <Input
