@@ -31,10 +31,16 @@ const RoomInfo = ({ display }) => {
 
   const [addMessage, setAddMessage] = useState();
   const [addMessageDisplay, setAddMessageDisplay] = useState('none');
+  const [nameValue, setNameValue] = useState('');
+  const [priceValue, setPriceValue] = useState('0');
   const [capacityValue, setCapacityValue] = useState(roomCapacity);
   const [maxCapacityValue, setMaxCapacityValue] = useState(roomMaxCapacity);
   const [availableDescriptionLength, setAvailableDescriptionLength] = useState(descriptionLimitLength);
   const [descriptionValue, setDescriptionValue] = useState();
+
+  const nameInput = React.createRef();
+  const priceInput = React.createRef();
+  const typeSelect = React.createRef();
 
   useEffect(() => {
     setCapacityValue(roomCapacity);
@@ -46,6 +52,17 @@ const RoomInfo = ({ display }) => {
     const nameLengthLimit = 25;
     if (nameValue.length >= nameLengthLimit) return;
     setNameValue(nameInputValue);
+  };
+
+  const validateRoomName = () => {
+    const nameInputValue = nameInput.current.value;
+    if (checkIsOnlyBlank(nameInputValue) || nameInputValue.length <= 0) return false;
+    return true;
+  };
+
+  const validateRoomType = () => {
+    if (!typeSelect.current.value) return false;
+    return true;
   };
 
   const onFocusPrice = (e) => {
@@ -63,6 +80,10 @@ const RoomInfo = ({ display }) => {
     if (e.target.value == '') e.target.value = priceValue;
   };
 
+  const validateCapacity = () => {
+    if (roomCapacity <= 0) return false;
+
+    return true;
   };
 
   const capacityIncreaseButtonClickHandler = () => {
@@ -113,6 +134,17 @@ const RoomInfo = ({ display }) => {
     if (availableLength === 0) return;
     setDescriptionValue(description);
   };
+
+  const addButtonClickHandler = () => {
+    if (!validateRoomType() || !validateRoomName() || !validateCapacity()) {
+      setAddMessage('필수값을 전부 입력해주세요');
+      setAddMessageDisplay('block');
+      return;
+    }
+    setAddMessageDisplay('none');
+    console.log('데이터 추가');
+  };
+
   return (
     <ContentWrap style={{ display: display }}>
       <RegisterTitle>방 정보 등록</RegisterTitle>
@@ -127,14 +159,18 @@ const RoomInfo = ({ display }) => {
             titleFontSize="15px"
             inputWidth="270px"
             marginRight="10px"
-            marginBottom="10px"
+            marginBottom="15px"
+            placeholder="최대 25자"
+            refValue={nameInput}
+            value={nameValue}
+            onChange={onChangeName}
           />
           <AddRoomInfoWrap>
             <SelectWrap>
               <Title>
                 방 타입<span> ●</span>
               </Title>
-              <RoomTypeSelect name="roomType">
+              <RoomTypeSelect name="roomType" ref={typeSelect}>
                 <option value="">선택</option>
                 <option value="일인실">일인실</option>
                 <option value="다인실">다인실</option>
@@ -192,7 +228,7 @@ const RoomInfo = ({ display }) => {
             <AvailableLength>{availableDescriptionLength}</AvailableLength>
             <InputMessage style={{ display: addMessageDisplay }}>{addMessage}</InputMessage>
           </InputWrap>
-          <BlackButton title="추가" width="300px" height="50px" titleSize="15px" />
+          <BlackButton title="추가" width="300px" height="50px" titleSize="15px" onClick={addButtonClickHandler} />
         </AddRoomWrap>
       </RegisterWrap>
     </ContentWrap>
@@ -313,6 +349,9 @@ const InputNumberButtonWrap = styled.div`
 `;
 
 const NumberButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 25px;
   height: 25px;
   background: white;
