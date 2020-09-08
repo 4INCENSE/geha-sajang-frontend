@@ -22,6 +22,7 @@ const RoomInfo = ({ display }) => {
   const dispatch = useDispatch();
   const { roomCapacity, roomMaxCapacity } = useSelector((state) => state.registerGuestHouseReducer);
 
+  const descriptionLimitLength = 200;
   const [capacityValue, setCapacityValue] = useState(roomCapacity);
   const [maxCapacityValue, setMaxCapacityValue] = useState(roomMaxCapacity);
 
@@ -79,6 +80,13 @@ const RoomInfo = ({ display }) => {
     setMaxCapacityValue(value);
   };
 
+  const onChangeRoomDescription = (e) => {
+    const description = e.target.value;
+    const availableLength = calculateAvailableStringLength(description, descriptionLimitLength);
+    setAvailableDescriptionLength(availableLength);
+    if (availableLength === 0) return;
+    setDescriptionValue(description);
+  };
   return (
     <ContentWrap style={{ display: display }}>
       <RegisterTitle>방 정보 등록</RegisterTitle>
