@@ -134,12 +134,10 @@ const RoomInfo = ({ display }) => {
             </SelectWrap>
             <TitleInput
               title="1박 가격(₩)"
-              spanValue=" ●"
               titleFontSize="15px"
               inputWidth="130px"
               marginRight="10px"
               textAlign="right"
-              onChange={addCommasToPrice}
               value={priceValue}
               refValue={priceInput}
               onChange={onChangePrice}
