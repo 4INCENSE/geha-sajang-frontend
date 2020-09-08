@@ -21,8 +21,6 @@ import TitleInput from '@/components/UIComponents/Input/TitleInput';
 import Input from '@/components/UIComponents/Input/Input';
 import BlackButton from '@/components/UIComponents/Button/BlackButton';
 
-import RegisterGuestHouseInfo from '@/components/RegisterGuestHouse/GuestHouseInfo/GuestHouseInfo';
-
 const RoomInfo = ({ display }) => {
   const dispatch = useDispatch();
   const { roomCapacity, roomMaxCapacity } = useSelector((state) => state.registerGuestHouseReducer);
