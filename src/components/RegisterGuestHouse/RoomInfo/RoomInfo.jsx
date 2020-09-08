@@ -41,6 +41,13 @@ const RoomInfo = ({ display }) => {
     setMaxCapacityValue(roomMaxCapacity);
   }, [roomCapacity, roomMaxCapacity]);
 
+  const onChangeName = () => {
+    const nameInputValue = nameInput.current.value;
+    const nameLengthLimit = 25;
+    if (nameValue.length >= nameLengthLimit) return;
+    setNameValue(nameInputValue);
+  };
+
   const onFocusPrice = (e) => {
     if (priceValue === '0') e.target.value = '';
   };
