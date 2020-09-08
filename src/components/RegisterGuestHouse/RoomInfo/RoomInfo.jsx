@@ -34,6 +34,9 @@ const RoomInfo = ({ display }) => {
   const addCommasToPrice = (e) => {
     const numberValue = removeChar(e.target.value);
     e.target.value = numberWithCommas(numberValue);
+  const onFocusPrice = (e) => {
+    if (priceValue === '0') e.target.value = '';
+  };
   };
 
   const capacityIncreaseButtonClickHandler = () => {
@@ -123,6 +126,11 @@ const RoomInfo = ({ display }) => {
               marginRight="10px"
               textAlign="right"
               onChange={addCommasToPrice}
+              value={priceValue}
+              refValue={priceInput}
+              onChange={onChangePrice}
+              onFocus={onFocusPrice}
+              onBlur={onBlurPrice}
             />
           </AddRoomInfoWrap>
           <AddRoomInfoWrap>
