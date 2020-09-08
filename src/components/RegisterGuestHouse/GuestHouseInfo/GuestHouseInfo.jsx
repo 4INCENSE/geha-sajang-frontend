@@ -20,7 +20,7 @@ import TitleInput from '@/components/UIComponents/Input/TitleInput';
 import TitleButtonInput from '@/components/UIComponents/Input/TitleButtonInput';
 import UploadFile from '@/components/UIComponents/UploadFile/UploadFile';
 
-const GuestHouseInfo = ({ display, nextButton }) => {
+const GuestHouseInfo = ({ display }) => {
   const dispatch = useDispatch();
   const { extraServiceList, guestHouseInfo } = useSelector((state) => state.registerGuestHouseReducer);
 
