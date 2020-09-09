@@ -172,19 +172,18 @@ const RoomInfo = ({ display }) => {
       </RegisterSubTitle>
       <RegisterWrap>
         <AddRoomWrap>
-          <TitleInput
-            title="방 이름"
-            spanValue=" ●"
-            titleFontSize="15px"
-            inputWidth="270px"
-            marginRight="10px"
-            marginBottom="15px"
-            placeholder="최대 25자"
-            refValue={nameInput}
-            value={nameValue}
-            onChange={onChangeName}
-          />
           <AddRoomInfoWrap>
+            <TitleInput
+              title="방 이름"
+              spanValue=" ●"
+              titleFontSize="15px"
+              inputWidth="270px"
+              marginRight="10px"
+              placeholder="최대 25자"
+              refValue={nameInput}
+              value={nameValue}
+              onChange={onChangeName}
+            />
             <SelectWrap>
               <Title>
                 방 타입<span> ●</span>
@@ -208,8 +207,6 @@ const RoomInfo = ({ display }) => {
               onFocus={onFocusPrice}
               onBlur={onBlurPrice}
             />
-          </AddRoomInfoWrap>
-          <AddRoomInfoWrap>
             <InputWrap>
               <Title>
                 기본 인원<span> ●</span>
@@ -241,13 +238,22 @@ const RoomInfo = ({ display }) => {
               </InputNumberButtonWrap>
             </InputWrap>
           </AddRoomInfoWrap>
-          <InputWrap>
-            <Title>방 설명</Title>
-            <Description onChange={onChangeRoomDescription} value={descriptionValue} />
-            <AvailableLength>{availableDescriptionLength}</AvailableLength>
-            <InputMessage style={{ display: addMessageDisplay }}>{addMessage}</InputMessage>
-          </InputWrap>
-          <BlackButton title="추가" width="300px" height="50px" titleSize="15px" onClick={addButtonClickHandler} />
+          <AddRoomInfoWrap>
+            <InputWrap>
+              <Title>방 설명</Title>
+              <Description onChange={onChangeRoomDescription} value={descriptionValue} />
+              <AvailableLength>{availableDescriptionLength}</AvailableLength>
+              <InputMessage style={{ display: addMessageDisplay }}>{addMessage}</InputMessage>
+            </InputWrap>
+            <BlackButton
+              title="추가"
+              width="150px"
+              height="50px"
+              titleSize="15px"
+              margin="15px 0 0 10px"
+              onClick={addButtonClickHandler}
+            />
+          </AddRoomInfoWrap>
         </AddRoomWrap>
         <RoomListWrap>
           {roomList.map((room, index) => {
@@ -310,11 +316,10 @@ const RegisterSubTitle = styled.div`
 `;
 
 const RegisterWrap = styled.div`
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 830px;
+  width: 950px;
   border: 0.5px solid #b3b3b3;
   padding: 60px;
 `;
@@ -324,19 +329,19 @@ const AddRoomWrap = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 400px;
+  width: 870px;
   border: 1px solid ${({ theme }) => theme.color.lightGray};
   border-radius: 5px;
   background: rgba(0, 0, 0, 0.05);
-  padding: 30px 20px;
+  padding: 30px 20px 20px 20px;
 `;
 
 const AddRoomInfoWrap = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 270px;
-  margin-bottom: 20px;
+  width: 100%;
+  margin-bottom: 10px;
 `;
 const SelectWrap = styled.div`
   display: flex;
@@ -374,9 +379,11 @@ const Title = styled.div`
 `;
 
 const InputWrap = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 100%;
+  margin-bottom: 10px;
 `;
 
 const InputNumberButtonWrap = styled.div`
@@ -407,11 +414,11 @@ const NumberButton = styled.button`
 
 const Description = styled.textarea`
   width: 100%;
-  min-height: 80px;
+  min-height: 70px;
   max-height: 200px;
   border-radius: 5px;
   border: 1px solid ${({ theme }) => theme.color.lightGray};
-  margin-top: 2px;
+  margin: 2px 10px 0 0;
   padding: 15px;
   font-size: 14px;
   resize: vertical;
@@ -421,6 +428,9 @@ const Description = styled.textarea`
   }
 `;
 const InputMessage = styled.div`
+  position: absolute;
+  bottom: -25px;
+  left: 0;
   display: flex;
   width: 300px;
   font-size: 13px;
@@ -429,6 +439,9 @@ const InputMessage = styled.div`
 `;
 
 const AvailableLength = styled.div`
+  position: absolute;
+  top: -5px;
+  right: 0;
   width: 100%;
   font-size: 12px;
   font-family: 'Eoe_Zno_L';
