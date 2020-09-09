@@ -133,6 +133,14 @@ const RoomInfo = ({ display }) => {
     setDescriptionValue(description);
   };
 
+  const allInputInit = () => {
+    setNameValue('');
+    setDescriptionValue('');
+    typeSelect.current.value = '';
+    setPriceValue('0');
+    setAvailableDescriptionLength(descriptionLimitLength);
+  };
+
   const addButtonClickHandler = () => {
     if (!validateRoomType() || !validateRoomName() || !validateCapacity()) {
       setAddMessage('필수값을 전부 입력해주세요');
