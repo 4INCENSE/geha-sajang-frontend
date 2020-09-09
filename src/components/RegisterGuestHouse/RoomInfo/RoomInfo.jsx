@@ -16,6 +16,7 @@ import {
   decreaseMaxCapacity,
   setMaxCapacity
 } from '@/redux/Registration/actions/roomCapacityAction';
+import { addRoom } from '@/redux/Registration/actions/roomListAction';
 
 import TitleInput from '@/components/UIComponents/Input/TitleInput';
 import Input from '@/components/UIComponents/Input/Input';
@@ -23,7 +24,7 @@ import BlackButton from '@/components/UIComponents/Button/BlackButton';
 
 const RoomInfo = ({ display }) => {
   const dispatch = useDispatch();
-  const { roomCapacity, roomMaxCapacity } = useSelector((state) => state.registerGuestHouseReducer);
+  const { roomCapacity, roomMaxCapacity, roomList } = useSelector((state) => state.registerGuestHouseReducer);
 
   const descriptionLimitLength = 200;
 
@@ -44,6 +45,8 @@ const RoomInfo = ({ display }) => {
     setCapacityValue(roomCapacity);
     setMaxCapacityValue(roomMaxCapacity);
   }, [roomCapacity, roomMaxCapacity]);
+
+  useEffect(() => {}, [roomList]);
 
   const onChangeName = () => {
     const nameInputValue = nameInput.current.value;
@@ -148,7 +151,17 @@ const RoomInfo = ({ display }) => {
       return;
     }
     setAddMessageDisplay('none');
-    console.log('데이터 추가');
+    const roomData = {
+      name: nameValue,
+      memo: descriptionValue,
+      roomType: typeSelect.current.value,
+      maxCapacity: roomMaxCapacity,
+      defaultCapacity: roomCapacity,
+      peakAmount: '0',
+      offPeakAmount: priceValue
+    };
+    dispatch(addRoom(roomData));
+    allInputInit();
   };
 
   return (
@@ -236,6 +249,25 @@ const RoomInfo = ({ display }) => {
           </InputWrap>
           <BlackButton title="추가" width="300px" height="50px" titleSize="15px" onClick={addButtonClickHandler} />
         </AddRoomWrap>
+        <RoomListWrap>
+          {roomList.map((room, index) => {
+            return (
+              <RoomWrap key={index}>
+                <RoomInfoWrap>
+                  <RoomName>{room.name}</RoomName>
+                </RoomInfoWrap>
+                <RoomInfoWrap>
+                  <RoomCapacityType>
+                    {room.roomType} {room.defaultCapacity}인
+                  </RoomCapacityType>
+                  <RoomMaxCapacity>(최대 {room.maxCapacity}인)</RoomMaxCapacity>
+                  <RoomPrice>{room.offPeakAmount}₩</RoomPrice>
+                </RoomInfoWrap>
+                <RoomDescription>{room.memo}</RoomDescription>
+              </RoomWrap>
+            );
+          })}
+        </RoomListWrap>
       </RegisterWrap>
     </ContentWrap>
   );
@@ -403,4 +435,73 @@ const AvailableLength = styled.div`
   color: ${({ theme }) => theme.color.darkGray};
   padding: 10px;
   text-align: right;
+`;
+const RoomListWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 400px;
+  height: 500px;
+  border: 1px solid ${({ theme }) => theme.color.lightGray};
+  border-radius: 3px;
+  padding: 15px 0;
+  margin-top: 20px;
+`;
+
+const RoomWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 380px;
+  min-height: 80px;
+  border-radius: 5px;
+  border: solid 2px ${({ theme }) => theme.color.lightGray};
+  background: white;
+  padding: 15px 15px;
+  margin-bottom: 10px;
+  &:hover {
+    border: solid 2px ${({ theme }) => theme.color.point};
+  }
+`;
+
+const RoomInfoWrap = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+`;
+
+const RoomName = styled.span`
+  font-family: 'S-CoreDream-5Medium';
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: bold;
+  color: ${({ theme }) => theme.color.darkGray};
+  margin-right: 5px;
+`;
+const RoomCapacityType = styled.span`
+  font-family: 'S-CoreDream-4Regular';
+  font-size: 13px;
+  font-weight: bold;
+  color: ${({ theme }) => theme.color.point};
+  margin-right: 5px;
+`;
+const RoomMaxCapacity = styled.span`
+  font-family: 'S-CoreDream-4Regular';
+  font-size: 11px;
+  font-weight: bold;
+  color: ${({ theme }) => theme.color.darkGray};
+  margin-right: 5px;
+`;
+const RoomPrice = styled.span`
+  font-family: 'Eoe_Zno_L';
+  font-size: 13px;
+  font-weight: bold;
+  color: ${({ theme }) => theme.color.darkGray};
+`;
+const RoomDescription = styled.span`
+  font-family: 'S-CoreDream-2ExtraLight';
+  font-size: 13px;
+  font-weight: bold;
+  color: ${({ theme }) => theme.color.darkGray};
+  margin-top: 8px;
 `;
