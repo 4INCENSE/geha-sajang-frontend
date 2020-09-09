@@ -131,9 +131,9 @@ const RoomInfo = ({ display }) => {
   const onChangeRoomDescription = (e) => {
     const description = e.target.value;
     const availableLength = calculateAvailableStringLength(description, descriptionLimitLength);
-    setAvailableDescriptionLength(availableLength);
+    availableLength <= 0 ? setAvailableDescriptionLength(0) : setAvailableDescriptionLength(availableLength);
     if (availableLength === 0) return;
-    setDescriptionValue(description);
+    setDescriptionValue(description.substr(0, descriptionLimitLength));
   };
 
   const allInputInit = () => {
