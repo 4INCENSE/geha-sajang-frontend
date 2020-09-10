@@ -245,24 +245,20 @@ const RoomInfo = ({ display }) => {
               <AvailableLength>{availableDescriptionLength}</AvailableLength>
               <InputMessage style={{ display: addMessageDisplay }}>{addMessage}</InputMessage>
             </InputWrap>
-            <BlackButton
-              title="추가"
-              width="150px"
-              height="50px"
-              titleSize="15px"
-              margin="15px 0 0 10px"
-              onClick={addButtonClickHandler}
-            />
+            <BlueInputButton title="추가" width="100px" margin="0 0 10px 10px" onClick={addButtonClickHandler} />
           </AddRoomInfoWrap>
         </AddRoomWrap>
+        <RoomListInfo>총 {roomList.length}개</RoomListInfo>
         <RoomListWrap>
           {roomList.map((room, index) => {
             return (
               <RoomWrap key={index}>
+                <RoomMenuButtonWrap>
+                  <RoomMenuButton>수정</RoomMenuButton>
+                  <RoomMenuButton onClick={() => roomDeleteButtonClickHandler(room.name, index)}>삭제</RoomMenuButton>
+                </RoomMenuButtonWrap>
                 <RoomInfoWrap>
                   <RoomName>{room.name}</RoomName>
-                </RoomInfoWrap>
-                <RoomInfoWrap>
                   <RoomCapacityType>
                     {room.roomType} {room.defaultCapacity}인
                   </RoomCapacityType>
@@ -274,6 +270,7 @@ const RoomInfo = ({ display }) => {
             );
           })}
         </RoomListWrap>
+        <BlackButton title="등록" margin="50px 0 0 0 " onClick={addButtonClickHandler} />
       </RegisterWrap>
     </ContentWrap>
   );
@@ -339,7 +336,7 @@ const AddRoomWrap = styled.div`
 const AddRoomInfoWrap = styled.div`
   display: flex;
   justify-content: space-around;
-  align-items: center;
+  align-items: flex-end;
   width: 100%;
   margin-bottom: 10px;
 `;
@@ -449,31 +446,65 @@ const AvailableLength = styled.div`
   padding: 10px;
   text-align: right;
 `;
+
+const RoomListInfo = styled.div`
+  width: 870px;
+  font-size: 15px;
+  font-weight: bold;
+  font-family: 'Eoe_Zno_L';
+  color: ${({ theme }) => theme.color.darkGray};
+  padding: 10px;
+  text-align: left;
+  margin-top: 25px;
+`;
+
 const RoomListWrap = styled.div`
   display: flex;
+  flex-wrap: nowrap;
   flex-direction: column;
   align-items: center;
-  width: 400px;
-  height: 500px;
+  overflow-y: auto;
+  width: 870px;
+  height: 400px;
   border: 1px solid ${({ theme }) => theme.color.lightGray};
   border-radius: 3px;
   padding: 15px 0;
-  margin-top: 20px;
+  margin-top: 5px;
 `;
 
 const RoomWrap = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 380px;
-  min-height: 80px;
+  width: 820px;
+  max-height: 120px;
   border-radius: 5px;
   border: solid 2px ${({ theme }) => theme.color.lightGray};
   background: white;
-  padding: 15px 15px;
+  padding: 10px 20px;
   margin-bottom: 10px;
   &:hover {
-    border: solid 2px ${({ theme }) => theme.color.point};
+    background: rgba(0, 0, 0, 0.05);
+  }
+`;
+
+const RoomMenuButtonWrap = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 5px;
+`;
+
+const RoomMenuButton = styled.button`
+  font-family: 'Eoe_Zno_L';
+  font-size: 13px;
+  font-weight: bold;
+  color: ${({ theme }) => theme.color.gray};
+  outline: 0;
+  border: 0;
+  margin-left: -5px;
+  &:hover {
+    color: ${({ theme }) => theme.color.point};
   }
 `;
 
@@ -484,8 +515,8 @@ const RoomInfoWrap = styled.div`
 `;
 
 const RoomName = styled.span`
-  font-family: 'S-CoreDream-5Medium';
-  font-size: 18px;
+  font-family: 'Eoe_Zno_L';
+  font-size: 16px;
   line-height: 22px;
   font-weight: bold;
   color: ${({ theme }) => theme.color.darkGray};
@@ -514,7 +545,8 @@ const RoomPrice = styled.span`
 const RoomDescription = styled.span`
   font-family: 'S-CoreDream-2ExtraLight';
   font-size: 13px;
+  line-height: 17px;
   font-weight: bold;
   color: ${({ theme }) => theme.color.darkGray};
-  margin-top: 8px;
+  margin: 8px 0px;
 `;
