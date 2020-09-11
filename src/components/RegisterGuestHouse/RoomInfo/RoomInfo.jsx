@@ -39,6 +39,7 @@ const RoomInfo = ({ display }) => {
   const [descriptionValue, setDescriptionValue] = useState();
   const [buttonTitle, setButtonTitle] = useState('추가');
   const [editIndex, setEditIndex] = useState();
+  const [registerMessageDisplay, setRegisterMessageDisplay] = useState('none');
 
   const nameInput = React.createRef();
   const priceInput = React.createRef();
@@ -49,7 +50,9 @@ const RoomInfo = ({ display }) => {
     setMaxCapacityValue(roomMaxCapacity);
   }, [roomCapacity, roomMaxCapacity]);
 
-  useEffect(() => {}, [roomList]);
+  useEffect(() => {
+    if (roomList.length !== 0) setRegisterMessageDisplay('none');
+  }, [roomList]);
 
   const onChangeName = () => {
     const nameInputValue = nameInput.current.value;
@@ -201,6 +204,14 @@ const RoomInfo = ({ display }) => {
     setButtonTitle('수정');
   };
 
+  const roomInfoRegisterButtonClickHandler = () => {
+    if (roomList.length === 0) {
+      setRegisterMessageDisplay('flex');
+      return;
+    }
+    setRegisterMessageDisplay('none');
+  };
+
   return (
     <ContentWrap style={{ display: display }}>
       <RegisterTitle>방 정보 등록</RegisterTitle>
@@ -328,7 +339,8 @@ const RoomInfo = ({ display }) => {
             );
           })}
         </RoomListWrap>
-        <BlackButton title="등록" margin="50px 0 0 0 " onClick={addButtonClickHandler} />
+        <RegisterMessage style={{ display: registerMessageDisplay }}>방을 1개 이상 등록해주세요</RegisterMessage>
+        <BlackButton title="등록" margin="30px 0 0 0 " onClick={roomInfoRegisterButtonClickHandler} />
       </RegisterWrap>
     </ContentWrap>
   );
@@ -614,4 +626,12 @@ const RoomDescription = styled.span`
   font-weight: bold;
   color: ${({ theme }) => theme.color.darkGray};
   margin: 8px 0px;
+`;
+const RegisterMessage = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 870px;
+  font-size: 13px;
+  color: ${({ theme }) => theme.color.point};
+  margin: 20px 0 0 0;
 `;
