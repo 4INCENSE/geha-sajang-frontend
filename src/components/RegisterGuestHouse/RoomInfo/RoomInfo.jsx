@@ -21,6 +21,8 @@ import { addRoom } from '@/redux/Registration/actions/roomListAction';
 import TitleInput from '@/components/UIComponents/Input/TitleInput';
 import Input from '@/components/UIComponents/Input/Input';
 import BlackButton from '@/components/UIComponents/Button/BlackButton';
+import BlueInputButton from '@/components/UIComponents/Button/BlueInputButton';
+
 
 const RoomInfo = ({ display }) => {
   const dispatch = useDispatch();
@@ -179,7 +181,7 @@ const RoomInfo = ({ display }) => {
               titleFontSize="15px"
               inputWidth="270px"
               marginRight="10px"
-              placeholder="최대 25자"
+              placeholder="ex.여성 도미토리 A (최대 25자)"
               refValue={nameInput}
               value={nameValue}
               onChange={onChangeName}
@@ -437,7 +439,7 @@ const InputMessage = styled.div`
 
 const AvailableLength = styled.div`
   position: absolute;
-  top: -5px;
+  bottom: -30px;
   right: 0;
   width: 100%;
   font-size: 12px;
