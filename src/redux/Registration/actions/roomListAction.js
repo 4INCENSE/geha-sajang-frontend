@@ -19,6 +19,15 @@ const deleteRoom = (deleteIndex) => (dispatch, getState) => {
   return dispatch(setRoomList(roomList));
 };
 
+const editRoom = (editIndex, editedRoomData) => (dispatch, getState) => {
+  const { roomList } = getState().registerGuestHouseReducer;
+  roomList[editIndex] = editedRoomData;
+  dispatch(setCapacity(0));
+  dispatch(setMaxCapacity(0));
+  dispatch(setRoomList(roomList));
+  return;
+};
+
 const setRoomList = (payload) => {
   return {
     type: SET_ROOM_LIST,
@@ -26,4 +35,4 @@ const setRoomList = (payload) => {
   };
 };
 
-export { addRoom, deleteRoom };
+export { addRoom, deleteRoom, editRoom };
