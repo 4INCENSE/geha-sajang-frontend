@@ -16,13 +16,12 @@ import {
   decreaseMaxCapacity,
   setMaxCapacity
 } from '@/redux/Registration/actions/roomCapacityAction';
-import { addRoom } from '@/redux/Registration/actions/roomListAction';
+import { addRoom, deleteRoom } from '@/redux/Registration/actions/roomListAction';
 
 import TitleInput from '@/components/UIComponents/Input/TitleInput';
 import Input from '@/components/UIComponents/Input/Input';
 import BlackButton from '@/components/UIComponents/Button/BlackButton';
 import BlueInputButton from '@/components/UIComponents/Button/BlueInputButton';
-
 
 const RoomInfo = ({ display }) => {
   const dispatch = useDispatch();
@@ -164,6 +163,15 @@ const RoomInfo = ({ display }) => {
     };
     dispatch(addRoom(roomData));
     allInputInit();
+  };
+
+  const roomDeleteButtonClickHandler = (roomName, roomIndex) => {
+    if (confirm(`'${roomName}' 방을 삭제하시겠습니까?`) == true) {
+      console.log(roomIndex);
+      dispatch(deleteRoom(roomIndex));
+    } else {
+      return;
+    }
   };
 
   return (
