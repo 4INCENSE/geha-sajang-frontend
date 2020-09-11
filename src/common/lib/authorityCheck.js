@@ -1,4 +1,6 @@
+import { getCookie } from '@/common/lib/util/cookies';
+
 export const isAuthenticated = () => {
-  const token = localStorage.getItem('jwt');
+  const token = getCookie('jwt');
   return token ? true : false;
 };
