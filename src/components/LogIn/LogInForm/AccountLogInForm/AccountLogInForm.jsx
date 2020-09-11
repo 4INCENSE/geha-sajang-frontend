@@ -92,7 +92,6 @@ const AccountLogInForm = ({ title, buttonTitle }) => {
   };
 
   const errorLogIn = (data) => {
-    setIsLoading(false);
     if (!data.response) return alert(data.message);
     const errorCode = data.response.data.code;
     const errorMessage = data.response.data.message;
@@ -116,6 +115,7 @@ const AccountLogInForm = ({ title, buttonTitle }) => {
   };
 
   const errorResendEmail = (data) => {
+    if (!data.response) return alert(data.message);
     const errorCode = data.response.data.code;
     const errorMessage = data.response.data.message;
     const { CERTIFIED_ACCOUNT } = logInErrorCode;
