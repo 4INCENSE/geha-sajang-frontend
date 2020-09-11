@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { postLogIn } from '@/redux/LogInLogOut/thunk/postLogIn';
+import { postResendEmail } from '@/redux/LogInLogOut/thunk/postResendEmail';
 
 import { logInErrorCode } from '@/common/constants/errorCode';
 import { unregistered, inProgress, registered, staff } from '@/common/constants/registerState';
@@ -16,7 +17,7 @@ const AccountLogInForm = ({ title, buttonTitle }) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const { logIn } = useSelector((state) => state.logInLogOutReducer);
+  const { logIn, resendEmail } = useSelector((state) => state.logInLogOutReducer);
 
   const [modalMessage, setModalMessage] = useState('계정 아이디 혹은 비밀번호가 일치하지 않습니다');
   const [messageDisplay, setMessageDisplay] = useState('none');
@@ -33,6 +34,14 @@ const AccountLogInForm = ({ title, buttonTitle }) => {
     if (data) setIsLoading(false);
     if (error) return errorLogIn(data);
   }, [logIn]);
+
+  useEffect(() => {
+    const { data, error } = resendEmail;
+    if (!data) return;
+    if (data.status === 200) return successResendEmail();
+    if (data) setIsLoading(false);
+    if (error) return errorResendEmail(data);
+  }, [resendEmail]);
 
   const logInButtonClickHandler = () => {
     const idValue = IdInput.current.value;
@@ -72,8 +81,10 @@ const AccountLogInForm = ({ title, buttonTitle }) => {
   };
 
   const yesButtonClickHandler = () => {
+    setIsLoading(true);
+    const idValue = IdInput.current.value;
+    dispatch(postResendEmail(idValue));
     setButtonMessageDisplay('none');
-    setMessageModal('인증 메일이 재전송되었습니다');
   };
 
   const noButtonClickHandler = () => {
@@ -95,6 +106,22 @@ const AccountLogInForm = ({ title, buttonTitle }) => {
     }
     if (errorCode === NOT_FOUNT_ACCOUNT || errorCode === INCORRECT_PASSWORD)
       return setMessageModal('계정 혹은 비밀번호가 일치하지 않습니다');
+    setMessageModal(errorMessage);
+  };
+
+  const successResendEmail = () => {
+    setMessageModal('인증 메일이 재전송되었습니다');
+    setIsLoading(false);
+  };
+
+  const errorResendEmail = (data) => {
+    if (!data.response) return alert(data.message);
+    const errorCode = data.response.data.code;
+    const errorMessage = data.response.data.message;
+    const { CERTIFIED_ACCOUNT } = logInErrorCode;
+
+    if (errorCode === CERTIFIED_ACCOUNT) return setMessageModal('이미 인증 완료된 이메일입니다');
+    if (errorCode === NOT_FOUNT_ACCOUNT) return setMessageModal('존재하지 않는 계정이거나 삭제된 계정입니다');
     setMessageModal(errorMessage);
   };
 
