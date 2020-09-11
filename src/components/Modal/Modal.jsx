@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const Modal = ({ messageDisplay, buttonMessageDisplay, message, yesButtonClickHandler, noButtonClickHandler }) => {
   return (
     <>
-      <LogInModal style={{ display: buttonMessageDisplay }}>
+      <ModalWrap style={{ display: buttonMessageDisplay }}>
         <ButtonMessage>
           <span>{message}</span>
           <ModalButtonWrap>
@@ -12,18 +12,18 @@ const Modal = ({ messageDisplay, buttonMessageDisplay, message, yesButtonClickHa
             <ModalButton onClick={noButtonClickHandler}>아니오</ModalButton>
           </ModalButtonWrap>
         </ButtonMessage>
-      </LogInModal>
+      </ModalWrap>
 
-      <LogInModal style={{ display: messageDisplay }}>
+      <ModalWrap style={{ display: messageDisplay }}>
         <Message>{message}</Message>
-      </LogInModal>
+      </ModalWrap>
     </>
   );
 };
 
 export default Modal;
 
-const LogInModal = styled.div`
+const ModalWrap = styled.div`
   position: absolute;
   display: flex;
   justify-content: center;
@@ -31,14 +31,15 @@ const LogInModal = styled.div`
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.8);
+  z-index: 3;
 `;
 
 const Message = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 80%;
-  min-height: 30%;
+  width: 380px;
+  min-height: 180px;
   background: white;
   border-radius: 5px;
   padding: 20px 40px;
@@ -53,8 +54,8 @@ const ButtonMessage = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 80%;
-  min-height: 35%;
+  width: 380px;
+  min-height: 180px;
   background: white;
   border-radius: 5px;
   padding: 20px 40px;
