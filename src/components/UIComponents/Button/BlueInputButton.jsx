@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const InputButton = ({ width, title, onClick, margin }) => {
+const BlueInputButton = ({ width, title, onClick, margin }) => {
   return (
     <InputButtonComponent style={{ width: width, margin: margin }} onClick={onClick}>
       {title}
@@ -9,7 +9,7 @@ const InputButton = ({ width, title, onClick, margin }) => {
   );
 };
 
-export default InputButton;
+export default BlueInputButton;
 
 const InputButtonComponent = styled.button`
   display: flex;
@@ -18,16 +18,14 @@ const InputButtonComponent = styled.button`
   font-family: 'Eoe_Zno_L';
   width: 50px;
   height: 40px;
-  color: ${({ theme }) => theme.color.darkGray};
+  color: white;
   font-weight: bold;
   font-size: 13px;
-  background: white;
+  background: ${({ theme }) => theme.color.point};
   border-radius: 5px;
-  border: 1px solid ${({ theme }) => theme.color.lightGray};
   border-radius: 5px;
   margin-left: 10px;
   &:hover {
-    border: 2px solid ${({ theme }) => theme.color.point};
-    color: ${({ theme }) => theme.color.point};
+    background: ${({ theme }) => theme.color.darkPoint};
   }
 `;

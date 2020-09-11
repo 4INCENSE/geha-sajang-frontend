@@ -8,6 +8,9 @@ import { addExtraService, deleteExtraService } from '@/redux/Registration/action
 import { guestHouseInfoFormData } from '@/redux/Registration/actions/guestHouseInfoFormDataAction';
 
 import { checkDuplicate } from '@/common/lib/util/checkDuplicate';
+import { removeChar } from '@/common/lib/util/inputUtils';
+
+import { inProgress, unregistered, registered, staff } from '@/common/constants/registerState';
 
 import questionIcon from '@/img/icon/question.png';
 import closeIcon from '@/img/icon/close_w.png';
@@ -17,7 +20,7 @@ import TitleInput from '@/components/UIComponents/Input/TitleInput';
 import TitleButtonInput from '@/components/UIComponents/Input/TitleButtonInput';
 import UploadFile from '@/components/UIComponents/UploadFile/UploadFile';
 
-const GuestHouseInfo = ({ display, nextButton }) => {
+const GuestHouseInfo = ({ display }) => {
   const dispatch = useDispatch();
   const { extraServiceList, guestHouseInfo } = useSelector((state) => state.registerGuestHouseReducer);
 
@@ -35,10 +38,10 @@ const GuestHouseInfo = ({ display, nextButton }) => {
   const numberInput = React.createRef();
 
   const extraServiceDescription = `  - 게스트하우스 추가 제공 서비스란?
-  <br />
+  \n
   '픽업', '저녁식사', '장비대여' 등 게스트하우스별 게스트에게 추가적으로 제공하는 서비스를 말합니다.
-  <br /> 추가 제공 서비스를 등록해두면 게스트의 서비스 이용 여부를 기록하고 관리할 수 있습니다.
-  <br /> 추가 제공 서비스는 회원가입 후, '게스트하우스 설정'에서도 추가,수정 가능합니다.`;
+ \n 추가 제공 서비스를 등록해두면 게스트의 서비스 이용 여부를 기록하고 관리할 수 있습니다.
+ \n 추가 제공 서비스는 회원가입 후, '게스트하우스 설정'에서도 추가,수정 가능합니다.`;
 
   useEffect(() => {
     setServiceList(extraServiceList);
@@ -47,7 +50,7 @@ const GuestHouseInfo = ({ display, nextButton }) => {
   useEffect(() => {
     const { data, loading, error } = guestHouseInfo;
     if (!data) return;
-    if (data.status === 201) return nextButton();
+    if (data.status === 201) return successRegisterGuestHouseInfo();
     if (error) alert(data.response.data.message);
   }, [guestHouseInfo]);
 
@@ -87,9 +90,9 @@ const GuestHouseInfo = ({ display, nextButton }) => {
     return true;
   };
 
-  const removeChar = (e) => {
-    const pattern = /[^0-9]/gi;
-    e.target.value = e.target.value.replace(pattern, '');
+  const onlyNumber = (e) => {
+    const number = removeChar(e.target.value);
+    e.target.value = number;
   };
 
   const addServiceButtonClickHandler = () => {
@@ -148,6 +151,11 @@ const GuestHouseInfo = ({ display, nextButton }) => {
     }
   };
 
+  const successRegisterGuestHouseInfo = () => {
+    localStorage.setItem('registerState', inProgress);
+    location.reload();
+  };
+
   return (
     <ContentWrap style={{ display: display }}>
       <RegisterTitle>게스트하우스 정보 등록</RegisterTitle>
@@ -170,7 +178,7 @@ const GuestHouseInfo = ({ display, nextButton }) => {
           <TitleInput
             title="대표 전화번호"
             spanValue=" ●"
-            onKeyUp={removeChar}
+            onKeyUp={onlyNumber}
             onBlur={validatePhoneNumber}
             refValue={numberInput}
             maxlength="11"

@@ -211,6 +211,7 @@ const CreateAccount = ({ isAgreeToMarketing }) => {
             <TitleInput
               title="이메일 주소"
               spanValue=" ●"
+              inputWidth="400px"
               refValue={emailInput}
               onBlur={validateEmail}
               messageDisplay={emailMessageDisplay}
@@ -221,6 +222,7 @@ const CreateAccount = ({ isAgreeToMarketing }) => {
             <TitleInput
               type="password"
               title="비밀번호"
+              inputWidth="400px"
               spanValue=" ●"
               refValue={passwordInput}
               onBlur={validatePassword}
@@ -232,6 +234,7 @@ const CreateAccount = ({ isAgreeToMarketing }) => {
             <TitleInput
               type="password"
               title="비밀번호 확인"
+              inputWidth="400px"
               spanValue=" ●"
               onBlur={confirmPassword}
               refValue={passwordConfirmInput}
@@ -242,6 +245,7 @@ const CreateAccount = ({ isAgreeToMarketing }) => {
           <InputWrap>
             <TitleInput
               title="닉네임"
+              inputWidth="400px"
               spanValue=" ●"
               onBlur={validateNickname}
               refValue={nicknameInput}
