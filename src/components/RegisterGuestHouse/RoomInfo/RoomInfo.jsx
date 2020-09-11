@@ -16,7 +16,7 @@ import {
   decreaseMaxCapacity,
   setMaxCapacity
 } from '@/redux/Registration/actions/roomCapacityAction';
-import { addRoom, deleteRoom } from '@/redux/Registration/actions/roomListAction';
+import { addRoom, deleteRoom, editRoom } from '@/redux/Registration/actions/roomListAction';
 
 import TitleInput from '@/components/UIComponents/Input/TitleInput';
 import Input from '@/components/UIComponents/Input/Input';
@@ -37,6 +37,8 @@ const RoomInfo = ({ display }) => {
   const [maxCapacityValue, setMaxCapacityValue] = useState(roomMaxCapacity);
   const [availableDescriptionLength, setAvailableDescriptionLength] = useState(descriptionLimitLength);
   const [descriptionValue, setDescriptionValue] = useState();
+  const [buttonTitle, setButtonTitle] = useState('추가');
+  const [editIndex, setEditIndex] = useState();
 
   const nameInput = React.createRef();
   const priceInput = React.createRef();
@@ -161,17 +163,42 @@ const RoomInfo = ({ display }) => {
       peakAmount: '0',
       offPeakAmount: priceValue
     };
+    if (buttonTitle === '수정') {
+      dispatch(editRoom(editIndex, roomData));
+      setButtonTitle('추가');
+      allInputInit();
+      setEditIndex();
+      setAddMessageDisplay('none');
+      return;
+    }
     dispatch(addRoom(roomData));
     allInputInit();
   };
 
   const roomDeleteButtonClickHandler = (roomName, roomIndex) => {
+    if (buttonTitle === '수정') {
+      setAddMessage('수정 작업을 먼저 완료해주세요');
+      setAddMessageDisplay('block');
+      return;
+    }
     if (confirm(`'${roomName}' 방을 삭제하시겠습니까?`) == true) {
-      console.log(roomIndex);
       dispatch(deleteRoom(roomIndex));
     } else {
       return;
     }
+  };
+
+  const roomEditButtonClickHandler = (roomIndex) => {
+    setAddMessageDisplay('none');
+    setEditIndex(roomIndex);
+    const { name, memo, roomType, maxCapacity, defaultCapacity, offPeakAmount } = roomList[roomIndex];
+    setNameValue(name);
+    setDescriptionValue(memo);
+    typeSelect.current.value = roomType;
+    setPriceValue(offPeakAmount);
+    dispatch(setCapacity(defaultCapacity));
+    dispatch(setMaxCapacity(maxCapacity));
+    setButtonTitle('수정');
   };
 
   return (
@@ -255,28 +282,49 @@ const RoomInfo = ({ display }) => {
               <AvailableLength>{availableDescriptionLength}</AvailableLength>
               <InputMessage style={{ display: addMessageDisplay }}>{addMessage}</InputMessage>
             </InputWrap>
-            <BlueInputButton title="추가" width="100px" margin="0 0 10px 10px" onClick={addButtonClickHandler} />
+            <BlueInputButton title={buttonTitle} width="100px" margin="0 0 10px 10px" onClick={addButtonClickHandler} />
           </AddRoomInfoWrap>
         </AddRoomWrap>
         <RoomListInfo>총 {roomList.length}개</RoomListInfo>
         <RoomListWrap>
           {roomList.map((room, index) => {
             return (
-              <RoomWrap key={index}>
-                <RoomMenuButtonWrap>
-                  <RoomMenuButton>수정</RoomMenuButton>
-                  <RoomMenuButton onClick={() => roomDeleteButtonClickHandler(room.name, index)}>삭제</RoomMenuButton>
-                </RoomMenuButtonWrap>
-                <RoomInfoWrap>
-                  <RoomName>{room.name}</RoomName>
-                  <RoomCapacityType>
-                    {room.roomType} {room.defaultCapacity}인
-                  </RoomCapacityType>
-                  <RoomMaxCapacity>(최대 {room.maxCapacity}인)</RoomMaxCapacity>
-                  <RoomPrice>{room.offPeakAmount}₩</RoomPrice>
-                </RoomInfoWrap>
-                <RoomDescription>{room.memo}</RoomDescription>
-              </RoomWrap>
+              <>
+                {editIndex === index ? (
+                  <RoomWrap key={index} style={{ border: `2px solid #0047d4` }}>
+                    <RoomMenuButtonWrap>
+                      <span>수정중</span>
+                    </RoomMenuButtonWrap>
+                    <RoomInfoWrap>
+                      <RoomName>{room.name}</RoomName>
+                      <RoomCapacityType>
+                        {room.roomType} {room.defaultCapacity}인
+                      </RoomCapacityType>
+                      <RoomMaxCapacity>(최대 {room.maxCapacity}인)</RoomMaxCapacity>
+                      <RoomPrice>{room.offPeakAmount}₩</RoomPrice>
+                    </RoomInfoWrap>
+                    <RoomDescription>{room.memo}</RoomDescription>
+                  </RoomWrap>
+                ) : (
+                  <RoomWrap key={index}>
+                    <RoomMenuButtonWrap>
+                      <RoomMenuButton onClick={() => roomEditButtonClickHandler(index)}>수정</RoomMenuButton>
+                      <RoomMenuButton onClick={() => roomDeleteButtonClickHandler(room.name, index)}>
+                        삭제
+                      </RoomMenuButton>
+                    </RoomMenuButtonWrap>
+                    <RoomInfoWrap>
+                      <RoomName>{room.name}</RoomName>
+                      <RoomCapacityType>
+                        {room.roomType} {room.defaultCapacity}인
+                      </RoomCapacityType>
+                      <RoomMaxCapacity>(최대 {room.maxCapacity}인)</RoomMaxCapacity>
+                      <RoomPrice>{room.offPeakAmount}₩</RoomPrice>
+                    </RoomInfoWrap>
+                    <RoomDescription>{room.memo}</RoomDescription>
+                  </RoomWrap>
+                )}
+              </>
             );
           })}
         </RoomListWrap>
@@ -503,6 +551,13 @@ const RoomMenuButtonWrap = styled.div`
   position: absolute;
   top: 10px;
   right: 5px;
+  span {
+    font-family: 'Eoe_Zno_L';
+    font-size: 13px;
+    font-weight: bold;
+    color: ${({ theme }) => theme.color.point};
+    margin-right: 5px;
+  }
 `;
 
 const RoomMenuButton = styled.button`
