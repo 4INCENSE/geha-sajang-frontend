@@ -10,6 +10,13 @@ const Header = () => {
   const accessToken = getCookie('jwt');
   const profileImg = getCookie('profileImage');
   const nickname = getCookie('nickname');
+
+  const [menuDisplay, setMenuDisplay] = useState('none');
+
+
+  const userWrapClickHandler = () => {
+    menuDisplay === 'none' ? setMenuDisplay('block') : setMenuDisplay('none');
+  };
   return (
     <>
       <CloseUserMenuWrap style={{ display: menuDisplay }} onClick={closeUserMenuWrapClickHandler}></CloseUserMenuWrap>
