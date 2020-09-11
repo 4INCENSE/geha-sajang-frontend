@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import logo from '@/img/logo/logo.png';
+import downArrow from '@/img/icon/down-arrow.png';
+
+import { getCookie, deleteCookie } from '@/common/lib/util/cookies';
+
+const Header = () => {
+  const accessToken = getCookie('jwt');
+  const profileImg = getCookie('profileImage');
+  const nickname = getCookie('nickname');
   return (
     <>
       <CloseUserMenuWrap style={{ display: menuDisplay }} onClick={closeUserMenuWrapClickHandler}></CloseUserMenuWrap>
