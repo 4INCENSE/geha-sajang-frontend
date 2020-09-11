@@ -4,5 +4,6 @@ export const API_URL = {
   postCheckMail: process.env.URL + process.env.POST_CHECK_EMAIL,
   postCheckName: process.env.URL + process.env.POST_CHECK_NAME,
   postCreateAccount: process.env.URL + process.env.POST_CREATE_ACCOUNT,
-  postLogIn: process.env.URL + process.env.POST_LOGIN
+  postLogIn: process.env.URL + process.env.POST_LOGIN,
+  postResendEmail: process.env.URL + process.env.POST_RESEND_EMAIL
 };
