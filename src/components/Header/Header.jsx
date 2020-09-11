@@ -13,6 +13,13 @@ const Header = () => {
 
   const [menuDisplay, setMenuDisplay] = useState('none');
 
+  const logOutButtonClickHandler = () => {
+    deleteCookie('jwt');
+    localStorage.removeItem('registerState');
+    deleteCookie('nickname');
+    deleteCookie('profileImage');
+    location.reload();
+  };
 
   const userWrapClickHandler = () => {
     menuDisplay === 'none' ? setMenuDisplay('block') : setMenuDisplay('none');
