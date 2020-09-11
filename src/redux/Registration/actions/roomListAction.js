@@ -13,6 +13,12 @@ const addRoomToArray = (getState, payload) => {
   return roomList.concat(payload);
 };
 
+const deleteRoom = (deleteIndex) => (dispatch, getState) => {
+  const { roomList } = getState().registerGuestHouseReducer;
+  roomList.splice(deleteIndex, 1);
+  return dispatch(setRoomList(roomList));
+};
+
 const setRoomList = (payload) => {
   return {
     type: SET_ROOM_LIST,
@@ -20,4 +26,4 @@ const setRoomList = (payload) => {
   };
 };
 
-export { addRoom };
+export { addRoom, deleteRoom };
