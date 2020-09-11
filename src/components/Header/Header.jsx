@@ -17,6 +17,11 @@ const Header = () => {
   const userWrapClickHandler = () => {
     menuDisplay === 'none' ? setMenuDisplay('block') : setMenuDisplay('none');
   };
+
+  const closeUserMenuWrapClickHandler = () => {
+    setMenuDisplay('none');
+  };
+
   return (
     <>
       <CloseUserMenuWrap style={{ display: menuDisplay }} onClick={closeUserMenuWrapClickHandler}></CloseUserMenuWrap>
