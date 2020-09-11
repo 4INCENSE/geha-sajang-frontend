@@ -9,6 +9,7 @@ import { logInErrorCode } from '@/common/constants/errorCode';
 import { unregistered, inProgress, registered, staff } from '@/common/constants/registerState';
 
 import LoadingIndicator from '@/components/LoadingIndicator/LoadingIndicator';
+import Modal from '@/components/Modal/Modal';
 import Input from '@/components/UIComponents/Input/Input';
 
 const AccountLogInForm = ({ title, buttonTitle }) => {
@@ -64,6 +65,7 @@ const AccountLogInForm = ({ title, buttonTitle }) => {
   const setMessageModal = (message) => {
     setModalMessage(message);
     setMessageDisplay('flex');
+    setButtonMessageDisplay('none');
     setTimeout(() => {
       setMessageDisplay('none');
     }, 1200);
@@ -84,7 +86,13 @@ const AccountLogInForm = ({ title, buttonTitle }) => {
     const errorMessage = data.response.data.message;
     const { NOT_CERTIFIED_ACCOUNT, NOT_FOUNT_ACCOUNT, INCORRECT_PASSWORD } = logInErrorCode;
 
-    if (errorCode === NOT_CERTIFIED_ACCOUNT) return setButtonMessageDisplay('flex');
+    if (errorCode === NOT_CERTIFIED_ACCOUNT) {
+      setModalMessage(` 이메일 인증이 완료되지 않았습니다.
+      \n\n
+      인증 메일을 재전송 하시겠습니까?`);
+      setButtonMessageDisplay('flex');
+      return;
+    }
     if (errorCode === NOT_FOUNT_ACCOUNT || errorCode === INCORRECT_PASSWORD)
       return setMessageModal('계정 혹은 비밀번호가 일치하지 않습니다');
     setMessageModal(errorMessage);
@@ -93,22 +101,13 @@ const AccountLogInForm = ({ title, buttonTitle }) => {
   return (
     <>
       {isLoading ? <LoadingIndicator position="absolute" /> : ''}
-      <LogInModal style={{ display: messageDisplay }}>
-        <Message>{modalMessage}</Message>
-      </LogInModal>
-      <LogInModal style={{ display: buttonMessageDisplay }}>
-        <ButtonMessage>
-          <span>
-            이메일 인증이 완료되지 않았습니다.
-            <br />
-            인증 메일을 재전송 하시겠습니까?
-          </span>
-          <ModalButtonWrap>
-            <ModalButton onClick={yesButtonClickHandler}>예</ModalButton>
-            <ModalButton onClick={noButtonClickHandler}>아니오</ModalButton>
-          </ModalButtonWrap>
-        </ButtonMessage>
-      </LogInModal>
+      <Modal
+        messageDisplay={messageDisplay}
+        buttonMessageDisplay={buttonMessageDisplay}
+        message={modalMessage}
+        yesButtonClickHandler={yesButtonClickHandler}
+        noButtonClickHandler={noButtonClickHandler}
+      />
       <LogInTitle>{title}</LogInTitle>
       <LogInFormWrap>
         <LogInFormContent style={{ marginTop: '15px' }}>아이디</LogInFormContent>
@@ -189,69 +188,5 @@ const Button = styled.button`
   margin: 0px 0px 18px 0px;
   &:hover {
     background: ${({ theme }) => theme.color.point};
-  }
-`;
-
-const LogInModal = styled.div`
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-`;
-
-const Message = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 80%;
-  min-height: 30%;
-  background: white;
-  border-radius: 5px;
-  padding: 20px 40px;
-  font-family: 'S-CoreDream-5Medium';
-  color: ${({ theme }) => theme.color.darkGray};
-  font-size: 14px;
-  line-height: 25px;
-`;
-
-const ButtonMessage = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 80%;
-  min-height: 35%;
-  background: white;
-  border-radius: 5px;
-  padding: 20px 40px;
-  span {
-    font-family: 'S-CoreDream-5Medium';
-    color: ${({ theme }) => theme.color.darkGray};
-    font-size: 14px;
-    line-height: 25px;
-  }
-`;
-
-const ModalButtonWrap = styled.div`
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  margin-top: 25px;
-`;
-const ModalButton = styled.button`
-  width: 120px;
-  height: 35px;
-  background: ${({ theme }) => theme.color.point};
-  border-radius: 3px;
-  color: white;
-  font-family: 'Eoe_Zno_L';
-  color: white;
-  font-size: 15px;
-  font-weight: bold;
-  &:hover {
-    background: ${({ theme }) => theme.color.darkPoint};
   }
 `;
