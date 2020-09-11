@@ -52,7 +52,7 @@ const RoomInfo = ({ display }) => {
     const nameInputValue = nameInput.current.value;
     const nameLengthLimit = 25;
     if (nameValue.length >= nameLengthLimit) return;
-    setNameValue(nameInputValue);
+    setNameValue(nameInputValue.substr(0, nameLengthLimit));
   };
 
   const validateRoomName = () => {
