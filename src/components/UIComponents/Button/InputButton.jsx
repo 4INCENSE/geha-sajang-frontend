@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const InputButton = ({ width, title, onClick }) => {
+const InputButton = ({ width, title, onClick, margin }) => {
   return (
-    <InputButtonComponent style={{ width: width }} onClick={onClick}>
+    <InputButtonComponent style={{ width: width, margin: margin }} onClick={onClick}>
       {title}
     </InputButtonComponent>
   );
@@ -21,6 +21,7 @@ const InputButtonComponent = styled.button`
   color: ${({ theme }) => theme.color.darkGray};
   font-weight: bold;
   font-size: 13px;
+  background: white;
   border-radius: 5px;
   border: 1px solid ${({ theme }) => theme.color.lightGray};
   border-radius: 5px;

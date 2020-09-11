@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const BlackButton = ({ width, height, title, titleSize, onClick }) => {
+const BlackButton = ({ width, height, title, titleSize, onClick, margin }) => {
   return (
-    <ButtonComponent style={{ width: width, height: height, fontSize: titleSize }} onClick={onClick}>
+    <ButtonComponent style={{ width: width, height: height, fontSize: titleSize, margin: margin }} onClick={onClick}>
       {title}
     </ButtonComponent>
   );
