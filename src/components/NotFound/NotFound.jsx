@@ -11,7 +11,7 @@ const NotFound = () => {
       <Header />
       <Wrap>
         <NotFoundWrap>
-          <NotFoundImageWrap>
+          <NotFoundImageWrap move>
             <img src={notFoundImage} />
             <NotFoundMessage>요청하신 페이지를 찾을 수 없습니다</NotFoundMessage>
           </NotFoundImageWrap>
@@ -49,6 +49,13 @@ const NotFoundImageWrap = styled.div`
   img {
     height: 450px;
   }
+  ${(props) => {
+    if (props.move) {
+      return css`
+        animation: ${move} 0.5s infinite alternate;
+      `;
+    }
+  }}
 `;
 
 const NotFoundMessage = styled.div`
@@ -62,4 +69,13 @@ const NotFoundMessage = styled.div`
   color: ${({ theme }) => theme.color.darkGray};
   padding: 25px 40px;
   border-radius: 45px;
+`;
+
+const move = keyframes`
+0% {
+margin-bottom : -30px; }
+
+ 100% {
+  margin-bottom : 30px;
+ }
 `;
