@@ -13,6 +13,7 @@ import Main from '@/components/Main/Main';
 import Footer from '@/components/Footer/Footer';
 import NotFound from '@/components/NotFound/NotFound';
 import EmptyComponent from '@/components/EmptyComponent/EmptyComponent';
+import AddReservation from '@/components/Reservation/AddReservation/AddReservation';
 
 const App = () => {
   const goToLogInPage = () => {
@@ -50,11 +51,17 @@ const App = () => {
             fallback={goToLogInPage}
             isAllow={isAuthenticated}
           />
+          <RestrictRoute
+            path="/addReservation"
+            component={AddReservation}
+            fallback={goToLogInPage}
+            isAllow={isAuthenticated}
+          />
           <Route path="/notFound" component={NotFound} />
           <Redirect path="*" to="/notFound" />
         </Switch>
+        <Footer />
       </BrowserRouter>
-      <Footer />
     </GlobalStyleProvider>
   );
 };
