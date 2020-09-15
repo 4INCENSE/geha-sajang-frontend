@@ -46,7 +46,7 @@ const Header = () => {
             <ProfileImage src={profileImg} />
             <MenuIcon src={downArrow} />
             <UserMenuWrap style={{ display: menuDisplay }}>
-              <UserMenuNickName style={{ borderTop: 'none' }}>
+              <UserMenuNickName style={{ borderBottom: 'solid 1px lightGray' }}>
                 {nickname} <Triangle />
               </UserMenuNickName>
               <UserMenu>내 정보</UserMenu>
