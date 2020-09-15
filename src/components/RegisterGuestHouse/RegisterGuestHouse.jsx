@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
 
-import { inProgress, unregistered, registered, staff } from '@/common/constants/registerState';
+import { inProgress, unregistered } from '@/common/constants/registerState';
 
 import Header from '@/components/Header/Header';
 import SelectRegistrationType from '@/components/RegisterGuestHouse/SelectRegistrationType/SelectRegistrationType';
@@ -11,7 +10,6 @@ import RegisterRegisteredGuestHouse from '@/components/RegisterGuestHouse/Regist
 import RoomInfo from '@/components/RegisterGuestHouse/RoomInfo/RoomInfo';
 
 const RegisterGuestHouse = () => {
-  const history = useHistory();
   const registerState = localStorage.getItem('registerState');
 
   const [selectRegistrationTypeDisplay, setSelectRegistrationTypeDisplay] = useState('flex');
@@ -19,8 +17,6 @@ const RegisterGuestHouse = () => {
   const [registeredGuestHouseDisplay, setRegisteredGuestHouseDisplay] = useState('none');
 
   const [roomInfoDisplay, setRoomInfoDisplay] = useState('flex');
-
-  if (registerState === registered || registerState === staff) history.replace('/');
 
   const goToRegisterGuestHouseInfo = () => {
     setSelectRegistrationTypeDisplay('none');
@@ -52,6 +48,7 @@ const RegisterGuestHouse = () => {
         );
       case inProgress:
         return <RoomInfo display={roomInfoDisplay} />;
+
       default:
         break;
     }
