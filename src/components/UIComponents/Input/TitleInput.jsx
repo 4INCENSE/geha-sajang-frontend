@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Input from '@/components/UIComponents/Input/Input';
+import InputTitle from '@/components/UIComponents/InputTitle/InputTitle';
 
 const TitleInput = ({
   type,
@@ -26,10 +27,7 @@ const TitleInput = ({
 }) => {
   return (
     <InputWrap style={{ marginBottom: marginBottom, width: inputWidth, marginRight: marginRight }}>
-      <InputTitle style={{ fontSize: titleFontSize }}>
-        {title}
-        <span>{spanValue}</span>
-      </InputTitle>
+      <InputTitle title={title} fontSize={titleFontSize} spanValue={spanValue} />
       <Input
         type={type}
         inputWidth={inputWidth}
@@ -55,22 +53,6 @@ const InputWrap = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-`;
-
-const InputTitle = styled.div`
-  display: flex;
-  width: 100%;
-  text-align: left;
-  font-family: 'Eoe_Zno_L';
-  font-weight: bold;
-  font-size: 17px;
-  color: ${({ theme }) => theme.color.darkGray};
-  padding-left: 5px;
-  margin-bottom: 10px;
-  span {
-    color: ${({ theme }) => theme.color.point};
-    margin-left: 3px;
-  }
 `;
 
 const InputMessage = styled.div`
