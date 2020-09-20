@@ -15,6 +15,9 @@ import NotFound from '@/components/NotFound/NotFound';
 import EmptyComponent from '@/components/EmptyComponent/EmptyComponent';
 import AddReservation from '@/components/Reservation/AddReservation/AddReservation';
 
+import 'react-dates/initialize';
+import 'react-dates/lib/css/_datepicker.css';
+
 const App = () => {
   const goToLogInPage = () => {
     useHistory().push('/logIn');
