@@ -14,6 +14,7 @@ const TitleInput = ({
   inputWidth,
   marginRight,
   marginBottom,
+  margin,
   textAlign,
   refValue,
   placeholder,
@@ -26,7 +27,7 @@ const TitleInput = ({
   value
 }) => {
   return (
-    <InputWrap style={{ marginBottom: marginBottom, width: inputWidth, marginRight: marginRight }}>
+    <InputWrap style={{ marginBottom: marginBottom, width: inputWidth, marginRight: marginRight, margin: margin }}>
       <InputTitle title={title} fontSize={titleFontSize} spanValue={spanValue} />
       <Input
         type={type}
