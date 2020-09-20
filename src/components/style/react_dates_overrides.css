@@ -1,0 +1,94 @@
+.DateInput_input__focused {
+  border-bottom: 3px solid #00308f;
+}
+
+.DateRangePickerInput {
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #cccccc;
+  height: 40px;
+  width: 270px;
+  padding: 15px 10px;
+}
+
+.DateInput {
+  display: flex;
+  justify-content: center;
+  background: transparent;
+  height: 40px;
+}
+.DateInput_input {
+  background: transparent;
+  font-size: 16px;
+  height: 40px;
+  color: black;
+  font-family: 'Roboto', 'Apple SD Gothic Neo', 'Helvetica', 'Arial', sans-serif;
+}
+
+.DateRangePickerInput_calendarIcon {
+  display: flex;
+  align-items: center;
+}
+
+.CalendarMonth_table {
+  margin-top: 5px;
+}
+
+button {
+  outline: 0;
+}
+
+td {
+  outline: 0;
+}
+
+.CalendarDay {
+  line-height: 38px;
+  font-family: 'Eoe_Zno_L';
+  /* font-weight: bold; */
+  font-size: 15px;
+}
+
+.CalendarMonth_caption strong {
+  font-family: 'S-CoreDream-4Regular';
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.DayPicker_weekHeader_li small {
+  font-family: 'Eoe_Zno_L';
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.CalendarDay__selected {
+  background: #0047d4;
+  border: solid 1px #0047d4;
+}
+.CalendarDay__selected:hover {
+  background: #00308f;
+  border: solid 1px #00308f;
+}
+
+.CalendarDay__selected_span {
+  border: solid 1px rgba(0, 71, 212, 0.2);
+  background: rgba(0, 71, 212, 0.5);
+}
+
+.CalendarDay__selected_span:hover {
+  border: solid 1px rgba(0, 71, 212, 0.2);
+  background: rgba(0, 71, 212, 0.7);
+}
+
+.CalendarDay__hovered_span {
+  border: solid 1px rgba(0, 71, 212, 0.2);
+  background: rgba(0, 71, 212, 0.2);
+  color: #00308f;
+}
+.CalendarDay__hovered_span:hover {
+  border: solid 1px rgba(0, 71, 212, 0.2);
+  background: rgba(0, 71, 212, 0.2);
+  color: #00308f;
+}
