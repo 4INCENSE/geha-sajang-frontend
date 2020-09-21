@@ -11,6 +11,7 @@ const TitleButtonInput = ({
   messageDisplay,
   messageValue,
   inputWidth,
+  margin,
   refValue,
   placeholder,
   maxlength,
@@ -24,7 +25,7 @@ const TitleButtonInput = ({
   buttonOnClick
 }) => {
   return (
-    <InputWrap>
+    <InputWrap style={{ margin: margin }}>
       <InputTitle>
         {title}
         <span>{spanValue}</span>
