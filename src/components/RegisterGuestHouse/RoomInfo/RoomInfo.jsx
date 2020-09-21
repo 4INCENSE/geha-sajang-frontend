@@ -213,6 +213,8 @@ const RoomInfo = ({ display }) => {
       return;
     }
     setRegisterMessageDisplay('none');
+    localStorage.setItem('registerState', registered);
+    location.reload();
   };
 
   return (
