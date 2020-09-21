@@ -21,7 +21,6 @@ import { addRoom, deleteRoom, editRoom } from '@/redux/Registration/actions/room
 import { registered } from '@/common/constants/registerState';
 
 import TitleInput from '@/components/UIComponents/Input/TitleInput';
-import Input from '@/components/UIComponents/Input/Input';
 import BlackButton from '@/components/UIComponents/Button/BlackButton';
 import BlueInputButton from '@/components/UIComponents/Button/BlueInputButton';
 import SetNumber from '@/components/UIComponents/Input/SetNumber/SetNumber';
@@ -263,6 +262,7 @@ const RoomInfo = ({ display }) => {
             <SetNumber
               title="기본 인원"
               spanValue=" ●"
+              titleFontSize="15px"
               onClickDecreaseButton={capacityDecreaseButtonClickHandler}
               onClickIncreaseButton={capacityIncreaseButtonClickHandler}
               inputWidth="50px"
@@ -273,6 +273,7 @@ const RoomInfo = ({ display }) => {
             />
             <SetNumber
               title="최대 인원"
+              titleFontSize="15px"
               onClickDecreaseButton={maxCapacityDecreaseButtonClickHandler}
               onClickIncreaseButton={maxCapacityIncreaseButtonClickHandler}
               inputWidth="50px"
