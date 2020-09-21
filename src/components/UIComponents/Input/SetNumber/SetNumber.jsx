@@ -2,9 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 import Input from '@/components/UIComponents/Input/Input';
+import InputTitle from '@/components/UIComponents/InputTitle/InputTitle';
 
 const SetNumber = ({
   title,
+  titleFontSize,
   spanValue,
   onClickIncreaseButton,
   onClickDecreaseButton,
@@ -17,10 +19,7 @@ const SetNumber = ({
 }) => {
   return (
     <InputWrap style={{ margin: margin }}>
-      <Title>
-        {title}
-        <span>{spanValue}</span>
-      </Title>
+      <InputTitle title={title} spanValue={spanValue} fontSize={titleFontSize} />
       <InputNumberButtonWrap>
         <NumberButton onClick={onClickDecreaseButton}>-</NumberButton>
         <Input
@@ -37,22 +36,6 @@ const SetNumber = ({
 };
 
 export default SetNumber;
-
-const Title = styled.div`
-  display: flex;
-  width: 100%;
-  text-align: left;
-  font-family: 'Eoe_Zno_L';
-  font-weight: bold;
-  font-size: 15px;
-  color: ${({ theme }) => theme.color.darkGray};
-  padding-left: 5px;
-  margin-bottom: 10px;
-  span {
-    color: ${({ theme }) => theme.color.point};
-    margin-left: 3px;
-  }
-`;
 
 const InputWrap = styled.div`
   position: relative;
@@ -84,21 +67,5 @@ const NumberButton = styled.button`
   &:hover {
     border: 2px solid ${({ theme }) => theme.color.point};
     color: ${({ theme }) => theme.color.point};
-  }
-`;
-
-const Description = styled.textarea`
-  width: 100%;
-  min-height: 70px;
-  max-height: 200px;
-  border-radius: 5px;
-  border: 1px solid ${({ theme }) => theme.color.lightGray};
-  margin: 2px 10px 0 0;
-  padding: 15px;
-  font-size: 14px;
-  resize: vertical;
-  &:focus {
-    outline: 0;
-    box-shadow: 0 0 5px 2px ${({ theme }) => theme.color.point};
   }
 `;
