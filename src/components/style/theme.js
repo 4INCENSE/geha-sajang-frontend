@@ -12,7 +12,8 @@ const color = {
   gray: '#ababab',
   darkGray: '#3d3d3d',
   point: '#0047d4',
-  darkPoint: '#00308f'
+  darkPoint: '#00308f',
+  lightPoint: '#dee9ff'
 };
 
 export default { fontSize, color };

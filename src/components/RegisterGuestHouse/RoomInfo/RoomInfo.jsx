@@ -18,10 +18,12 @@ import {
 } from '@/redux/Registration/actions/roomCapacityAction';
 import { addRoom, deleteRoom, editRoom } from '@/redux/Registration/actions/roomListAction';
 
+import { registered } from '@/common/constants/registerState';
+
 import TitleInput from '@/components/UIComponents/Input/TitleInput';
-import Input from '@/components/UIComponents/Input/Input';
 import BlackButton from '@/components/UIComponents/Button/BlackButton';
 import BlueInputButton from '@/components/UIComponents/Button/BlueInputButton';
+import SetNumber from '@/components/UIComponents/Input/SetNumber/SetNumber';
 
 const RoomInfo = ({ display }) => {
   const dispatch = useDispatch();
@@ -210,6 +212,8 @@ const RoomInfo = ({ display }) => {
       return;
     }
     setRegisterMessageDisplay('none');
+    localStorage.setItem('registerState', registered);
+    location.reload();
   };
 
   return (
@@ -226,7 +230,7 @@ const RoomInfo = ({ display }) => {
               spanValue=" ●"
               titleFontSize="15px"
               inputWidth="270px"
-              marginRight="10px"
+              margin="0 10px 0 0"
               placeholder="ex.여성 도미토리 A (최대 25자)"
               refValue={nameInput}
               value={nameValue}
@@ -247,7 +251,7 @@ const RoomInfo = ({ display }) => {
               title="1박 가격(₩)"
               titleFontSize="15px"
               inputWidth="130px"
-              marginRight="10px"
+              margin="0 10px 0 0"
               textAlign="right"
               value={priceValue}
               refValue={priceInput}
@@ -255,36 +259,30 @@ const RoomInfo = ({ display }) => {
               onFocus={onFocusPrice}
               onBlur={onBlurPrice}
             />
-            <InputWrap>
-              <Title>
-                기본 인원<span> ●</span>
-              </Title>
-              <InputNumberButtonWrap>
-                <NumberButton onClick={capacityDecreaseButtonClickHandler}>-</NumberButton>
-                <Input
-                  inputWidth="50px"
-                  textAlign="center"
-                  value={capacityValue}
-                  onBlur={onBlurCapacity}
-                  onChange={onChangeCapacity}
-                />
-                <NumberButton onClick={capacityIncreaseButtonClickHandler}>+</NumberButton>
-              </InputNumberButtonWrap>
-            </InputWrap>
-            <InputWrap style={{ marginLeft: '10px' }}>
-              <Title>최대 인원</Title>
-              <InputNumberButtonWrap>
-                <NumberButton onClick={maxCapacityDecreaseButtonClickHandler}>-</NumberButton>
-                <Input
-                  inputWidth="50px"
-                  textAlign="center"
-                  value={maxCapacityValue}
-                  onBlur={onBlurMaxCapacity}
-                  onChange={onChangeMaxCapacity}
-                />
-                <NumberButton onClick={maxCapacityIncreaseButtonClickHandler}>+</NumberButton>
-              </InputNumberButtonWrap>
-            </InputWrap>
+            <SetNumber
+              title="기본 인원"
+              spanValue=" ●"
+              titleFontSize="15px"
+              onClickDecreaseButton={capacityDecreaseButtonClickHandler}
+              onClickIncreaseButton={capacityIncreaseButtonClickHandler}
+              inputWidth="50px"
+              inputTextAlign="center"
+              inputValue={capacityValue}
+              onBlur={onBlurCapacity}
+              onChange={onChangeCapacity}
+            />
+            <SetNumber
+              title="최대 인원"
+              titleFontSize="15px"
+              onClickDecreaseButton={maxCapacityDecreaseButtonClickHandler}
+              onClickIncreaseButton={maxCapacityIncreaseButtonClickHandler}
+              inputWidth="50px"
+              inputTextAlign="center"
+              inputValue={maxCapacityValue}
+              onBlur={onBlurMaxCapacity}
+              onChange={onChangeMaxCapacity}
+              margin="0 0 10px 0"
+            />
           </AddRoomInfoWrap>
           <AddRoomInfoWrap>
             <InputWrap>
@@ -451,32 +449,6 @@ const InputWrap = styled.div`
   flex-direction: column;
   width: 100%;
   margin-bottom: 10px;
-`;
-
-const InputNumberButtonWrap = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 130px;
-`;
-
-const NumberButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 25px;
-  height: 25px;
-  background: white;
-  border: 2px solid ${({ theme }) => theme.color.gray};
-  border-radius: 25px;
-  font-family: 'Eoe_Zno_L';
-  font-weight: bold;
-  font-size: 18px;
-  color: ${({ theme }) => theme.color.gray};
-  &:hover {
-    border: 2px solid ${({ theme }) => theme.color.point};
-    color: ${({ theme }) => theme.color.point};
-  }
 `;
 
 const Description = styled.textarea`

@@ -46,7 +46,7 @@ const Header = () => {
             <ProfileImage src={profileImg} />
             <MenuIcon src={downArrow} />
             <UserMenuWrap style={{ display: menuDisplay }}>
-              <UserMenuNickName style={{ borderTop: 'none' }}>
+              <UserMenuNickName style={{ borderBottom: 'solid 1px lightGray' }}>
                 {nickname} <Triangle />
               </UserMenuNickName>
               <UserMenu>내 정보</UserMenu>
@@ -125,7 +125,6 @@ const UserMenu = styled.div`
   font-family: 'Eoe_Zno_L';
   font-size: 13px;
   color: ${({ theme }) => theme.color.darkGray};
-  border-top: solid 0.5px ${({ theme }) => theme.color.lightGray};
   padding: 10px 12px;
   &:hover {
     background: ${({ theme }) => theme.color.point};
@@ -144,7 +143,6 @@ const UserMenuNickName = styled.div`
   font-family: 'S-CoreDream-5Medium';
   font-size: 15px;
   color: ${({ theme }) => theme.color.darkGray};
-  border-top: solid 0.5px ${({ theme }) => theme.color.lightGray};
   padding: 10px;
 `;
 

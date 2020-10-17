@@ -10,7 +10,7 @@ const NotFound = () => {
     <>
       <Header />
       <Wrap>
-        <NotFoundWrap>
+        <NotFoundWrap appear>
           <NotFoundImageWrap move>
             <img src={notFoundImage} />
             <NotFoundMessage>요청하신 페이지를 찾을 수 없습니다</NotFoundMessage>
@@ -29,6 +29,7 @@ const Wrap = styled.div`
   align-items: center;
   width: 100%;
   height: 730px;
+  background: black;
 `;
 
 const NotFoundWrap = styled.div`
@@ -38,7 +39,13 @@ const NotFoundWrap = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
-  background: black;
+  ${(props) => {
+    if (props.appear) {
+      return css`
+        animation: ${appear} 1s;
+      `;
+    }
+  }}
 `;
 
 const NotFoundImageWrap = styled.div`
@@ -55,7 +62,7 @@ const NotFoundImageWrap = styled.div`
         animation: ${move} 0.5s infinite alternate;
       `;
     }
-  }}
+  }};
 `;
 
 const NotFoundMessage = styled.div`
@@ -73,9 +80,19 @@ const NotFoundMessage = styled.div`
 
 const move = keyframes`
 0% {
-margin-bottom : -30px; }
+  margin-bottom : -30px; }
 
  100% {
   margin-bottom : 30px;
+ }
+`;
+
+const appear = keyframes`
+0% {
+  opacity : 0; 
+ }
+
+ 100% {
+  opacity : 1;
  }
 `;

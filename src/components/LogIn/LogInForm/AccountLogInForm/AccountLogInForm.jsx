@@ -57,8 +57,8 @@ const AccountLogInForm = ({ title, buttonTitle }) => {
     if (e.keyCode === 13) logInButtonClickHandler();
   };
 
-  const successLogIn = (data) => {
-    let registerState = data.data.registerState;
+  const successLogIn = () => {
+    const registerState = localStorage.getItem('registerState');
     if (registerState === staff || registerState === registered) {
       return history.push('/');
     }
