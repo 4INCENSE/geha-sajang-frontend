@@ -6,6 +6,8 @@ import logo from '@/img/logo/logo.png';
 import LogInForm from '@/components/LogIn/LogInForm/LogInForm';
 import ServiceDescription from '@/components/LogIn/ServiceDescription/ServiceDescription';
 
+import { mobileModeWidth, loginSlideWidth } from '@/common/constants/responsiveWidth';
+
 const LogIn = () => {
   const [logInFormWrapRightValue, setLogInFormWrapRightValueValue] = useState('-650px');
   const [serviceStartDisplay, setServiceStartButtonDisplay] = useState('flex');
@@ -26,15 +28,20 @@ const LogIn = () => {
     <Wrap>
       <LogInContentWrap>
         <ImgBlur />
-        <Logo src={logo} />
-        <DescriptionContent>
-          게스트 하우스 맞춤형 예약 관리 시스템으로
-          <br />
-          게스트의 예약을 보다 손쉽게 관리하세요
-        </DescriptionContent>
-        <ServiceStartButton style={{ display: serviceStartDisplay }} onClick={startButtonClickHandler}>
-          지금 바로 시작하기
-        </ServiceStartButton>
+        <LogoDescriptionWrap>
+          <Logo src={logo} />
+          <DescriptionContent>
+            게스트 하우스 맞춤형 예약 관리 시스템으로
+            <br />
+            게스트의 예약을 보다 손쉽게 관리하세요
+          </DescriptionContent>
+        </LogoDescriptionWrap>
+        <ServiceStartButtonWrap>
+          <ServiceStartButton style={{ display: serviceStartDisplay }} onClick={startButtonClickHandler}>
+            지금 바로 시작하기
+          </ServiceStartButton>
+        </ServiceStartButtonWrap>
+        <ServiceStartMobileButton>지금 바로 시작하기</ServiceStartMobileButton>
         <LoginFormWrap style={{ right: logInFormWrapRightValue }}>
           <LogInForm cancelButtonClickHandler={cancelButtonClickHandler} />
         </LoginFormWrap>
@@ -66,6 +73,16 @@ const LogInContentWrap = styled.div`
   background-image: url('bunkBed.jpg');
   background-size: cover;
   overflow-x: hidden;
+  @media only screen and (max-width: ${loginSlideWidth}) {
+    background-image: url('mobileBackground.jpg');
+    background-size: cover;
+    width: 100%;
+    height: 680px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
 `;
 
 const ImgBlur = styled.div`
@@ -83,13 +100,35 @@ const Logo = styled.img`
   left: 60px;
   width: 300px;
   padding: 10px;
+  @media only screen and (max-width: ${loginSlideWidth}) {
+    position: static;
+    width: 250px;
+    height: 200px;
+    padding: 0;
+    z-index: 2;
+    margin: 10% 0 0 0;
+  }
+  @media only screen and (max-width: ${mobileModeWidth}) {
+    position: static;
+    width: 180px;
+    height: 150px;
+    padding: 0;
+    z-index: 2;
+    margin: 15% 0 0 0;
+  }
+`;
+
+const ServiceStartButtonWrap = styled.div`
+  @media only screen and (max-width: ${loginSlideWidth}) {
+    display: none;
+  }
 `;
 
 const ServiceStartButton = styled.button`
   position: absolute;
   bottom: 50px;
   right: 50px;
-  display: 'flex';
+  display: flex;
   justify-content: center;
   align-items: center;
   width: 300px;
@@ -103,8 +142,40 @@ const ServiceStartButton = styled.button`
   &:hover {
     background: ${({ theme }) => theme.color.darkPoint};
   }
+  @media only screen and (max-width: ${loginSlideWidth}) {
+    display: none;
+  }
 `;
 
+const ServiceStartMobileButton = styled.button`
+  display: none;
+  @media only screen and (max-width: ${loginSlideWidth}) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 250px;
+    padding: 20px 40px;
+    background: ${({ theme }) => theme.color.point};
+    border-radius: 5px;
+    font-family: 'S-CoreDream-4Regular';
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    &:hover {
+      background: ${({ theme }) => theme.color.darkPoint};
+    }
+    z-index: 2;
+    margin: 0 0 80px 0;
+  }
+`;
+
+const LogoDescriptionWrap = styled.div`
+  @media only screen and (max-width: ${loginSlideWidth}) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+`;
 const DescriptionContent = styled.div`
   position: absolute;
   bottom: 50px;
@@ -117,6 +188,17 @@ const DescriptionContent = styled.div`
   font-size: 23px;
   line-height: 40px;
   text-align: left;
+  @media only screen and (max-width: ${loginSlideWidth}) {
+    position: static;
+    z-index: 2;
+    font-size: 20px;
+    text-align: center;
+    margin: 15px 0 0 0;
+  }
+  @media only screen and (max-width: ${mobileModeWidth}) {
+    font-size: 15px;
+    line-height: 30px;
+  }
 `;
 
 const LoginFormWrap = styled.div`
@@ -129,4 +211,7 @@ const LoginFormWrap = styled.div`
   width: 650px;
   height: 100%;
   transition: 0.5s;
+  @media only screen and (max-width: ${loginSlideWidth}) {
+    display: none;
+  }
 `;
