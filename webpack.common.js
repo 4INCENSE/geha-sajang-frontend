@@ -19,7 +19,7 @@ module.exports = {
         use: ['style-loader', 'css-loader']
       },
       {
-        test: /\.(jpg|png|gif)$/,
+        test: /\.(jpg|png|gif|svg)$/,
         loader: 'url-loader',
         options: {
           name: '[name].[ext]?[hash]',
