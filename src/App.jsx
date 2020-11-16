@@ -21,9 +21,9 @@ import '@/components/style/react_dates_overrides.css';
 
 const App = () => {
   const goToLogInPage = () => {
-    useHistory().push('/logIn');
-    return <EmptyComponent />;
+    return <Redirect to="logIn" />;
   };
+
   const goToBeforePage = () => {
     alert('잘못된 접근입니다.\n이전페이지로 돌아갑니다.');
     useHistory().goBack();
