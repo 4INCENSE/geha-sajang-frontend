@@ -5,6 +5,7 @@ import { loginSlideWidth, mobileModeWidth } from '@/common/constants/responsiveW
 
 const DescriptionContent = ({ image, title, description, index }) => {
   const [isEvenIndex, setIsEvenIndex] = useState();
+  const [isShown, setIsShown] = useState(false);
 
   const checkEven = (number) => {
     return number % 2 ? false : true;
@@ -15,7 +16,6 @@ const DescriptionContent = ({ image, title, description, index }) => {
   }, []);
 
   const backgroundStyle = !isEvenIndex ? { background: 'rgba(0,0,0,0.05)' } : {};
-
   const baseOption = {
     root: null,
     threshold: 0.5,
@@ -42,22 +42,26 @@ const DescriptionContent = ({ image, title, description, index }) => {
 
   return (
     <Wrap ref={target} style={backgroundStyle}>
-      {isEvenIndex ? (
-        <DescriptionWrap right>
-          <DescriptionImage right src={image} />
-          <DescriptionTitleWrap right>
-            <DescriptionTitle>{title}</DescriptionTitle>
-            <Description>{description}</Description>
-          </DescriptionTitleWrap>
-        </DescriptionWrap>
+      {isShown ? (
+        isEvenIndex ? (
+          <DescriptionWrap right>
+            <DescriptionImage right src={image} />
+            <DescriptionTitleWrap right>
+              <DescriptionTitle>{title}</DescriptionTitle>
+              <Description>{description}</Description>
+            </DescriptionTitleWrap>
+          </DescriptionWrap>
+        ) : (
+          <DescriptionWrap left>
+            <DescriptionTitleWrap left>
+              <DescriptionTitle>{title}</DescriptionTitle>
+              <Description>{description}</Description>
+            </DescriptionTitleWrap>
+            <DescriptionImage left src={image} />
+          </DescriptionWrap>
+        )
       ) : (
-        <DescriptionWrap left>
-          <DescriptionTitleWrap left>
-            <DescriptionTitle>{title}</DescriptionTitle>
-            <Description>{description}</Description>
-          </DescriptionTitleWrap>
-          <DescriptionImage left src={image} />
-        </DescriptionWrap>
+        ''
       )}
     </Wrap>
   );
@@ -104,9 +108,53 @@ const DescriptionWrap = styled.div`
   }
 `;
 
+const moveUp = keyframes`
+  from {
+      margin-bottom : -200px;
+  }
+  to {
+      margin-bottom : 0;
+  }
+`;
+
+const moveRight = keyframes`
+  from {
+      transform : translateX(-1000px);
+  }
+  to {
+      margin-left :translateX(0px);
+  }
+`;
+
+const moveLeft = keyframes`
+  from {
+      transform : translateX(1000px);
+  }
+  to {
+      margin-left :translateX(0px);
+  }
+`;
+
+const appear = keyframes`
+  from { opacity : 0}
+  to { opacity : 1}
+`;
+
 const DescriptionImage = styled.img`
   width: 30%;
   min-width: 500px;
+  ${(props) => {
+    if (props.right) {
+      return css`
+        animation: ${moveRight} 1s, ${appear} 1.5s;
+      `;
+    }
+    if (props.left) {
+      return css`
+        animation: ${moveLeft} 1s, ${appear} 1.5s;
+      `;
+    }
+  }};
   @media only screen and (max-width: ${loginSlideWidth}) {
     width: 75%;
     min-width: 80%;
@@ -141,7 +189,7 @@ const DescriptionTitleWrap = styled.div`
       `;
     }
   }};
-
+  animation: ${moveUp} 1s, ${appear} 1.5s;
   @media only screen and (max-width: ${loginSlideWidth}) {
     width: 80%;
     align-items: center;
