@@ -5,7 +5,7 @@ import { isAuthenticated } from '@/common/lib/authorityCheck';
 import { useHistory } from 'react-router-dom';
 
 import GlobalStyleProvider from '@/components/style/GlobalStyle';
-import RestrictRoute from '@/common/lib/util/RestrictRoute';
+import RestrictRoute from '@/common/lib/RestrictRoute';
 import Register from '@/components/Register/Register';
 import RegisterGuestHouse from '@/components/RegisterGuestHouse/RegisterGuestHouse';
 import LogIn from '@/components/LogIn/LogIn';
