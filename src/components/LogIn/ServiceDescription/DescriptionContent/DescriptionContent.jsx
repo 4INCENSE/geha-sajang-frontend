@@ -16,8 +16,32 @@ const DescriptionContent = ({ image, title, description, index }) => {
 
   const backgroundStyle = !isEvenIndex ? { background: 'rgba(0,0,0,0.05)' } : {};
 
+  const baseOption = {
+    root: null,
+    threshold: 0.5,
+    rootMargin: '0px'
+  };
+
+  const target = useRef();
+
+  useEffect(() => {
+    const callback = (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          observer.unobserve(entry.target);
+          setIsShown(true);
+        } else {
+          setIsShown(false);
+        }
+      });
+    };
+    const observer = new IntersectionObserver(callback, baseOption);
+
+    observer.observe(target.current);
+  }, []);
+
   return (
-    <Wrap style={backgroundStyle}>
+    <Wrap ref={target} style={backgroundStyle}>
       {isEvenIndex ? (
         <DescriptionWrap right>
           <DescriptionImage right src={image} />
