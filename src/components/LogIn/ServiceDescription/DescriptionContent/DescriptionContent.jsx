@@ -4,15 +4,37 @@ import styled, { css, keyframes } from 'styled-components';
 import { loginSlideWidth, mobileModeWidth } from '@/common/constants/responsiveWidth';
 
 const DescriptionContent = ({ image, title, description, index }) => {
+  const [isEvenIndex, setIsEvenIndex] = useState();
+
+  const checkEven = (number) => {
+    return number % 2 ? false : true;
+  };
+
+  useEffect(() => {
+    setIsEvenIndex(checkEven(index));
+  }, []);
+
+  const backgroundStyle = !isEvenIndex ? { background: 'rgba(0,0,0,0.05)' } : {};
+
   return (
-    <Wrap>
-      <DescriptionWrap right>
-        <DescriptionImage right src={image} />
-        <DescriptionTitleWrap right>
-          <DescriptionTitle>{title}</DescriptionTitle>
-          <Description>{description}</Description>
-        </DescriptionTitleWrap>
-      </DescriptionWrap>
+    <Wrap style={backgroundStyle}>
+      {isEvenIndex ? (
+        <DescriptionWrap right>
+          <DescriptionImage right src={image} />
+          <DescriptionTitleWrap right>
+            <DescriptionTitle>{title}</DescriptionTitle>
+            <Description>{description}</Description>
+          </DescriptionTitleWrap>
+        </DescriptionWrap>
+      ) : (
+        <DescriptionWrap left>
+          <DescriptionTitleWrap left>
+            <DescriptionTitle>{title}</DescriptionTitle>
+            <Description>{description}</Description>
+          </DescriptionTitleWrap>
+          <DescriptionImage left src={image} />
+        </DescriptionWrap>
+      )}
     </Wrap>
   );
 };
@@ -42,6 +64,20 @@ const DescriptionWrap = styled.div`
   width: 100%;
   height: 100%;
   padding: 25px;
+  @media only screen and (max-width: ${loginSlideWidth}) {
+    ${(props) => {
+      if (props.right) {
+        return css`
+          flex-direction: column;
+        `;
+      }
+      if (props.left) {
+        return css`
+          flex-direction: column-reverse;
+        `;
+      }
+    }};
+  }
 `;
 
 const DescriptionImage = styled.img`
@@ -65,6 +101,23 @@ const DescriptionTitleWrap = styled.div`
   margin: 30px 0 0 0;
   padding: 30px 50px;
   word-break: keep-all;
+  ${(props) => {
+    if (props.right) {
+      return css`
+        align-items: flex-end;
+        border-right: solid 15px ${({ theme }) => theme.color.darkGray};
+        text-align: right;
+      `;
+    }
+    if (props.left) {
+      return css`
+        align-items: flex-start;
+        border-left: solid 15px ${({ theme }) => theme.color.darkGray};
+        text-align: left;
+      `;
+    }
+  }};
+
   @media only screen and (max-width: ${loginSlideWidth}) {
     width: 80%;
     align-items: center;
