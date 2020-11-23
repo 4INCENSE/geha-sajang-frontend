@@ -77,10 +77,10 @@ const Wrap = styled.div`
   height: 650px;
   @media only screen and (max-width: ${loginSlideWidth}) {
     flex-direction: column;
-    height: auto;
-    min-height: 650px;
+    height: 840px;
   }
   @media only screen and (max-width: ${mobileModeWidth}) {
+    min-height: 650px;
     height: auto;
   }
 `;
