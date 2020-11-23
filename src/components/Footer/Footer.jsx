@@ -5,16 +5,16 @@ import teamLogo from '@/img/4INCENSE.png';
 const FooterWrap = styled.div`
   width: 100%;
   height: 150px;
-  background: ${({ theme }) => theme.color.lightGray};
+  border-top: solid 1px ${({ theme }) => theme.color.lightGray};
 `;
 
 const ContentWrap = styled.div`
   display: flex;
   justify-content: left;
-  align-items : center;
+  align-items: center;
   width: 100%;
   height: 100%;
-  padding : 50px 50px ;
+  padding: 50px 50px;
 `;
 const TeamLogo = styled.img`
   width: 100px;
