@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import logo from '@/img/logo/logo.png';
+import mobileBackground from '@/img/mobileBackground.jpg';
 
 import LogInForm from '@/components/LogIn/LogInForm/LogInForm';
 import ServiceDescription from '@/components/LogIn/ServiceDescription/ServiceDescription';
@@ -9,7 +10,7 @@ import ServiceDescription from '@/components/LogIn/ServiceDescription/ServiceDes
 import { mobileModeWidth, loginSlideWidth } from '@/common/constants/responsiveWidth';
 
 const LogIn = () => {
-  const [logInFormWrapRightValue, setLogInFormWrapRightValueValue] = useState('-650px');
+  const [logInFormWrapRightValue, setLogInFormWrapRightValueValue] = useState('-1000px');
   const [serviceStartDisplay, setServiceStartButtonDisplay] = useState('flex');
 
   const startButtonClickHandler = () => {
@@ -18,10 +19,15 @@ const LogIn = () => {
   };
 
   const cancelButtonClickHandler = () => {
-    setLogInFormWrapRightValueValue('-650px');
+    setLogInFormWrapRightValueValue('-1000px');
     setTimeout(() => {
       setServiceStartButtonDisplay('flex');
     }, 230);
+  };
+
+  const mobileStartButtonClickHandler = () => {
+    setLogInFormWrapRightValueValue(0);
+    setServiceStartButtonDisplay('none');
   };
 
   return (
@@ -37,11 +43,11 @@ const LogIn = () => {
           </DescriptionContent>
         </LogoDescriptionWrap>
         <ServiceStartButtonWrap>
-          <ServiceStartButton style={{ display: serviceStartDisplay }} onClick={startButtonClickHandler}>
+          <ServiceStartButton style={{ display: serviceStartDisplay }} onClick={mobileStartButtonClickHandler}>
             지금 바로 시작하기
           </ServiceStartButton>
         </ServiceStartButtonWrap>
-        <ServiceStartMobileButton>지금 바로 시작하기</ServiceStartMobileButton>
+        <ServiceStartMobileButton onClick={startButtonClickHandler}>지금 바로 시작하기</ServiceStartMobileButton>
         <LoginFormWrap style={{ right: logInFormWrapRightValue }}>
           <LogInForm cancelButtonClickHandler={cancelButtonClickHandler} />
         </LoginFormWrap>
@@ -77,7 +83,7 @@ const LogInContentWrap = styled.div`
     background-image: url('mobileBackground.jpg');
     background-size: cover;
     width: 100%;
-    height: 680px;
+    height: 570px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -92,6 +98,10 @@ const ImgBlur = styled.div`
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
+  @media only screen and (max-width: ${loginSlideWidth}) {
+    width: 100%;
+    height: 570px;
+  }
 `;
 
 const Logo = styled.img`
@@ -139,6 +149,7 @@ const ServiceStartButton = styled.button`
   color: white;
   font-size: 25px;
   font-weight: bold;
+  word-break: keep-all;
   &:hover {
     background: ${({ theme }) => theme.color.darkPoint};
   }
@@ -165,7 +176,11 @@ const ServiceStartMobileButton = styled.button`
       background: ${({ theme }) => theme.color.darkPoint};
     }
     z-index: 2;
-    margin: 0 0 80px 0;
+    margin: 0 0 10% 0;
+  }
+  @media only screen and (max-width: ${mobileModeWidth}) {
+    z-index: 2;
+    margin: 0 0 15% 0;
   }
 `;
 
@@ -212,6 +227,8 @@ const LoginFormWrap = styled.div`
   height: 100%;
   transition: 0.5s;
   @media only screen and (max-width: ${loginSlideWidth}) {
-    display: none;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
   }
 `;
