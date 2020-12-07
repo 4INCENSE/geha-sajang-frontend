@@ -66,8 +66,6 @@ const Wrap = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin-bottom: 100px;
-  overflow-x: hidden;
 `;
 
 const LogInContentWrap = styled.div`
