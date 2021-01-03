@@ -24,7 +24,7 @@ module.exports = {
         options: {
           name: '[name].[ext]?[hash]',
           publicPath: './dist/',
-          limit: 25000
+          limit: 10000
         }
       }
     ]
