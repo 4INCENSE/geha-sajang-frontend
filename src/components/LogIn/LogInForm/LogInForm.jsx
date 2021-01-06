@@ -92,6 +92,7 @@ const CancelButton = styled.button`
   font-family: 'S-CoreDream-4Regular';
   color: white;
   font-size: 15px;
+  cursor: pointer;
   &:hover {
     color: ${({ theme }) => theme.color.point};
   }
@@ -115,6 +116,8 @@ const BackToLogInButton = styled.button`
   color: ${({ theme }) => theme.color.point};
   font-size: 14px;
   font-weight: bold;
+  cursor: pointer;
+
   &:hover {
     text-decoration: underline;
   }

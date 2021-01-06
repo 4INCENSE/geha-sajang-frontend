@@ -148,6 +148,8 @@ const ServiceStartButton = styled.button`
   font-size: 25px;
   font-weight: bold;
   word-break: keep-all;
+  cursor: pointer;
+
   &:hover {
     background: ${({ theme }) => theme.color.darkPoint};
   }
@@ -170,6 +172,8 @@ const ServiceStartMobileButton = styled.button`
     color: white;
     font-size: 20px;
     font-weight: bold;
+    cursor: pointer;
+
     &:hover {
       background: ${({ theme }) => theme.color.darkPoint};
     }
