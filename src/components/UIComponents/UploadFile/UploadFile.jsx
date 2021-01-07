@@ -106,6 +106,7 @@ const UploadButton = styled.label`
   border: 1px solid ${({ theme }) => theme.color.lightGray};
   border-radius: 5px;
   margin-right: 10px;
+  cursor: pointer;
   &:hover {
     border: 2px solid ${({ theme }) => theme.color.point};
     color: ${({ theme }) => theme.color.point};
