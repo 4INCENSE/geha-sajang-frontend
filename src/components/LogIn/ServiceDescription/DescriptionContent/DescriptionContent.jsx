@@ -3,7 +3,7 @@ import styled, { css, keyframes } from 'styled-components';
 
 import { loginSlideWidth, mobileModeWidth } from '@/common/constants/responsiveWidth';
 
-const DescriptionContent = ({ image, title, description, index }) => {
+const DescriptionContent = ({ type, component, image, title, description, index }) => {
   const [isEvenIndex, setIsEvenIndex] = useState();
   const [isShown, setIsShown] = useState(false);
 
@@ -43,7 +43,9 @@ const DescriptionContent = ({ image, title, description, index }) => {
   return (
     <Wrap ref={target} style={backgroundStyle}>
       {isShown ? (
-        isEvenIndex ? (
+        type == 'last' ? (
+          component
+        ) : isEvenIndex ? (
           <DescriptionWrap right>
             <DescriptionImage right src={image} />
             <DescriptionTitleWrap right>
@@ -77,10 +79,10 @@ const Wrap = styled.div`
   height: 650px;
   @media only screen and (max-width: ${loginSlideWidth}) {
     flex-direction: column;
-    height: auto;
-    min-height: 650px;
+    height: 840px;
   }
   @media only screen and (max-width: ${mobileModeWidth}) {
+    min-height: 650px;
     height: auto;
   }
 `;

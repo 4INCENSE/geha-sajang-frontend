@@ -25,6 +25,7 @@ const ButtonComponent = styled.div`
   border-radius: 3px;
   padding: 20px 30px;
   margin-top: 20px;
+  cursor: pointer;
   &:hover {
     background: ${({ theme }) => theme.color.point};
   }

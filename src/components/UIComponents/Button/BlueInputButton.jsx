@@ -25,6 +25,8 @@ const InputButtonComponent = styled.button`
   border-radius: 5px;
   border-radius: 5px;
   margin-left: 10px;
+  cursor: pointer;
+
   &:hover {
     background: ${({ theme }) => theme.color.darkPoint};
   }

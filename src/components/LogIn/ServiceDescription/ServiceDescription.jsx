@@ -9,6 +9,7 @@ import blackLogo from '@/img/logo/logo_b.png';
 import { mobileModeWidth } from '@/common/constants/responsiveWidth';
 
 import DescriptionContent from '@/components/LogIn/ServiceDescription/DescriptionContent/DescriptionContent';
+import ServiceStartDescription from '@/components/LogIn/ServiceDescription/ServiceStartDescription/ServiceStartDescription';
 
 const Wrap = styled.div`
   display: flex;
@@ -24,6 +25,7 @@ const DescriptionCardWrap = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  height: auto;
 `;
 
 const ServiceDescription = () => {
@@ -68,6 +70,7 @@ const ServiceDescription = () => {
             />
           );
         })}
+        <DescriptionContent type="last" component={<ServiceStartDescription />} />
       </DescriptionCardWrap>
     </Wrap>
   );

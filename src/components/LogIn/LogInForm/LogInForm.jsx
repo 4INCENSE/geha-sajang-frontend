@@ -8,6 +8,8 @@ import closeIcon from '@/img/icon/close.png';
 import AccountLogInForm from '@/components/LogIn/LogInForm/AccountLogInForm/AccountLogInForm';
 import SNSLogInForm from '@/components/LogIn/LogInForm/SNSLogInForm/SNSLogInForm';
 
+import { mobileModeWidth, loginSlideWidth } from '@/common/constants/responsiveWidth';
+
 const LogInForm = ({ cancelButtonClickHandler }) => {
   const history = useHistory();
 
@@ -40,8 +42,8 @@ const LogInForm = ({ cancelButtonClickHandler }) => {
                 <BackToLogInButton onClick={moveToRegister}>회원가입</BackToLogInButton>
               </ButtonWrap>
               <ButtonWrap>
-                <span>스텝 계정이 있으시다면,</span>
-                <BackToLogInButton onClick={staffLogInButtonClickHandler}>스탭 계정으로 로그인하기</BackToLogInButton>
+                <span>계정정보를 잊어버렸다면,</span>
+                <BackToLogInButton>아이디, 비밀번호 찾기</BackToLogInButton>
               </ButtonWrap>
             </>
           ) : (
@@ -66,6 +68,10 @@ const Wrap = styled.div`
   height: 510px;
   max-width: 500px;
   background: white;
+  @media only screen and (max-width: ${loginSlideWidth}) {
+    width: 100%;
+    height: 90%;
+  }
 `;
 
 const LogInWrap = styled.div`
@@ -86,6 +92,7 @@ const CancelButton = styled.button`
   font-family: 'S-CoreDream-4Regular';
   color: white;
   font-size: 15px;
+  cursor: pointer;
   &:hover {
     color: ${({ theme }) => theme.color.point};
   }
@@ -109,6 +116,8 @@ const BackToLogInButton = styled.button`
   color: ${({ theme }) => theme.color.point};
   font-size: 14px;
   font-weight: bold;
+  cursor: pointer;
+
   &:hover {
     text-decoration: underline;
   }
