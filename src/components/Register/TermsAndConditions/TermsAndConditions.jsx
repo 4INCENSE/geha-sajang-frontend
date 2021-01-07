@@ -136,6 +136,7 @@ const Checkbox = styled.input`
 
 const CheckBoxIcon = styled.img`
   width: 25px;
+  cursor: pointer;
 `;
 const CheckBoxLabel = styled.label`
   display: flex;
