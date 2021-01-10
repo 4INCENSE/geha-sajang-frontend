@@ -11,6 +11,7 @@ import { checkDuplicate } from '@/common/lib/util/checkDuplicate';
 import { removeChar } from '@/common/lib/util/inputUtils';
 
 import { inProgress, unregistered, registered, staff } from '@/common/constants/registerState';
+import { extraServiceDescription } from '@/common/constants/serviceInformation';
 
 import questionIcon from '@/img/icon/question.png';
 import closeIcon from '@/img/icon/close_w.png';
@@ -36,12 +37,6 @@ const GuestHouseInfo = ({ display }) => {
   const serviceInput = React.createRef();
   const nameInput = React.createRef();
   const numberInput = React.createRef();
-
-  const extraServiceDescription = `  - 게스트하우스 추가 제공 서비스란?
-  \n
-  '픽업', '저녁식사', '장비대여' 등 게스트하우스별 게스트에게 추가적으로 제공하는 서비스를 말합니다.
- \n 추가 제공 서비스를 등록해두면 게스트의 서비스 이용 여부를 기록하고 관리할 수 있습니다.
- \n 추가 제공 서비스는 회원가입 후, '게스트하우스 설정'에서도 추가,수정 가능합니다.`;
 
   useEffect(() => {
     setServiceList(extraServiceList);
