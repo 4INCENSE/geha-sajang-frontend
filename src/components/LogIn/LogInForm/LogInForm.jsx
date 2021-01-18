@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 
@@ -6,22 +6,11 @@ import mainImage from '@/img/bunkBed.jpg';
 import closeIcon from '@/img/icon/close.png';
 
 import AccountLogInForm from '@/components/LogIn/LogInForm/AccountLogInForm/AccountLogInForm';
-import SNSLogInForm from '@/components/LogIn/LogInForm/SNSLogInForm/SNSLogInForm';
 
 import { mobileModeWidth, loginSlideWidth } from '@/common/constants/responsiveWidth';
 
 const LogInForm = ({ cancelButtonClickHandler }) => {
   const history = useHistory();
-
-  const [isStaffLogIn, setIsStaffLogIn] = useState(false);
-
-  const staffLogInButtonClickHandler = () => {
-    setIsStaffLogIn(true);
-  };
-
-  const backButtonClickHandler = () => {
-    setIsStaffLogIn(false);
-  };
 
   const moveToRegister = () => {
     history.push('/register');
@@ -34,26 +23,17 @@ const LogInForm = ({ cancelButtonClickHandler }) => {
           <CancelButton>
             <img src={closeIcon} style={{ width: '100%' }} onClick={cancelButtonClickHandler} />
           </CancelButton>
-          {!isStaffLogIn ? (
-            <>
-              <AccountLogInForm title="서비스 시작하기" buttonTitle="로그인" />
-              <ButtonWrap>
-                <span>사이트가 처음이신가요?</span>
-                <BackToLogInButton onClick={moveToRegister}>회원가입</BackToLogInButton>
-              </ButtonWrap>
-              <ButtonWrap>
-                <span>계정정보를 잊어버렸다면,</span>
-                <BackToLogInButton>아이디, 비밀번호 찾기</BackToLogInButton>
-              </ButtonWrap>
-            </>
-          ) : (
-            <>
-              <AccountLogInForm title="스텝 계정 로그인" buttonTitle="스텝으로 로그인" />
-              <BackToLogInButton style={{ marginTop: '10px' }} onClick={backButtonClickHandler}>
-                사장님 로그인 화면으로 돌아가기
-              </BackToLogInButton>
-            </>
-          )}
+          <>
+            <AccountLogInForm title="서비스 시작하기" buttonTitle="로그인" />
+            <ButtonWrap>
+              <span>사이트가 처음이신가요?</span>
+              <BackToLogInButton onClick={moveToRegister}>회원가입</BackToLogInButton>
+            </ButtonWrap>
+            <ButtonWrap>
+              <span>계정정보를 잊어버렸다면,</span>
+              <BackToLogInButton>아이디, 비밀번호 찾기</BackToLogInButton>
+            </ButtonWrap>
+          </>
         </LogInWrap>
       </Wrap>
     </>
