@@ -21,7 +21,7 @@ const Register = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (error) errorGetTerms();
+    if (error || !data) errorGetTerms();
   }, [terms]);
 
   const nextButtonClickHandler = () => {
@@ -33,8 +33,9 @@ const Register = () => {
   };
 
   const errorGetTerms = () => {
-    alert(data);
+    data ? alert(data) : alert('network error!');
     window.history.back();
+    return;
   };
 
   if (!data) return <></>;
