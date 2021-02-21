@@ -4,7 +4,8 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { postCheckEmail, postCheckName } from '@/redux/Registration/thunk/postCheckDuplicate';
-import { postCreateAccount, removeCreateAccountData } from '@/redux/Registration/thunk/postCreateAccount';
+import { postCreateAccount } from '@/redux/Registration/thunk/postCreateAccount';
+import { removeCreateAccountData } from '@/redux/Registration/actions/removeCreateAccountDataAction';
 
 import BlackButton from '@/components/UIComponents/Button/BlackButton';
 import TitleInput from '@/components/UIComponents/Input/TitleInput';
@@ -195,9 +196,9 @@ const CreateAccount = ({ isAgreeToMarketing }) => {
   };
 
   const successCreateAccount = () => {
-    removeCreateAccountData();
     alert(`가입한 이메일로 인증 이메일이 전송되었습니다.\n이메일 인증 후 서비스를 이용하실 수 있습니다.`);
     setIsLoading(false);
+    dispatch(removeCreateAccountData());
     moveToLogIn();
   };
 
