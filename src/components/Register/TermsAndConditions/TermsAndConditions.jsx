@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
 import checkedIcon from '@/img/icon/checked.png';
 import uncheckedIcon from '@/img/icon/unchecked.png';
@@ -7,6 +8,8 @@ import uncheckedIcon from '@/img/icon/unchecked.png';
 import BlackButton from '@/components/UIComponents/Button/BlackButton';
 
 const TermsAndConditions = ({ termsData, getIsAgreeToMarketing, nextButtonClickHandler }) => {
+  const history = useHistory();
+
   const [isAllChecked, setIsAllChecked] = useState(false);
   const [isServiceChecked, setIsServiceChecked] = useState(false);
   const [isPersonalInfoChecked, setIsPersonalInfoChecked] = useState(false);
@@ -18,6 +21,7 @@ const TermsAndConditions = ({ termsData, getIsAgreeToMarketing, nextButtonClickH
   const personalInfoCheckboxIcon = isPersonalInfoChecked ? checkedIcon : uncheckedIcon;
   const marketingCheckboxIcon = isMarketingChecked ? checkedIcon : uncheckedIcon;
 
+  if (!termsData) return <></>;
   const termsOfService = { title: termsData[0].type, contents: termsData[0].contents };
   const termsOfPersonalInfo = { title: termsData[1].type, contents: termsData[1].contents };
   const termsOfMarketing = { title: termsData[2].type, contents: termsData[2].contents };
