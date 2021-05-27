@@ -8,23 +8,6 @@ import { serviceDescriptionData } from '@/common/constants/serviceInformation';
 import DescriptionContent from '@/components/LogIn/ServiceDescription/DescriptionContent/DescriptionContent';
 import ServiceStartDescription from '@/components/LogIn/ServiceDescription/ServiceStartDescription/ServiceStartDescription';
 
-const Wrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-`;
-
-const DescriptionCardWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: auto;
-`;
-
 const ServiceDescription = () => {
   return (
     <Wrap>
@@ -47,3 +30,20 @@ const ServiceDescription = () => {
 };
 
 export default ServiceDescription;
+
+const Wrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`;
+
+const DescriptionCardWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+`;
