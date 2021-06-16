@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import Header from '@/components/Header/Header';
 import CreateAccount from '@/components/Register/CreateAccount/CreateAccount';
@@ -10,6 +11,8 @@ import { getTerms } from '@/redux/Registration/thunk/getTerms';
 
 const Register = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+
   const { terms } = useSelector((state) => state.registerReducer);
   const { data, error } = terms;
 
@@ -21,7 +24,7 @@ const Register = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (error || !data) errorGetTerms();
+    if (error) errorGetTerms();
   }, [terms]);
 
   const nextButtonClickHandler = () => {
@@ -34,12 +37,10 @@ const Register = () => {
 
   const errorGetTerms = () => {
     data ? alert(data) : alert('network error!');
-    window.history.back();
-    return;
+    history.push('/login');
   };
 
-  if (!data) return <></>;
-  if (error) return <></>;
+  if (error) errorGetTerms();
   return (
     <Wrap>
       <Header />
