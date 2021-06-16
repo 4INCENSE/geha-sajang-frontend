@@ -1,0 +1,2 @@
+export const SET_MALE_COUNT = 'SET_MALE_COUNT';
+export const SET_FEMALE_COUNT = 'SET_FEMALE_COUNT';

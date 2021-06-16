@@ -8,6 +8,7 @@ import 'moment/locale/ko';
 import Header from '@/components/Header/Header';
 import InputTitle from '@/components/UIComponents/InputTitle/InputTitle';
 import TitleInput from '@/components/UIComponents/Input/TitleInput';
+import TitleButtonInput from '@/components/UIComponents/Input/TitleButtonInput';
 
 const AddReservation = () => {
   const [startDate, setStartDate] = useState();
@@ -44,36 +45,7 @@ const AddReservation = () => {
               <InputTitle title="방이름" margin="0 0 15px 0" />
               <SelectedInfo>여성 도미토리 A, 남성 도미토리 A</SelectedInfo>
             </ItemWrap>
-            <ItemWrap>
-              <InputTitle title="숙박인원" spanValue=" ●" margin="15px 0 10px 0" />
-              <SetPersonnelWrap>
-                <SetNumber
-                  title="남"
-                  titleMargin="0 -10px 1px 0"
-                  titleFontWeight="bold"
-                  inputWidth="50px"
-                  titleFontSize="16px"
-                  readOnlyType="true"
-                  inputValue={male}
-                  flexDirection="row"
-                  onClickIncreaseButton={maleIncreaseButtonClickHandler}
-                  onClickDecreaseButton={maleDecreaseButtonClickHandler}
-                />
-                <SetNumber
-                  title="여"
-                  titleFontWeight="bold"
-                  titleMargin="0 -10px 1px 0"
-                  inputWidth="50px"
-                  titleFontSize="16px"
-                  readOnlyType="true"
-                  inputValue={female}
-                  flexDirection="row"
-                  onClickIncreaseButton={femaleIncreaseButtonClickHandler}
-                  onClickDecreaseButton={femaleDecreaseButtonClickHandler}
-                />
-                <Total onClick={totalPersonnelClickHandler}>{male + female} 명</Total>
-              </SetPersonnelWrap>
-            </ItemWrap>
+
             <TitleButtonInput
               title="예약자명"
               spanValue=" ●"
@@ -81,7 +53,12 @@ const AddReservation = () => {
               inputWidth="213px"
               margin="0 0 10px 0"
             />
+
             <TitleInput title="전화번호" spanValue=" ●" inputWidth="270px" margin="0 0 10px 0" />
+
+            {/* 
+            
+            
 
             <ItemWrap>
               <InputTitle title="예약 메모" />
@@ -114,7 +91,6 @@ const AddReservation = () => {
                       <ServiceAttendPersonnel>1</ServiceAttendPersonnel>
                     </ServiceName>
                   </ServiceInfoWrap>
-                  {/* <ServiceMemo>→ 전복죽</ServiceMemo> */}
                 </ServiceContentWrap>
                 <ServiceContentWrap>
                   <ServiceInfoWrap>
@@ -141,6 +117,8 @@ const AddReservation = () => {
                 </DateInfo>
               </ServiceDateWrap>
             </ServiceWrap>
+          
+         */}
           </ReservationContentWrap>
         </ReservationWrap>
       </Wrap>

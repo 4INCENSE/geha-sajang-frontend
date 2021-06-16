@@ -53,7 +53,10 @@ const Routing = () => {
           path="/addReservation"
           component={AddReservation}
           fallback={goToLogInPage}
-          isAllow={isAuthenticated}
+          isAllow={() => {
+            return true;
+          }}
+          // isAllow={isAuthenticated}
         />
         <Route path="/notFound" component={NotFound} />
         <Redirect path="*" to="/notFound" />
